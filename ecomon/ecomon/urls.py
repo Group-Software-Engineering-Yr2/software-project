@@ -21,4 +21,5 @@ from django.urls.conf import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('backend.urls')), # sends base url to backend.urls
+    path('accounts/', include('accounts.urls')), # sends accounts/ to accounts.urls
 ]
