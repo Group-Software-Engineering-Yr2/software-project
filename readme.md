@@ -1,12 +1,17 @@
-# Ecomon
+# Software Project
 
-# Running the App
+# Useful Links
 
-All commands run within /backend
-``python3 manage.py runserver`
+https://trello.com/b/wzoUYlVk/group-software-project
 
-# Installation
+# License
 
-All commands run within /backend
+# Members
 
-1. `python3 manage.py migrate`
+-   Adam O'Neill
+-   Lorenzo Meixieira
+-   Callum Ward
+-   Jake Mcallister
+-   Boris Cheung
+-   Angelo Thind
+-   Finay Fordham
