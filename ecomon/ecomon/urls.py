@@ -17,9 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
+from django.conf.urls.static import static
+from . import settings
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('backend.urls')), # sends base url to backend.urls
     path('accounts/', include('accounts.urls')), # sends accounts/ to accounts.urls
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

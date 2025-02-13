@@ -1,10 +1,10 @@
+from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from .models import Profile
 from .serializers import ProfileSerializer, RegisterSerializer, LoginSerializer
-
 
 class UserProfileView(APIView):
     '''
@@ -74,4 +74,12 @@ class LoginView(APIView):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+
+def render_sign_up(request):
+    '''Render sign up page'''
+    return render(request, "accounts/sign-up.html")
+
+def render_login(request):
+    '''Render login page'''
+    return render(request, "accounts/login.html")
