@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
-from .models import Profile
+from .models import Profile, Team
 from .serializers import ProfileSerializer, RegisterSerializer, LoginSerializer
 
 class UserProfileView(APIView):
@@ -78,7 +78,9 @@ class LoginView(APIView):
 
 def render_sign_up(request):
     '''Render sign up page'''
-    return render(request, "accounts/sign-up.html")
+    teams = Team.objects.all()
+    return render(request, "accounts/sign-up.html", {"teams": teams})
+
 
 def render_login(request):
     '''Render login page'''

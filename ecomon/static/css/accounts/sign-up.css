@@ -73,10 +73,30 @@ input[type="email"], input[type="password"] {
     transition: background-color 0.4s ease;
 }
 
-.plant {
-    top: 50%;
+select {
+    width: 348px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    background-color: white;
+    color:gray;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+select:focus, 
+select:valid {
+    color: black;
+}
+
+/* .plant {
+    top: 50%; */
     /* transform: translateY(-50%); */
-    width: 100%;
+    /* width: 100%;
     display: flex;
     justify-content: space-between;
 }
@@ -91,4 +111,4 @@ input[type="email"], input[type="password"] {
 
 .plant img:last-child {
     transform: scaleX(-1);
-}
+} */
