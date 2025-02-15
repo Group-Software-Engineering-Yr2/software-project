@@ -38,7 +38,7 @@ h2 {
     color: #144E3F;
 }
 
-input[type="email"], input[type="password"] {
+input {
     width: 326px;
     padding: 10px;
     border: 1px solid #ccc;

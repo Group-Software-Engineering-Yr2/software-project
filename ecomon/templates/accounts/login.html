@@ -9,14 +9,27 @@
 </head>
 <body>
     <div class="container">
-        <img src="../../static/images/accounts/Ecomon1-removebg.png" alt="ECOMON Logo" class="logo">
+        <img src="{% static 'images/accounts/Ecomon1-removebg.png' %}" alt="ECOMON Logo" class="logo">
+
         <div class="signup-box">
             <h2>Login</h2>
-            <form>
-                <input type="email" placeholder="Email address" required>
-                <input type="password" placeholder="Password" required>
+
+            <!-- Display error messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
                 <button type="submit" class="submit">Login</button>
-                <p >Don't have an account? <a class="login-link" href="{% url 'register-page' %}">Sign up</a></p>
+
+                <p>Don't have an account? 
+                    <a class="login-link" href="{% url 'register-page' %}">Sign up</a>
+                </p>
             </form>
         </div>
     </div>

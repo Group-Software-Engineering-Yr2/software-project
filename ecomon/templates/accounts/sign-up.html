@@ -10,21 +10,35 @@
 <body>
 
     <div class="container">
-        <img src="../../static/images/accounts/Ecomon1-removebg.png" alt="ECOMON Logo" class="logo">
+        <img src="{% static 'images/accounts/Ecomon1-removebg.png' %}" alt="ECOMON Logo" class="logo">
+        
         <div class="signup-box">
-            <h2>Sign up</h2>
-            <form>
-                <input type="email" placeholder="Email address" required>
-                <input type="password" placeholder="Password" required>
-                <input type="password" placeholder="Confirm Password" required>
+            <h2>Sign Up</h2>
+            <form method="post">
+                {% csrf_token %}
+                            {% if messages %}
+                    {% for message in messages %}
+                        <p class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email address" required>
+                <input type="password" name="password1" placeholder="Password" required>
+                <input type="password" name="password2" placeholder="Confirm Password" required>
+            
+                <!-- Team Selection -->
                 <select name="team" required>
                     <option value="" disabled selected>Select your team</option>
                     {% for team in teams %}
-                        <option value="{{ team.id }}">{{ team.name }}</option>
+                        <option value="{{ team.name }}">{{ team.name }}</option>
                     {% endfor %}
                 </select>
-                <button type="submit" class="submit">Sign up</button>
-                <p class="login-text">Already have an account? <a class="login-link" href="{% url 'login-page' %}">Login</a></p>
+            
+                <button type="submit" class="submit">Sign Up</button>
+                <p class="login-text">Already have an account? 
+                    <a class="login-link" href="{% url 'login-page' %}">Login</a>
+                </p>
             </form>
         </div>
     </div>
