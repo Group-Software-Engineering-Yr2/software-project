@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>Ecomon Home</title>
+    <link rel="stylesheet" href="{% static 'css/homePage/homePage.css' %}">
+</head>
+<body>
+    <div class="buttons-container">
+        <!-- packs button -->
+        <a href="/packs">
+            <button class="button"><img src="{% static 'images/homePage/packsIcon.PNG' %}" alt="Packs"></button>
+        </a>
+        <!-- scanner button -->
+        <a href="/scanner">
+            <button class="button"><img src="{% static 'images/homePage/QRCodeIcon.png' %}" alt="Scanner"></button>
+        </a>
+        <!-- profile button -->
+        <a href="/profile">
+            <button class="button"><img src="{% static 'images/homePage/profileIcon.png' %}" alt="Profile"></button>
+        </a>
+    </div>
+</body>
+</html>
