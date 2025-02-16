@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <title>Ecomon Profile</title>
+    </head>
+<header>
+    <link rel="stylesheet" href="{% static 'css/profile/profilestyle.css' %}">
+    <div class="logo">
+        <img src="{% static 'images/profile/Ecomon1-removebg.png' %}" alt="Ecomon Logo">
+    </div>  
+</header>
+
+<body>
+    
+    <div class = "backButton">
+        <button type="button"><img src="{% static 'images/profile/backButton.png' %}" alt="Back Button"></button>
+    </div>
+
+    <div class="profile-container">
+        <div class="profilepic">
+            <img src="{% static 'images/profile/Reduce.png' %}" alt="Reduce Logo">
+        </div>
+
+        <div class="details">
+            <p>
+                Username: ExampleUsername123
+                <br> <br>
+                Email: ExampleEmail@rocketmail.com
+                <br> <br>
+                Team: Reduce
+            </p>
+        </div>
+
+        <div class="bin">
+            <div class="binimage">
+                <img src="{% static 'images/profile/binplaceholder.png' %}" alt="Bin Image">
+            </div>
+            <div class="binText">
+                <p>Bin 0/3</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-container">
+        <div class="cards-section">
+            <div class="cardTitle">
+                <p>Obtained Cards</p>
+            </div>
+            <div class="cardTable">
+                <table>
+                    <tr>
+                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Plastic Bottle Card"></td>
+                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Plastic Bag Card"></td>
+                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Straw Card"></td>
+                    </tr>
+                    <tr>
+                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Toothbrush Card"></td>
+                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Crisp Packet Card"></td>
+                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Disposable Razor Card"></td>
+                    </tr>
+                    <tr>
+                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Disposable Glove Card"></td>
+                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Disposable Cutlery Card"></td>
+                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Bubble Wrap Card"></td>
+                    </tr>
+                    <tr>
+                        <td><img src="{% static 'images/profile/RecycleBlankBorder.png' %}" alt="Drinks Can Card"></td>
+                        <td><img src="{% static 'images/profile/RecycleBlankBorder.png' %}" alt="Battery Card"></td>
+                        <td><img src="{% static 'images/profile/RecycleBlankBorder.png' %}" alt="Cardboard Box Card"></td>
+                    </tr>
+                    <tr>
+                        <td><img src="{% static 'images/profile/RecycleBlankBorder.png' %}" alt="Pizza Box Card"></td>
+                        <td><img src="{% static 'images/profile/RecycleBlankBorder.png' %}" alt="Milk Carton Card"></td>
+                        <td><img src="{% static 'images/profile/RecycleBlankBorder.png' %}" alt="Newspaper Card"></td>
+                    </tr>
+                    <tr>
+                        <td><img src="{% static 'images/profile/PlantBlankBorder.png' %}" alt="English Oak Card"></td>
+                        <td><img src="{% static 'images/profile/PlantBlankBorder.png' %}" alt="Common Beech Card"></td>
+                        <td><img src="{% static 'images/profile/PlantBlankBorder.png' %}" alt="Common Ash Card"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="achievements-section">
+            <div class="AchievementTitle">
+                <p>Achievements</p>
+            </div>
+            <div class="AchievmentsTable">
+                <table>
+                    <tr>
+                        <td><img src="{% static 'images/profile/silvermedal.jpg' %}" alt="Silver Medal"></td>
+                        <td><img src="{% static 'images/profile/goldmedal.jpg' %}" alt="Gold Medal"></td>
+                        <td><img src="{% static 'images/profile/bronzemedal.jpg' %}" alt="Bronze Medal"></td>
+                    </tr>
+                    <tr>
+                        <td>Silver Medal Example</td>
+                        <td>Gold Medal Example</td>
+                        <td>Bronze Medal Example</td>
+                    </tr>
+                    <tr>
+                        <td><img src="{% static 'images/profile/silvermedal.jpg' %}" alt="Silver Medal"></td>
+                        <td><img src="{% static 'images/profile/goldmedal.jpg' %}" alt="Gold Medal"></td>
+                        <td><img src="{% static 'images/profile/bronzemedal.jpg' %}" alt="Bronze Medal"></td>
+                    </tr>
+                    <tr>
+                        <td>Silver Medal Example</td>
+                        <td>Gold Medal Example</td>
+                        <td>Bronze Medal Example</td>
+                    </tr>
+                    <tr>
+                        <td><img src="{% static 'images/profile/silvermedal.jpg' %}" alt="Silver Medal"></td>
+                        <td><img src="{% static 'images/profile/goldmedal.jpg' %}" alt="Gold Medal"></td>
+                        <td><img src="{% static 'images/profile/bronzemedal.jpg' %}" alt="Bronze Medal"></td>
+                    </tr>
+                    <tr>
+                        <td>Silver Medal Example</td>
+                        <td>Gold Medal Example</td>
+                        <td>Bronze Medal Example</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>

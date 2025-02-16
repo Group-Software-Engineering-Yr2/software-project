@@ -1,0 +1,111 @@
+header {
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    height: 200px;        
+    padding: 20px;
+}
+
+
+.logo img {
+    height: 200px;
+    width: auto;            
+    padding: 25px;
+}
+
+
+.profile-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+}
+
+
+.profilepic img {
+    height: 250px;
+    width: auto;
+    border-radius: 10px;
+}
+
+
+.details {
+    text-align: center;
+    font-size: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+
+.bin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.binimage img {
+    height: 250px;
+    width: auto;
+}
+
+.binText {
+    text-align: center;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.content-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+    
+}
+
+
+.cards-section, .achievements-section {
+    width: 40%;
+}
+
+
+.cardTitle, .AchievementTitle {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+
+.cardTable table, .AchievmentsTable table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cardTable td, .AchievmentsTable td {
+    text-align: center;
+    padding: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.cardTable img, .AchievmentsTable img {
+    width: 200px;
+    height: auto;
+}
+
+.backButton button {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    width: 40px; 
+    height: 40px; 
+}
+
+.backButton button img {
+    width: 400%;
+    height: 400%;
+    object-fit: contain;
+}
+
