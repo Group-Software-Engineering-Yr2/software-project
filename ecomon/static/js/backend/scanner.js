@@ -2,8 +2,9 @@ let html5QrCode = new Html5Qrcode("reader");
 let isScanning = false;
 
 function onScanSuccess(decodedText, decodedResult) {
-    console.log(`Scanned: ${decodedText}`, decodedResult);
-    window.location.href = `/gym-battle/${encodeURIComponent(decodedText)}/`;
+    console.log(`Scanned URL: ${decodedText}`, decodedResult);
+    // Directly use the scanned URL for redirection
+    window.location.href = decodedText;
 }
 
 function onScanFailure(error) {
@@ -59,9 +60,8 @@ function isValidImage(file) {
 // Add click handler for the file input label
 document.querySelector('label[for="qr-input-file"]').addEventListener('click', function(e) {
     if (isScanning) {
-        e.preventDefault(); // Prevent the file dialog from opening immediately
+        e.preventDefault();
         stopScanner();
-        // Wait for scanner to stop, then trigger file input
         setTimeout(() => {
             document.getElementById('qr-input-file').click();
         }, 100);
@@ -77,20 +77,18 @@ document.getElementById("qr-input-file").addEventListener("change", function(e) 
     const fileInput = this;
     const imageFile = e.target.files[0];
     
-    // Clear the file input immediately
     fileInput.value = "";
     
-    // Validate file type
     if (!isValidImage(imageFile)) {
         alert("Please upload a valid image (PNG, JPG, or JPEG only).");
         return;
     }
     
-    // Process the file
     html5QrCode.scanFile(imageFile, true)
         .then(decodedText => {
             console.log("File scanned successfully:", decodedText);
-            window.location.href = `/gym-battle/${encodeURIComponent(decodedText)}/`;
+            // Directly use the scanned URL for redirection
+            window.location.href = decodedText;
             if (document.getElementById("qr-canvas-visible")) {
                 document.getElementById("qr-canvas-visible").style.display = "none";
             }
