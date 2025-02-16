@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan a QR Code!</title>
+    <link rel="stylesheet" href="{% static 'css/backend/scanner.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Wrap the logo and text inside a div to hide it during scanning -->
+        <div id="logo-and-text">
+            <img src="{% static 'images/backend/Ecomon1-removebg.png' %}" alt="ECOMON Logo" class="logo">
+        </div>
+
+        <div class="title">
+            <h1>Scan a QR Code To Battle A Recycling Gym!</h1>
+        </div>
+
+        <!-- Scanner -->
+        <div class="scanner-container">
+            <div id="reader" width="600px"></div>         
+            <!-- Buttons -->
+            <div class="buttons">
+                <button id="start-scanner" class="scan-button">Start Scanning</button>
+                <button id="stop-scanner" class="scan-button" style="display: none;">Stop Scanning</button>
+                <label for="qr-input-file" class="upload-button">Upload an Image to Scan</label>
+                <input type="file" id="qr-input-file" accept="image/*" style="display: none;">
+            </div>
+        </div>
+
+        <!-- Information About Teams Or Map??-->
+        
+        <!-- Back Button -->
+        <div class="back-button">
+            <a>
+                <i class="fas fa-arrow-left"></i> <!-- Back icon -->
+            </a>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="{% static 'js/backend/scanner.js' %}"></script>
+</body>
+
+</html>

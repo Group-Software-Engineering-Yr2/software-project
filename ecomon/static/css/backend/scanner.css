@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f5fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    position: relative;
+}
+
+.logo {
+    width: 400px;
+    margin-bottom: 20px;
+}
+
+.title {
+    color:#144E3F;
+}
+
+.scan-button {
+    display: inline-block;
+    padding: 10px 15px;
+    font: 16px Arial, sans-serif;
+    background-color: #84C44C;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.scan-button:hover {
+    background-color: #144E3F;
+}
+
+.upload-button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #84C44C;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+    background-color: #144E3F;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Style for the back button container */
+.back-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;   /* Ensure it's above other elements */
+}
+
+/* Style for the back icon */
+.back-button a {
+    background-color: #84C44C;
+    color: white;     
+    padding: 10px 15px;        
+    text-decoration: none;
+    border-radius: 5px;  
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for the back icon */
+.back-button a:hover {
+    background-color: #144E3F;
+    cursor: pointer;
+}
