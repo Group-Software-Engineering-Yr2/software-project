@@ -1,10 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
+from django.contrib import messages
+from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
-from .models import Profile
+from .models import Profile, Team
 from .serializers import ProfileSerializer, RegisterSerializer, LoginSerializer
+from .forms import CustomUserCreationForm
 
 class UserProfileView(APIView):
     '''
@@ -74,12 +78,51 @@ class LoginView(APIView):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 def render_sign_up(request):
-    '''Render sign up page'''
-    return render(request, "accounts/sign-up.html")
+    '''Render sign-up page and handle user registration'''
+    teams = Team.objects.all()
+
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+
+            messages.success(request, "Account created successfully!")
+            return redirect("home")
+
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field.capitalize()}: {error}")
+
+    else:
+        form = CustomUserCreationForm()
+
+    return render(request, "accounts/sign-up.html", {"teams": teams, "form": form})
 
 def render_login(request):
-    '''Render login page'''
+    '''Render login page and authenticate users using email and password'''
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        try:
+            # Get user by email
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            messages.error(request, "Invalid email or password.")
+            return render(request, "accounts/login.html")
+
+        user = authenticate(request, username=user.username, password=password)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Login successful!")
+            return redirect("home")  # Redirect to homepage
+        else:
+            messages.error(request, "Invalid email or password.")
+
     return render(request, "accounts/login.html")

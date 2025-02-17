@@ -10,4 +10,5 @@ urlpatterns = [
     path('packs', views.packs),
     path('scanner', views.scanner),
     path('profile', views.profile),
+    path('',views.index)
 ]

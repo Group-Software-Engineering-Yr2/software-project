@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here
 
@@ -17,3 +17,10 @@ def scanner(request):
 
 def profile(request):
     return HttpResponse('temp')
+
+def index(request):
+    '''Redirects user based on authentication status'''
+    if request.user.is_authenticated:
+        return redirect('/home')
+    else:
+        return redirect('/accounts/register')
