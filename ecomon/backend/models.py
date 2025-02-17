@@ -9,21 +9,22 @@ class Team(models.Model):
     '''
     name = models.CharField(max_length=100,primary_key=True)
     color = models.CharField(max_length=100)
-    icon = models.ImageField()
+    icon = models.ImageField(upload_to='/static/images/teams/')
 
 class Card(models.Model):
     '''
     Card database model
     '''
     name = models.CharField(max_length=100, primary_key=True)
-    image = models.ImageField()
+    image = models.ImageField(upload_to="/static/images/cards/")
     card_type = models.IntegerField()
     ability_name_1 = models.CharField(max_length=100)
     ability_power_1 = models.IntegerField()
     ability_name_2 = models.CharField(max_length=100)
     ability_power_2 = models.IntegerField()
+    ability_self_power_2 = models.IntegerField(default=0) 
     health_points = models.IntegerField()
-    fact = models.CharField(max_length=100)
+    fact = models.CharField(max_length=200)
 
 class Gym(models.Model):
     '''
@@ -56,7 +57,7 @@ class Achievement(models.Model):
     '''
     name = models.CharField(max_length=100, primary_key=True)
     tier = models.IntegerField()
-    icon = models.ImageField()
+    icon = models.ImageField(upload_to='/static/images/achievement/')
 
 class PlayerAchievements(models.Model):
     '''
