@@ -3,11 +3,8 @@ from django.shortcuts import render, redirect
 
 # Create your views here
 
-def example_view(request):
-    return HttpResponse('Hello, World!')
-
 def home(request):
-    return render(request, 'homePage/homePage.html')
+    return render(request, 'backend/homePage.html')
 
 def packs(request):
     return HttpResponse('temp')
@@ -24,3 +21,11 @@ def index(request):
         return redirect('/home')
     else:
         return redirect('/accounts/register')
+    
+# @login_required
+def render_scanner(request):
+    return render(request, 'backend/scanner.html')
+
+# @login_required
+def render_gym_battle(request, gym_id):
+    return render(request, "backend/gym_battle.html", {"gym_id": gym_id})
