@@ -109,3 +109,10 @@ header {
     object-fit: contain;
 }
 
+body {
+    transform: scale(0.75);
+    transform-origin: top left;
+    width: 133.33%; /* Compensate for the scale */
+}
+
+
