@@ -16,7 +16,7 @@ class Card(models.Model):
     Card database model
     '''
     name = models.CharField(max_length=100, primary_key=True)
-    image = models.ImageField()
+    image = models.ImageField(upload_to="/static/images/cards/")
     card_type = models.IntegerField()
     ability_name_1 = models.CharField(max_length=100)
     ability_power_1 = models.IntegerField()
