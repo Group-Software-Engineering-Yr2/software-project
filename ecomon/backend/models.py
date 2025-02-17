@@ -9,7 +9,7 @@ class Team(models.Model):
     '''
     name = models.CharField(max_length=100,primary_key=True)
     color = models.CharField(max_length=100)
-    icon = models.ImageField()
+    icon = models.ImageField(upload_to='/static/images/teams/')
 
 class Card(models.Model):
     '''
@@ -57,7 +57,7 @@ class Achievement(models.Model):
     '''
     name = models.CharField(max_length=100, primary_key=True)
     tier = models.IntegerField()
-    icon = models.ImageField()
+    icon = models.ImageField(upload_to='/static/images/achievement/')
 
 class PlayerAchievements(models.Model):
     '''
