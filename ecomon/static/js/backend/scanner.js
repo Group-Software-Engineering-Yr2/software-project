@@ -26,6 +26,8 @@ function startScanner() {
                 isScanning = true;
                 document.getElementById("logo-and-text").style.display = "none";
                 document.getElementById("start-scanner").style.display = "none";
+                document.getElementById("content").style.marginTop = "20px";
+                document.getElementById("teams").style.display = "none";
                 document.getElementById("stop-scanner").style.display = "block";
                 document.querySelector(".title").style.marginTop = "155px";
             }).catch(err => {
@@ -45,6 +47,8 @@ function stopScanner() {
         isScanning = false;
         document.getElementById("logo-and-text").style.display = "block";
         document.getElementById("start-scanner").style.display = "block";
+        document.getElementById("teams").style.display = "flex";
+        document.getElementById("content").style.marginTop = "220px";
         document.getElementById("stop-scanner").style.display = "none";
         document.querySelector(".title").style.marginTop = "0";
     }).catch(err => {

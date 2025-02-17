@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container" id="content">
         <!-- Wrap the logo and text inside a div to hide it during scanning -->
         <div id="logo-and-text">
             <img src="{% static 'images/backend/Ecomon1-removebg.png' %}" alt="ECOMON Logo" class="logo">
@@ -34,11 +34,31 @@
         </div>
 
         <!-- Information About Teams Or Map??-->
+        <div class="teams-information" id="teams">
+            <div class="team">
+                <div class="image-container">
+                <img src="{% static 'images/backend/ReduceLogo.png' %}" alt="Team Reduce Logo">
+                </div>
+                <p>Team Reduce</p>
+            </div>
+            <div class="team">
+                <div class="image-container">
+                <img src="{% static 'images/backend/ReuseLogo.png' %}" alt="Team Reuse Logo">
+                </div>
+                <p>Team Reuse</p>
+            </div>
+            <div class="team">
+                <div class="image-container">
+                <img class="reuse-icon" src="{% static 'images/backend/RecycleLogo.png' %}" alt="Team Recycle Logo">
+                </div>
+                <p>Team Recycle</p>
+            </div>
+        </div>
         
         <!-- Back Button -->
         <div class="back-button">
-            <a>
-                <i class="fas fa-arrow-left"></i> <!-- Back icon -->
+            <a href="/home">
+                <i class="fas fa-arrow-left"></i>
             </a>
         </div>
     </div>

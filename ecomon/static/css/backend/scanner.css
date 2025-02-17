@@ -12,6 +12,7 @@ body {
 .container {
     text-align: center;
     position: relative;
+    margin-top: 220px;
 }
 
 .logo {
@@ -61,7 +62,55 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 30px;
+}
+
+.teams-information {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team .image-container{
+    height: 140px;
+    display: flex;
+    align-items: center;
+}
+
+.teams-information img {
+    width: 120px;
+    height: 120px;
+    transition: scale 0.3s ease;
+}
+
+.teams-information .reuse-icon{
+    width: 140px;
+    height: 140px;
+}
+
+.teams-information img:hover {
+    scale: 1.1;
+}
+
+.team p {
+    color: #144E3F;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.teams-information .team-names {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Style for the back button container */
