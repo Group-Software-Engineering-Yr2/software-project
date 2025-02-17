@@ -10,7 +10,7 @@ def home(request):
     return render(request, 'homePage/homePage.html')
 
 def packs(request):
-    return HttpResponse('temp')
+    return render(request, 'packs/packsPage.html')
 
 def scanner(request):
     return HttpResponse('temp')
