@@ -22,8 +22,9 @@ class Card(models.Model):
     ability_power_1 = models.IntegerField()
     ability_name_2 = models.CharField(max_length=100)
     ability_power_2 = models.IntegerField()
+    ability_self_power_2 = models.IntegerField(default=0) 
     health_points = models.IntegerField()
-    fact = models.CharField(max_length=100)
+    fact = models.CharField(max_length=200)
 
 class Gym(models.Model):
     '''

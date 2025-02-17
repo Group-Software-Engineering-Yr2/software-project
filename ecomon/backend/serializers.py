@@ -16,7 +16,7 @@ class CardSerializer(serializers.ModelSerializer):
         model = Card
         fields = [
             'name', 'image', 'card_type', 'ability_name_1', 'ability_power_1',
-            'ability_name_2', 'ability_power_2', 'health_points', 'fact'
+            'ability_name_2', 'ability_power_2','ability_self_power_2' 'health_points', 'fact'
         ]
 
 
