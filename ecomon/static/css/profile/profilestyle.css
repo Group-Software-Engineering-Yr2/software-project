@@ -1,18 +1,40 @@
 header {
     display: flex;
-    justify-content: center; 
-    align-items: center;     
-    height: 200px;        
+    justify-content: center;
+    align-items: center;
+    height: 200px;
     padding: 20px;
 }
 
-
 .logo img {
     height: 200px;
-    width: auto;            
+    width: auto;
     padding: 25px;
 }
 
+.Buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    padding: 0 20px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.backButton button, .logoutButton button {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+}
+
+.backButton button img, .logoutButton button img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
 
 .profile-container {
     display: flex;
@@ -21,13 +43,11 @@ header {
     padding: 20px;
 }
 
-
 .profilepic img {
     height: 250px;
     width: auto;
     border-radius: 10px;
 }
-
 
 .details {
     text-align: center;
@@ -52,66 +72,79 @@ header {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-
 .content-container {
     display: flex;
     justify-content: space-around;
     margin-top: 30px;
-    
 }
-
 
 .cards-section, .achievements-section {
     width: 40%;
 }
 
-
-.cardTitle, .AchievementTitle {
+.deckTitle, .cardTitle, .AchievementTitle {
     font-size: 32px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 10px;
     font-family: Arial, Helvetica, sans-serif;
-
 }
 
+.Deck {
+    width: 100%;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-.cardTable table, .AchievmentsTable table {
+.cardTable table, .AchievmentsTable table, .My.Deck table {
     width: 100%;
     border-collapse: collapse;
+    margin: 0 auto;
 }
 
-.cardTable td, .AchievmentsTable td {
+.cardTable td, .AchievmentsTable td, .My.Deck td {
     text-align: center;
     padding: 8px;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.cardTable img, .AchievmentsTable img {
+.cardTable img, .AchievmentsTable img, .My.Deck img {
     width: 200px;
     height: auto;
 }
 
-.backButton button {
+.My.Deck {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.My.Deck table {
+    max-width: 800px;
+}
+
+/* New Deck Button Styling */
+.DeckButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.DeckButton button {
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #4CAF50;  /* Green color */
+    color: white;
     border: none;
-    background: none;
-    padding: 0;
+    border-radius: 5px;
     cursor: pointer;
-    width: 40px; 
-    height: 40px; 
+    transition: background-color 0.3s;
 }
 
-.backButton button img {
-    width: 400%;
-    height: 400%;
-    object-fit: contain;
+.DeckButton button:hover {
+    background-color: #45a049;  /* Darker green on hover */
 }
-
-
-body {
-    transform: scale(0.75);
-    transform-origin: top left;
-    width: 133.33%; /* Compensate for the scale */
-}
-
-
