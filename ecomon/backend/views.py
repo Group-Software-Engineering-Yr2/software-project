@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .pack_service import get_pack_count
+from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards
 
 # Create your views here
 
@@ -30,15 +30,34 @@ def index(request):
 
 @login_required
 def open_pack(request):
-    ''' Checks if there is a pack to open and render template accordingly'''
+    ''' Checks if there is a pack to open and shows the user confirmation'''
     pack_count = get_pack_count(request.user)
     # If packs simulate the packs and display to user
     if pack_count > 0:
-        return render(request, 'backend/packs/packobject.html')
+        return render(request, 'backend/packs/open_pack.html', {'pack_count': pack_count})
     return render(request, 'backend/packs/nopacks.html')
 
-    
+@login_required
+def opening_pack(request):
+    '''
+    Actual logic for opening a pack
+    '''
+    pack_count = get_pack_count(request.user)
+    if pack_count <= 0:
+        return redirect('/packs')
 
+    # If the user has a pack
+
+    # Generate the cards
+    pack_cards = generate_pack()
+    # Add the cards to the user's collection (PlayerCards)
+    add_player_cards(request.user, pack_cards)
+    # Decrement pack count from the user's profile
+    reduce_user_pack_count(request.user)
+    # Show the user the cards they got
+
+    card_images = [str(pack.image).replace('static/', '') for pack in pack_cards]
+    return render(request, 'backend/packs/opening_pack.html', {'card_images': card_images})
 
 # @login_required
 def render_scanner(request):

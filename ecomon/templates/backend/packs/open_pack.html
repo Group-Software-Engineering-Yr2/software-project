@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/backend/packs/open_pack.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Packs Available</title>
+</head>
+<body>
+    <!-- Back Button -->
+    <div class="back-button">
+        <a href="/home">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+
+    <section>
+        <h1>You Have <span id="pack-count">{{pack_count}}</span> Packs!</h1>
+        <p>I'm feeling lucky!</p>
+        <img class="pack-image" src="{% static 'images/pack_template.png' %}" alt="Open Pack"> 
+        <button class="open-button">
+            <a href="/opening_pack">Open Packs</a>
+        </button>
+    </section>
+</body>
+</html>
