@@ -76,11 +76,12 @@
             <div class="cardTable">
                  <table>
         <!-- Table will be populated by JavaScript -->
-    </table>
+                </table>
             </div>
 
-            {{ cards|json_script:"cards-data" }}
-            {{ playerCards|json_script:"player-cards-data" }}
+            {{ cards_data|json_script:"cards-data" }}
+            {{ player_cards_data|json_script:"player-cards-data" }}
+
             <p>Cards count: {{ cards|length }}</p>
 
             
