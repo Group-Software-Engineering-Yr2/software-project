@@ -91,7 +91,7 @@ def render_sign_up(request):
             login(request, user)
 
             messages.success(request, "Account created successfully!")
-            return redirect("home")
+            return redirect("/home")
 
         else:
             for field, errors in form.errors.items():
@@ -121,7 +121,7 @@ def render_login(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Login successful!")
-            return redirect("home")  # Redirect to homepage
+            return redirect("/home")  # Redirect to homepage
         else:
             messages.error(request, "Invalid email or password.")
 
