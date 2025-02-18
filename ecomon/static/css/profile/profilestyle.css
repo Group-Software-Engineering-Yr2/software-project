@@ -48,6 +48,7 @@ header {
     justify-content: space-around;
     align-items: center;
     padding: 20px;
+    transform: scale(0.7);
 }
 
 .profilepic img {
@@ -191,4 +192,8 @@ header {
 backButton.resize {
     width:350px; /* you can use % */
     height: auto;
+}
+
+header, .logo img, .Buttons, .backButton button, .logoutButton button, .backButton button img, .logoutButton button img, .logoutButton, .profile-container, .profilepic img, .details, .bin, .binimage img, .binText, .content-container, .cards-section, .achievements-section, .deckTitle, .cardTitle, .AchievementTitle, .Deck, .cardTable table, .AchievmentsTable table, .My.Deck table, .cardTable td, .AchievmentsTable td, .My.Deck td, .achievements-section, .cardTable img, .AchievmentsTable img, .My.Deck img, .My.Deck, .DeckButton, .DeckButton button, .DeckButton button:hover, .backButton, .backButton a, .backButton a:hover, backButton.resize {
+    color: #144E3F; /* Changed all text color to background-color: #144E3F */
 }
