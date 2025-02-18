@@ -3,9 +3,10 @@
     <head>
         {% load static %}
         <title>Ecomon Profile</title>
+        <script src="{% static 'js/profile/profilescript.js' %}" defer></script>
+        <link rel="stylesheet" href="{% static 'css/profile/profilestyle.css' %}">
     </head>
 <header>
-    <link rel="stylesheet" href="{% static 'css/profile/profilestyle.css' %}">
     <div class="logo">
         <img src="{% static 'images/profile/Ecomon1-removebg.png' %}" alt="Ecomon Logo">
     </div>  
@@ -15,7 +16,10 @@
     
     <div class = "Buttons">
         <div class = "backButton">
-            <button type="button"><img src="{% static 'images/profile/backButton.png' %}"alt="Back Button"></button>
+            <a href="/homePage">
+                <button type="button"><img src="{% static 'images/profile/backButton.png' %}"alt="Back Button"></button>
+            </a>
+            
         </div>
         <div class = "logoutButton">
             <button type="button"><img src="{% static 'images/profile/logout.png' %}" alt="Logout Button"></button>
@@ -64,7 +68,6 @@
             <button type="button">Change Deck</button>
         </div>
     </div>
-
     <div class="content-container">
         <div class="cards-section">
             <div class="cardTitle">
@@ -72,39 +75,29 @@
             </div>
             <div class="cardTable">
                 <table>
-                    <tr>
-                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Plastic Bottle Card"></td>
-                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Plastic Bag Card"></td>
-                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Straw Card"></td>
-                    </tr>
-                    <tr>
-                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Toothbrush Card"></td>
-                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Crisp Packet Card"></td>
-                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Disposable Razor Card"></td>
-                    </tr>
-                    <tr>
-                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Disposable Glove Card"></td>
-                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Disposable Cutlery Card"></td>
-                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Bubble Wrap Card"></td>
-                    </tr>
-                    <tr>
-                        <td><img src="{% static 'images/profile/RecycleBlankBorder.png' %}" alt="Drinks Can Card"></td>
-                        <td><img src="{% static 'images/profile/RecycleBlankBorder.png' %}" alt="Battery Card"></td>
-                        <td><img src="{% static 'images/profile/RecycleBlankBorder.png' %}" alt="Cardboard Box Card"></td>
-                    </tr>
-                    <tr>
-                        <td><img src="{% static 'images/profile/RecycleBlankBorder.png' %}" alt="Pizza Box Card"></td>
-                        <td><img src="{% static 'images/profile/RecycleBlankBorder.png' %}" alt="Milk Carton Card"></td>
-                        <td><img src="{% static 'images/profile/RecycleBlankBorder.png' %}" alt="Newspaper Card"></td>
-                    </tr>
-                    <tr>
-                        <td><img src="{% static 'images/profile/PlantBlankBorder.png' %}" alt="English Oak Card"></td>
-                        <td><img src="{% static 'images/profile/PlantBlankBorder.png' %}" alt="Common Beech Card"></td>
-                        <td><img src="{% static 'images/profile/PlantBlankBorder.png' %}" alt="Common Ash Card"></td>
-                    </tr>
+                    {% for playerCard in cards %}
+                        {% if forloop.counter0|divisibleby:3 %}
+                        <tr>
+                        {% endif %}
+            
+                        <td>
+                            <img 
+                                class="playing-card"
+                                src="{% static 'images/profile/placeholder.png' %}"
+                                data-card-src="{{ playerCard.card.image.url }}"
+                                data-card-type="{{ playerCard.card.card_type }}"
+                                data-in-gym="{{ playerCard.in_gym|yesno:'true,false' }}"
+                                alt="{{ playerCard.card.name }}">
+                        </td>
+            
+                        {% if forloop.counter|divisibleby:3 or forloop.last %}
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
                 </table>
             </div>
         </div>
+    
 
         <div class="achievements-section">
             <div class="AchievementTitle">
