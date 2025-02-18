@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from backend.models import Team, Card
+from backend.models import Team, Card, PlayerCards
 
 # Create your models here.
 
@@ -11,13 +11,13 @@ class Profile(models.Model):
     '''
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     team_name = models.ForeignKey(Team, on_delete=models.CASCADE)
-    deck_card_1 = models.ForeignKey(Card, on_delete=models.CASCADE,
+    deck_card_1 = models.ForeignKey(PlayerCards, on_delete=models.CASCADE,
                                     related_name='profile_deck_card1',
                                     null=True)
-    deck_card_2 = models.ForeignKey(Card, on_delete=models.CASCADE,
+    deck_card_2 = models.ForeignKey(PlayerCards, on_delete=models.CASCADE,
                                     related_name='profile_deck_card2',
                                     null=True)
-    deck_card_3 = models.ForeignKey(Card, on_delete=models.CASCADE,
+    deck_card_3 = models.ForeignKey(PlayerCards, on_delete=models.CASCADE,
                                     related_name='profile_deck_card3',
                                     null=True)
     wrapper_count = models.IntegerField()
