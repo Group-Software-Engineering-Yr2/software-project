@@ -40,6 +40,7 @@ class Gym(models.Model):
     owning_player = models.ForeignKey(User, on_delete=models.CASCADE) # Can get the team from here
     latitude = models.FloatField()
     longitude = models.FloatField()
+    radius = models.FloatField()
     cooldown = models.DateTimeField()
 
 class PlayerCards(models.Model):
