@@ -17,7 +17,13 @@ def scanner(request):
     return HttpResponse('temp')
 
 def profile(request):
-    return render(request, 'profile/profile.html')
+    cards = Card.objects.all()
+    playersCards = PlayerCards.objects.all()
+    context = {
+        "cards": cards,
+        "playerCards": playersCards
+    }
+    return render(request, 'profile/profile.html', context)
 
 def index(request):
     '''Redirects user based on authentication status'''
