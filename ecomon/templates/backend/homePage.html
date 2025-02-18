@@ -2,10 +2,19 @@
 <html>
 <head>
     {% load static %}
-    <title>Ecomon Home</title>
+    <!-- leaflet css -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <!-- leaflet js -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
     <link rel="stylesheet" href="{% static 'css/backend/homePage.css' %}">
+    <title>Ecomon Home</title>
 </head>
 <body>
+    <div id="map"></div>
     <div class="buttons-container">
         <!-- packs button -->
         <a href="/packs">
@@ -20,5 +29,6 @@
             <button class="button"><img src="{% static 'images/backend/homePage/profileIcon.png' %}" alt="Profile"></button>
         </a>
     </div>
+    <script src="{% static 'js/backend/homePage.js' %}"></script>
 </body>
 </html>
