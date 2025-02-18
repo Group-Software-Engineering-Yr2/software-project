@@ -74,28 +74,18 @@
                 <p>Obtained Cards</p>
             </div>
             <div class="cardTable">
-                <table>
-                    {% for playerCard in cards %}
-                        {% if forloop.counter0|divisibleby:3 %}
-                        <tr>
-                        {% endif %}
-            
-                        <td>
-                            <img 
-                                class="collected-cards"
-                                src="{% static 'images/profile/PlasticBlankBorder.png' %}"
-                                data-card-src="{{ playerCard.card.image.url }}"
-                                data-card-type="{{ playerCard.card.card_type }}"
-                                data-use-count="{{ playerCard.use_count }}"
-                                alt="{{ playerCard.card.name }}">
-                        </td>
-            
-                        {% if forloop.counter|divisibleby:3 or forloop.last %}
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                </table>
+                 <table>
+        <!-- Table will be populated by JavaScript -->
+    </table>
             </div>
+
+            {{ cards|json_script:"cards-data" }}
+            {{ playerCards|json_script:"player-cards-data" }}
+            <p>Cards count: {{ cards|length }}</p>
+
+            
+            
+            
         </div>
     
 

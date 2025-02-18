@@ -18,10 +18,10 @@ def scanner(request):
 
 def profile(request):
     cards = Card.objects.all()
-    playersCards = PlayerCards.objects.all()
+    playerCards = PlayerCards.objects.all()
     context = {
         "cards": cards,
-        "playerCards": playersCards
+        "playerCards": playerCards
     }
     return render(request, 'profile/profile.html', context)
 
