@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import Card, PlayerCards
+from django.core import serializers
 
 # Create your views here
 
@@ -18,10 +19,12 @@ def scanner(request):
 
 def profile(request):
     cards = Card.objects.all()
-    playerCards = PlayerCards.objects.all()
+    playerCards = PlayerCards.objects.all() 
     context = {
-        "cards": cards,
-        "playerCards": playerCards
+        "cards": cards,  # Original QuerySet for counting
+        "cards_data": serializers.serialize('json', cards),  # Serialized data for JavaScript
+        "playerCards": playerCards,  # Original QuerySet
+        "player_cards_data": serializers.serialize('json', playerCards)  # Serialized data for JavaScript
     }
     return render(request, 'profile/profile.html', context)
 
