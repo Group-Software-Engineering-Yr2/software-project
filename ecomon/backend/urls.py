@@ -8,7 +8,6 @@ urlpatterns = [
     path('home', views.home),
     path('packs', views.open_pack),
     path('opening_pack', views.opening_pack),
-    path('scanner', views.scanner),
     path('profile', views.profile),
     path('',views.index),
     path('scanner/', views.render_scanner, name='scanner'),
