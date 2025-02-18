@@ -18,3 +18,11 @@ def has_deck(user:User) -> bool:
     '''
     profile = Profile.objects.get(user=user)
     return profile.deck_card_1 is not None and profile.deck_card_2 is not None and profile.deck_card_3 is not None
+
+def add_players_pack(user:User) -> None:
+    '''
+    Function to add a card to the player's pack
+    '''
+    profile = Profile.objects.get(user=user)
+    profile.pack_count += 1
+    profile.save()

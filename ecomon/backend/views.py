@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from accounts.player_service import get_player_deck, has_deck
+from accounts.player_service import get_player_deck, has_deck, add_players_pack
 from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards
 from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown
 from .models import Gym
@@ -119,6 +119,8 @@ def completed_gym_battle(request):
         update_owning_player(gym, request.user)
         # Update the cooldown of the gym
         update_cooldown(gym)
+        # Add a pack to the user's profile
+        add_players_pack(request.user)
 
     # todo update this to a custom template render
     return HttpResponse('Gym battle result processed')
