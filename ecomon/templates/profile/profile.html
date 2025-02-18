@@ -83,10 +83,10 @@
                         <td>
                             <img 
                                 class="collected-cards"
-                                src="{% static 'images/profile/placeholder.png' %}"
+                                src="{% static 'images/profile/PlasticBlankBorder.png' %}"
                                 data-card-src="{{ playerCard.card.image.url }}"
                                 data-card-type="{{ playerCard.card.card_type }}"
-                                data-in-gym="{{ playerCard.in_gym|yesno:'true,false' }}"
+                                data-use-count="{{ playerCard.use_count }}"
                                 alt="{{ playerCard.card.name }}">
                         </td>
             
