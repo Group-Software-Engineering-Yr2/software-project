@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import card, playerCards
+from .models import Card, PlayerCards
 
 # Create your views here
 
@@ -17,9 +17,7 @@ def scanner(request):
     return HttpResponse('temp')
 
 def profile(request):
-    cards = card.objects.all()
-    playersCards = playerCards.objects.all()
-    return render(request, 'profile/profile.html',{"cards": cards},{"playerCards": playerCards})
+    return render(request, 'profile/profile.html')
 
 def index(request):
     '''Redirects user based on authentication status'''
