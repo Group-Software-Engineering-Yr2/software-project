@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from .pack_service import get_pack_count
 
 # Create your views here
 
@@ -26,7 +27,19 @@ def index(request):
         return redirect('/home')
     else:
         return redirect('/accounts/register')
+
+@login_required
+def open_pack(request):
+    ''' Checks if there is a pack to open and render template accordingly'''
+    pack_count = get_pack_count(request.user)
+    # If packs simulate the packs and display to user
+    if pack_count > 0:
+        return render(request, 'backend/packs/packobject.html')
+    return render(request, 'backend/packs/nopacks.html')
+
     
+
+
 # @login_required
 def render_scanner(request):
     return render(request, 'backend/scanner.html')
