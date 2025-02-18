@@ -13,8 +13,13 @@
 
 <body>
     
-    <div class = "backButton">
-        <button type="button"><img src="{% static 'images/profile/backButton.png' %}" alt="Back Button"></button>
+    <div class = "Buttons">
+        <div class = "backButton">
+            <button type="button"><img src="{% static 'images/profile/backButton.png' %}"alt="Back Button"></button>
+        </div>
+        <div class = "logoutButton">
+            <button type="button"><img src="{% static 'images/profile/logout.png' %}" alt="Logout Button"></button>
+        </div>
     </div>
 
     <div class="profile-container">
@@ -24,7 +29,7 @@
 
         <div class="details">
             <p>
-                Username: ExampleUsername123
+                Username: ExampleUsername12356
                 <br> <br>
                 Email: ExampleEmail@rocketmail.com
                 <br> <br>
@@ -39,6 +44,24 @@
             <div class="binText">
                 <p>Bin 0/3</p>
             </div>
+        </div>
+    </div>
+
+    <div class = "Deck">
+        <div class = "deckTitle">
+            <p>Deck</p>
+        </div>
+        <div class = "My Deck">
+            <table>
+                    <tr>
+                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 1"></td>
+                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 2"></td>
+                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 3"></td>
+                    </tr>
+            </table>
+        </div>
+        <div class = "DeckButton">
+            <button type="button">Change Deck</button>
         </div>
     </div>
 
