@@ -1,6 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", function () {
-    let cardImage = document.querySelectorAll(".clollected-cards");
+    let cardImage = document.querySelectorAll(".collected-cards");
 
     playerCards.forEach(playerCards => {
         if (use_count > 0){

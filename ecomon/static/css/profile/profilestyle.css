@@ -26,14 +26,21 @@ header {
     background: none;
     padding: 0;
     cursor: pointer;
-    width: 60px;
-    height: 60px;
+    width: 75px;  /* Increased size */
+    height: 75px; /* Increased size */
 }
 
 .backButton button img, .logoutButton button img {
-    width: 60px;
-    height: 60px;
+    width: 80px;  /* Increased size */
+    height: 80px; /* Increased size */
     object-fit: contain;
+}
+
+.logoutButton {
+    position: fixed;
+    top: 20px;
+    right: 20px; /* Moved logout button to the right */
+    z-index: 1000;
 }
 
 .profile-container {
@@ -110,6 +117,11 @@ header {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.achievements-section {
+    transform: scale(0.7); /* Further scaled down achievements section */
+    transform-origin: top left;
+}
+
 .cardTable img, .AchievmentsTable img, .My.Deck img {
     width: 200px;
     height: auto;
@@ -137,7 +149,7 @@ header {
     padding: 12px 30px;
     font-size: 18px;
     font-weight: bold;
-    background-color: #4CAF50;  /* Green color */
+    background-color: #84C44C;  /* Green color */
     color: white;
     border: none;
     border-radius: 5px;
@@ -147,4 +159,36 @@ header {
 
 .DeckButton button:hover {
     background-color: #45a049;  /* Darker green on hover */
+}
+
+/* Style for the back button container */
+.backButton {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;   /* Ensure it's above other elements */
+}
+
+/* Style for the back icon */
+.backButton a {
+    background-color: #84C44C;
+    color: white;
+    padding: 15px 20px;  /* Increased padding for bigger size */
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+    font-size: 20px;  /* Increased font size */
+}
+
+/* Hover effect for the back icon */
+.backButton a:hover {
+    background-color: #144E3F;
+    cursor: pointer;
+}
+
+backButton.resize {
+    width:350px; /* you can use % */
+    height: auto;
 }

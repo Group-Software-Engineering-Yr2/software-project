@@ -5,6 +5,7 @@
         <title>Ecomon Profile</title>
         <script src="{% static 'js/profile/profilescript.js' %}" defer></script>
         <link rel="stylesheet" href="{% static 'css/profile/profilestyle.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
 <header>
     <div class="logo">
@@ -15,11 +16,10 @@
 <body>
     
     <div class = "Buttons">
-        <div class = "backButton">
-            <a href="/homePage">
-                <button type="button"><img src="{% static 'images/profile/backButton.png' %}"alt="Back Button"></button>
+        <div class="backButton">
+            <a href="/home">
+                <i class="fas fa-arrow-left"></i>
             </a>
-            
         </div>
         <div class = "logoutButton">
             <button type="button"><img src="{% static 'images/profile/logout.png' %}" alt="Logout Button"></button>
@@ -82,7 +82,7 @@
             
                         <td>
                             <img 
-                                class="playing-card"
+                                class="collected-cards"
                                 src="{% static 'images/profile/placeholder.png' %}"
                                 data-card-src="{{ playerCard.card.image.url }}"
                                 data-card-type="{{ playerCard.card.card_type }}"
