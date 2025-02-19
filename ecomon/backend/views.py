@@ -1,6 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from .models import Gym
 
 # Create your views here
 
@@ -34,3 +35,8 @@ def render_scanner(request):
 # @login_required
 def render_gym_battle(request, gym_id):
     return render(request, "backend/gym_battle.html", {"gym_id": gym_id})
+
+def get_gym_locations(request):
+    gyms = Gym.objects.all()
+    gym_data = [{"name": gym.name, "latitude": gym.latitude, "longitude": gym.longitude} for gym in gyms]
+    return JsonResponse(gym_data, safe=False)
