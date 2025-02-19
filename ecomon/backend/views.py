@@ -17,11 +17,12 @@ def scanner(request):
     return HttpResponse('temp')
 
 def profile(request):
-    cards = Card.objects.all()
+    cards = Card.objects.all().order_by('card_type')
     players_cards = PlayerCards.objects.all()
     context = {
         "cards": cards,
-        "player_cards": players_cards
+        "player_cards": players_cards,
+        "user": request.user,  # Pass the user object to the template
     }
     return render(request, 'profile/profile.html', context)
 

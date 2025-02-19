@@ -33,11 +33,11 @@
 
         <div class="details">
             <p>
-                Username: ExampleUsername12356
-                <br> <br>
-                Email: ExampleEmail@rocketmail.com
-                <br> <br>
-                Team: Reduce
+                Username: {{ user.username }}
+                <br><br>
+                Email: {{ user.email }}
+                <br><br>
+                Team: {{ user.profile.team.name }}
             </p>
         </div>
 
