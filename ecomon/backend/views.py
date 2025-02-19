@@ -24,10 +24,13 @@ def profile(request):
     cards = Card.objects.all().order_by('card_type')
     players_cards = PlayerCards.objects.filter(player=request.user)  # Get logged-in user's cards
     
-    # Assuming the User model or Profile model has deck_card_1, deck_card_2, deck_card_3 fields
+    # Get deck cards for the user
     deck_card_1 = request.user.profile.deck_card_1
     deck_card_2 = request.user.profile.deck_card_2
     deck_card_3 = request.user.profile.deck_card_3
+
+    # Get the logo of the user's team (assuming team has a 'logo' field)
+    team_logo = request.user.profile.team_name.icon if request.user.profile.team_name else None
 
     context = {
         "cards": cards,
@@ -37,8 +40,10 @@ def profile(request):
         "deck_card_1": deck_card_1,
         "deck_card_2": deck_card_2,
         "deck_card_3": deck_card_3,
+        "team_logo": team_logo,
     }
     return render(request, 'profile/profile.html', context)
+
 
 
 

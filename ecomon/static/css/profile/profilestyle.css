@@ -1,3 +1,10 @@
+/* Common styles */
+* {
+    color: #144E3F;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Layout containers */
 header {
     display: flex;
     justify-content: center;
@@ -6,98 +13,157 @@ header {
     padding: 20px;
 }
 
-.logo img {
-    height: 200px;
-    width: auto;
-    padding: 25px;
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px auto;
+    max-width: 1200px;
+    padding: 0 20px;
 }
 
+/* Navigation buttons */
 .Buttons {
     display: flex;
     justify-content: space-between;
     width: 80%;
+    margin: 0 auto 20px;
     padding: 0 20px;
-    margin: 0 auto;
-    margin-bottom: 20px;
 }
 
-.backButton button, .logoutButton button {
-    border: none;
-    background: none;
-    padding: 0;
-    cursor: pointer;
-    width: 75px;  /* Increased size */
-    height: 75px; /* Increased size */
-}
-
-.backButton button img, .logoutButton button img {
-    width: 80px;  /* Increased size */
-    height: 80px; /* Increased size */
-    object-fit: contain;
-}
-
+.backButton,
 .logoutButton {
     position: fixed;
     top: 20px;
-    right: 20px; /* Moved logout button to the right */
     z-index: 1000;
 }
 
+.backButton {
+    left: 20px;
+}
+
+.logoutButton {
+    right: 20px;
+}
+
+.backButton button,
+.logoutButton button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    width: 75px;
+    height: 75px;
+    padding: 0;
+}
+
+.backButton button img,
+.logoutButton button img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.backButton a {
+    background-color: #84C44C;
+    color: white;
+    padding: 15px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+    font-size: 20px;
+}
+
+.backButton a:hover {
+    background-color: #144E3F;
+    cursor: pointer;
+}
+
+/* Profile section */
 .profile-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 20px;
-    transform: scale(0.7);
+    transform: scale(0.8); /* Added scale to shrink profile section */
+    transform-origin: center top; /* Ensures scaling from the top center */
 }
 
-.profilepic img {
-    height: 250px;
-    width: auto;
-    border-radius: 10px;
-}
-
-.details {
-    text-align: center;
-    font-size: 25px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.bin {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
+.logo img,
+.profilepic img,
 .binimage img {
     height: 250px;
     width: auto;
 }
 
+.logo img {
+    padding: 25px;
+}
+
+.profilepic img {
+    border-radius: 10px;
+}
+
+/* Text styles */
+.details {
+    text-align: center;
+    font-size: 25px;
+}
+
 .binText {
     text-align: center;
     font-size: 20px;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
-.content-container {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 30px;
-}
-
-.cards-section, .achievements-section {
-    width: 40%;
-}
-
-.deckTitle, .cardTitle, .AchievementTitle {
+.deckTitle,
+.cardTitle,
+.AchievementTitle {
     font-size: 32px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 10px;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Cards and Achievements sections */
+.cards-section {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 40px;
+}
+
+.achievements-section {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Table styles */
+.cardTable table,
+.AchievmentsTable table,
+.My.Deck table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.cardTable td,
+.AchievmentsTable td,
+.My.Deck td {
+    text-align: center;
+    padding: 4px;
+}
+
+.cardTable img,
+.AchievmentsTable img,
+.My.Deck img {
+    width: 180px;
+    height: auto;
+    margin: 5px;
+}
+
+/* Deck styles */
 .Deck {
     width: 100%;
     margin-bottom: 30px;
@@ -106,40 +172,6 @@ header {
     align-items: center;
 }
 
-.cardTable table, .AchievmentsTable table, .My.Deck table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-}
-
-.cardTable td, .AchievmentsTable td, .My.Deck td {
-    text-align: center;
-    padding: 8px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.achievements-section {
-    transform: scale(0.7); /* Further scaled down achievements section */
-    transform-origin: top left;
-}
-
-.cardTable img, .AchievmentsTable img, .My.Deck img {
-    width: 200px;
-    height: auto;
-}
-
-.My.Deck {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin: 0 auto;
-}
-
-.My.Deck table {
-    max-width: 800px;
-}
-
-/* New Deck Button Styling */
 .DeckButton {
     display: flex;
     justify-content: center;
@@ -150,7 +182,7 @@ header {
     padding: 12px 30px;
     font-size: 18px;
     font-weight: bold;
-    background-color: #84C44C;  /* Green color */
+    background-color: #84C44C;
     color: white;
     border: none;
     border-radius: 5px;
@@ -159,41 +191,5 @@ header {
 }
 
 .DeckButton button:hover {
-    background-color: #45a049;  /* Darker green on hover */
-}
-
-/* Style for the back button container */
-.backButton {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;   /* Ensure it's above other elements */
-}
-
-/* Style for the back icon */
-.backButton a {
-    background-color: #84C44C;
-    color: white;
-    padding: 15px 20px;  /* Increased padding for bigger size */
-    text-decoration: none;
-    border-radius: 5px;
-    display: inline-block;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;
-    font-size: 20px;  /* Increased font size */
-}
-
-/* Hover effect for the back icon */
-.backButton a:hover {
-    background-color: #144E3F;
-    cursor: pointer;
-}
-
-backButton.resize {
-    width:350px; /* you can use % */
-    height: auto;
-}
-
-header, .logo img, .Buttons, .backButton button, .logoutButton button, .backButton button img, .logoutButton button img, .logoutButton, .profile-container, .profilepic img, .details, .bin, .binimage img, .binText, .content-container, .cards-section, .achievements-section, .deckTitle, .cardTitle, .AchievementTitle, .Deck, .cardTable table, .AchievmentsTable table, .My.Deck table, .cardTable td, .AchievmentsTable td, .My.Deck td, .achievements-section, .cardTable img, .AchievmentsTable img, .My.Deck img, .My.Deck, .DeckButton, .DeckButton button, .DeckButton button:hover, .backButton, .backButton a, .backButton a:hover, backButton.resize {
-    color: #144E3F; /* Changed all text color to background-color: #144E3F */
+    background-color: #45a049;
 }

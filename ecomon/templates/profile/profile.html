@@ -32,7 +32,11 @@
 
     <div class="profile-container">
         <div class="profilepic">
-            <img src="{% static 'images/profile/Reduce.png' %}" alt="Reduce Logo">
+            {% if team_logo %}
+                <img src="{{ team_logo.url }}" alt="{{ user.profile.team.name }} Logo">
+            {% else %}
+                <img src="{% static 'images/profile/Reduce.png' %}" alt="Default Logo">
+            {% endif %}
         </div>
 
         <div class="details">
@@ -41,7 +45,7 @@
                 <br><br>
                 Email: {{ user.email }}
                 <br><br>
-                Team: {{ user.profile.team.name }}
+                Team: {{ user.profile.team_name.name}}
             </p>
         </div>
 
