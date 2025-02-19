@@ -18,17 +18,28 @@ def packs(request):
 def scanner(request):
     return HttpResponse('temp')
 
+
 @login_required
 def profile(request):
     cards = Card.objects.all().order_by('card_type')
-    players_cards = PlayerCards.objects.filter(player=request.user)  # Filter by logged-in user
+    players_cards = PlayerCards.objects.filter(player=request.user)  # Get logged-in user's cards
     
+    # Assuming the User model or Profile model has deck_card_1, deck_card_2, deck_card_3 fields
+    deck_card_1 = request.user.profile.deck_card_1
+    deck_card_2 = request.user.profile.deck_card_2
+    deck_card_3 = request.user.profile.deck_card_3
+
     context = {
         "cards": cards,
-        "player_cards": players_cards,  # Now contains only the logged-in user's cards
+        "player_cards": players_cards,
         "user": request.user,
+        "wrapper_count": request.user.profile.wrapper_count,
+        "deck_card_1": deck_card_1,
+        "deck_card_2": deck_card_2,
+        "deck_card_3": deck_card_3,
     }
     return render(request, 'profile/profile.html', context)
+
 
 
 def index(request):

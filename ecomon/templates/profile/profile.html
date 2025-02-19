@@ -50,7 +50,7 @@
                 <img src="{% static 'images/profile/binplaceholder.png' %}" alt="Bin Image">
             </div>
             <div class="binText">
-                <p>Bin 0/3</p>
+                <p>Wrappers: {{ user.profile.wrapper_count }}/3</p>
             </div>
         </div>
     </div>
@@ -62,9 +62,30 @@
         <div class = "My Deck">
             <table>
                     <tr>
-                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 1"></td>
-                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 2"></td>
-                        <td><img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 3"></td>
+                        <td>
+                            
+
+                            {% if deck_card_1 %}
+                                <img src="{% static 'images/cards/'|add:deck_card_1.name|replace_space|add:'.png' %}" alt="{{ deck_card_1.name }}">
+                            {% else %}
+                                <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 1">
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if deck_card_2 %}
+                                <img src="{% static 'images/cards/'|add:deck_card_2.name|replace_space|add:'.png' %}" alt="{{ deck_card_2.name }}">
+                            {% else %}
+                                <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 2">
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if deck_card_3 %}
+                                <img src="{% static 'images/cards/'|add:deck_card_3.name|replace_space|add:'.png' %}" alt="{{ deck_card_3.name }}">
+                            {% else %}
+                                <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 3">
+                            {% endif %}
+                        </td>
+                        
                     </tr>
             </table>
         </div>
