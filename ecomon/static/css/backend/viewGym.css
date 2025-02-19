@@ -139,6 +139,11 @@ html {
     background-color: #144E3F;
 }
 
+.button a {
+    color: white;
+    text-decoration: none;
+}
+
 .back-button {
     position: absolute;
     left: 20px;

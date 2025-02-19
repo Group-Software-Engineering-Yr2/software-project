@@ -103,6 +103,7 @@ def render_gym_view(request, gym_id):
             team_icon_url = profile.team_name.icon.url
 
         context = {
+            "gym_id": gym_id,
             "gym_name": gym.name,
             "gym_fact": gym.fact,
             "gym_card1": gym.card1,
@@ -121,6 +122,10 @@ def render_gym_view(request, gym_id):
         return HttpResponse('Gym does not exist')
 
     return render(request, "backend/view_gym.html", context)
+
+# @login_required
+def render_gym_battle_lorenzo(request, gym_id):
+    return render(request, "backend/gym_battle_lorenzo.html")
 
 @login_required
 def completed_gym_battle(request):
