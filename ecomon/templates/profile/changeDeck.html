@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        {% load profile_extras %}
+        <title>Ecomon Profile</title>
+        <link rel="stylesheet" href="{% static 'css/profile/changedeck.css' %}">
+    </head>
+<body>
+    <div class = "Deck">
+        <div class = "deckTitle">
+            <p>Deck</p>
+        </div>
+        <div class = "My Deck">
+            <table>
+                    <tr>
+                        <td>
+                            
+    
+                            {% if deck_card_1 %}
+                                <img src="{% static 'images/cards/'|add:deck_card_1.name|replace_space|add:'.png' %}" alt="{{ deck_card_1.name }}">
+                            {% else %}
+                                <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 1">
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if deck_card_2 %}
+                                <img src="{% static 'images/cards/'|add:deck_card_2.name|replace_space|add:'.png' %}" alt="{{ deck_card_2.name }}">
+                            {% else %}
+                                <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 2">
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if deck_card_3 %}
+                                <img src="{% static 'images/cards/'|add:deck_card_3.name|replace_space|add:'.png' %}" alt="{{ deck_card_3.name }}">
+                            {% else %}
+                                <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 3">
+                            {% endif %}
+                        </td>
+                        
+                    </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="cards-selection">
+        <h2>Your Cards</h2>
+        <form method="POST" action="{% url 'update_deck' %}">
+            {% csrf_token %}
+            <div class="cardTable">
+                <table>
+                    <tr>
+                    {% for player_card in player_cards %}
+                        <td>
+                            <label class="card-select">
+                                <input type="checkbox" name="selected_cards" value="{{ player_card.card.name }}" 
+                                       onclick="limitSelections(this)" 
+                                       {% if player_card.card.name in deck_cards %}checked{% endif %}>
+                                <img src="{% static 'images/cards/'|add:player_card.card.name|replace_space|add:'.png' %}" 
+                                     alt="{{ player_card.card.name }}">
+                            </label>
+                        </td>
+                    {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            <button type="submit">Update Deck</button>
+        </form>
+    </div>
+    
+    <script>
+    function limitSelections(checkbox) {
+        const maxAllowed = 3;
+        let checkboxes = document.getElementsByName('selected_cards');
+        let checked = document.querySelectorAll('input[name="selected_cards"]:checked');
+    
+        if (checked.length > maxAllowed) {
+            checkbox.checked = false;
+        }
+    }
+    </script>
+</body>
+</html>
