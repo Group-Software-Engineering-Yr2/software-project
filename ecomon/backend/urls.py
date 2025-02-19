@@ -3,6 +3,8 @@ URL configuration for ecomon project.
 """
 from django.urls import path
 from . import views
+from .views import logout_view 
+
 
 urlpatterns = [
     path('home', views.home),
@@ -13,4 +15,5 @@ urlpatterns = [
     path('',views.index),
     path('scanner/', views.render_scanner, name='scanner'),
     path('gym-battle/<str:gym_id>/', views.render_gym_battle, name='gym-battle'),
+    path('logout/', logout_view, name='logout'),
 ]

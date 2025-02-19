@@ -8,3 +8,8 @@ def findcard(player_cards, card_name):
         if player_card.card.name == card_name:
             return player_card
     return None
+
+@register.filter
+def replace_space(value):
+    """Replaces spaces with underscores in a string."""
+    return value.replace(" ", "_")

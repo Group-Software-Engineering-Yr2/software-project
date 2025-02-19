@@ -21,8 +21,12 @@
                 <i class="fas fa-arrow-left"></i>
             </a>
         </div>
-        <div class = "logoutButton">
-            <button type="button"><img src="{% static 'images/profile/logout.png' %}" alt="Logout Button"></button>
+        <div class="logoutButton">
+            <a href="{% url 'logout' %}">
+                <button type="button">
+                    <img src="{% static 'images/profile/logout.png' %}" alt="Logout Button">
+                </button>
+            </a>
         </div>
     </div>
 
@@ -79,8 +83,8 @@
                     {% for card in cards %}
                         <td>
                             {% with player_card=player_cards|findcard:card.name %}
-                                {% if player_card and player_card.use_count > 0 %}
-                                    <img src="{% static 'images/profile/'|add:card.name|add:'.png' %}" alt="{{ card.name }}">
+                                {% if player_card %}
+                                    <img src="{% static 'images/cards/'|add:card.name|replace_space|add:'.png' %}" alt="{{ card.name }}">
                                 {% else %}
                                     {% if card.card_type == 1 %}
                                         <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Plastic Border">

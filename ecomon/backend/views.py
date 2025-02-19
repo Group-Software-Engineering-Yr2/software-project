@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards
 from .models import Card, PlayerCards
+from django.contrib.auth import logout
 
-# Create your views here
 
 @login_required
 def home(request):
@@ -21,13 +21,15 @@ def scanner(request):
 @login_required
 def profile(request):
     cards = Card.objects.all().order_by('card_type')
-    players_cards = PlayerCards.objects.all()
+    players_cards = PlayerCards.objects.filter(player=request.user)  # Filter by logged-in user
+    
     context = {
         "cards": cards,
-        "player_cards": players_cards,
-        "user": request.user,  # Pass the user object to the template
+        "player_cards": players_cards,  # Now contains only the logged-in user's cards
+        "user": request.user,
     }
     return render(request, 'profile/profile.html', context)
+
 
 def index(request):
     '''Redirects user based on authentication status'''
@@ -74,3 +76,8 @@ def render_scanner(request):
 # @login_required
 def render_gym_battle(request, gym_id):
     return render(request, "backend/gym_battle.html", {"gym_id": gym_id})
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('/accounts/login')
