@@ -5,11 +5,20 @@
         {% load profile_extras %}
         <title>Ecomon Profile</title>
         <link rel="stylesheet" href="{% static 'css/profile/changedeck.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     </head>
 <body>
+
+    <div class="backButton">
+        <a href="/profile">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+
     <div class = "Deck">
         <div class = "deckTitle">
-            <p>Deck</p>
+            <p>Currently Selected Deck</p>
         </div>
         <div class = "My Deck">
             <table>

@@ -10,7 +10,7 @@ header {
     justify-content: center;
     align-items: center;
     height: 200px;
-    padding: 20px;
+    padding: 25px;
 }
 
 .content-container {
@@ -31,8 +31,7 @@ header {
     padding: 0 20px;
 }
 
-.backButton,
-.logoutButton {
+.backButton, .logoutButton {
     position: fixed;
     top: 20px;
     z-index: 1000;
