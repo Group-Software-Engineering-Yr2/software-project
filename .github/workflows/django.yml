@@ -31,5 +31,6 @@ jobs:
               env:
                   DJANGO_SETTINGS_MODULE: myproject.settings
               run: |
+                  cd ecomon
                   python manage.py migrate
                   python manage.py test
