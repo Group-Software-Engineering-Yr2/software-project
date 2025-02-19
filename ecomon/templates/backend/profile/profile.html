@@ -4,12 +4,12 @@
         {% load static %}
         {% load profile_extras %}
         <title>Ecomon Profile</title>
-        <link rel="stylesheet" href="{% static 'css/profile/profilestyle.css' %}">
+        <link rel="stylesheet" href="{% static 'css/backend/profile/profilestyle.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
 <header>
     <div class="logo">
-        <img src="{% static 'images/profile/Ecomon1-removebg.png' %}" alt="Ecomon Logo">
+        <img src="{% static 'images/backend/profile/Ecomon1-removebg.png' %}" alt="Ecomon Logo">
     </div>  
 </header>
 
@@ -24,7 +24,7 @@
         <div class="logoutButton">
             <a href="{% url 'logout' %}">
                 <button type="button">
-                    <img src="{% static 'images/profile/logout.png' %}" alt="Logout Button">
+                    <img src="{% static 'images/backend/profile/logout.png' %}" alt="Logout Button">
                 </button>
             </a>
         </div>
@@ -35,7 +35,7 @@
             {% if team_logo %}
                 <img src="{{ team_logo.url }}" alt="{{ user.profile.team.name }} Logo">
             {% else %}
-                <img src="{% static 'images/profile/Reduce.png' %}" alt="Default Logo">
+                <img src="{% static 'images/backend/profile/Reduce.png' %}" alt="Default Logo">
             {% endif %}
         </div>
 
@@ -51,7 +51,7 @@
 
         <div class="bin">
             <div class="binimage">
-                <img src="{% static 'images/profile/binplaceholder.png' %}" alt="Bin Image">
+                <img src="{% static 'images/backend/profile/binplaceholder.png' %}" alt="Bin Image">
             </div>
             <div class="binText">
                 <p>Wrappers: {{ user.profile.wrapper_count }}/3</p>
@@ -72,21 +72,21 @@
                             {% if deck_card_1 %}
                                 <img src="{% static 'images/cards/'|add:deck_card_1.name|replace_space|add:'.png' %}" alt="{{ deck_card_1.name }}">
                             {% else %}
-                                <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 1">
+                                <img src="{% static 'images/backend/profile/PlasticBlankBorder.png' %}" alt="Deck Card 1">
                             {% endif %}
                         </td>
                         <td>
                             {% if deck_card_2 %}
                                 <img src="{% static 'images/cards/'|add:deck_card_2.name|replace_space|add:'.png' %}" alt="{{ deck_card_2.name }}">
                             {% else %}
-                                <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 2">
+                                <img src="{% static 'images/backend/profile/PlasticBlankBorder.png' %}" alt="Deck Card 2">
                             {% endif %}
                         </td>
                         <td>
                             {% if deck_card_3 %}
                                 <img src="{% static 'images/cards/'|add:deck_card_3.name|replace_space|add:'.png' %}" alt="{{ deck_card_3.name }}">
                             {% else %}
-                                <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 3">
+                                <img src="{% static 'images/backend/profile/PlasticBlankBorder.png' %}" alt="Deck Card 3">
                             {% endif %}
                         </td>
                         
@@ -114,11 +114,11 @@
                                     <img src="{% static 'images/cards/'|add:card.name|replace_space|add:'.png' %}" alt="{{ card.name }}">
                                 {% else %}
                                     {% if card.card_type == 1 %}
-                                        <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Plastic Border">
+                                        <img src="{% static 'images/backend/profile/PlasticBlankBorder.png' %}" alt="Plastic Border">
                                     {% elif card.card_type == 2 %}
-                                        <img src="{% static 'images/profile/RecycleBlankBorder.png' %}" alt="Recycle Border">
+                                        <img src="{% static 'images/backend/profile/RecycleBlankBorder.png' %}" alt="Recycle Border">
                                     {% elif card.card_type == 3 %}
-                                        <img src="{% static 'images/profile/PlantBlankBorder.png' %}" alt="Plant Border">
+                                        <img src="{% static 'images/backend/profile/PlantBlankBorder.png' %}" alt="Plant Border">
                                     {% endif %}
                                 {% endif %}
                             {% endwith %}
@@ -140,9 +140,9 @@
             <div class="AchievmentsTable">
                 <table>
                     <tr>
-                        <td><img src="{% static 'images/profile/silvermedal.jpg' %}" alt="Silver Medal"></td>
-                        <td><img src="{% static 'images/profile/goldmedal.jpg' %}" alt="Gold Medal"></td>
-                        <td><img src="{% static 'images/profile/bronzemedal.jpg' %}" alt="Bronze Medal"></td>
+                        <td><img src="{% static 'images/backend/profile/silvermedal.jpg' %}" alt="Silver Medal"></td>
+                        <td><img src="{% static 'images/backend/profile/goldmedal.jpg' %}" alt="Gold Medal"></td>
+                        <td><img src="{% static 'images/backend/profile/bronzemedal.jpg' %}" alt="Bronze Medal"></td>
                     </tr>
                     <tr>
                         <td>Silver Medal Example</td>
@@ -150,9 +150,9 @@
                         <td>Bronze Medal Example</td>
                     </tr>
                     <tr>
-                        <td><img src="{% static 'images/profile/silvermedal.jpg' %}" alt="Silver Medal"></td>
-                        <td><img src="{% static 'images/profile/goldmedal.jpg' %}" alt="Gold Medal"></td>
-                        <td><img src="{% static 'images/profile/bronzemedal.jpg' %}" alt="Bronze Medal"></td>
+                        <td><img src="{% static 'images/backend/profile/silvermedal.jpg' %}" alt="Silver Medal"></td>
+                        <td><img src="{% static 'images/backend/profile/goldmedal.jpg' %}" alt="Gold Medal"></td>
+                        <td><img src="{% static 'images/backend/profile/bronzemedal.jpg' %}" alt="Bronze Medal"></td>
                     </tr>
                     <tr>
                         <td>Silver Medal Example</td>
@@ -160,9 +160,9 @@
                         <td>Bronze Medal Example</td>
                     </tr>
                     <tr>
-                        <td><img src="{% static 'images/profile/silvermedal.jpg' %}" alt="Silver Medal"></td>
-                        <td><img src="{% static 'images/profile/goldmedal.jpg' %}" alt="Gold Medal"></td>
-                        <td><img src="{% static 'images/profile/bronzemedal.jpg' %}" alt="Bronze Medal"></td>
+                        <td><img src="{% static 'images/backend/profile/silvermedal.jpg' %}" alt="Silver Medal"></td>
+                        <td><img src="{% static 'images/backend/profile/goldmedal.jpg' %}" alt="Gold Medal"></td>
+                        <td><img src="{% static 'images/backend/profile/bronzemedal.jpg' %}" alt="Bronze Medal"></td>
                     </tr>
                     <tr>
                         <td>Silver Medal Example</td>

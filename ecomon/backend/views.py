@@ -42,7 +42,7 @@ def profile(request):
         "deck_card_3": deck_card_3,
         "team_logo": team_logo,
     }
-    return render(request, 'profile/profile.html', context)
+    return render(request, 'backend/profile/profile.html', context)
 
 @login_required
 def change_deck(request):
