@@ -2,8 +2,8 @@
 <html lang="en">
     <head>
         {% load static %}
+        {% load profile_extras %}
         <title>Ecomon Profile</title>
-        <script src="{% static 'js/profile/profilescript.js' %}" defer></script>
         <link rel="stylesheet" href="{% static 'css/profile/profilestyle.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
@@ -74,18 +74,30 @@
                 <p>Obtained Cards</p>
             </div>
             <div class="cardTable">
-                 <table>
-        <!-- Table will be populated by JavaScript -->
+                <table>
+                    <tr>
+                    {% for card in cards %}
+                        <td>
+                            {% with player_card=player_cards|findcard:card.name %}
+                                {% if player_card and player_card.use_count > 0 %}
+                                    <img src="{% static 'images/profile/'|add:card.name|add:'.png' %}" alt="{{ card.name }}">
+                                {% else %}
+                                    {% if card.card_type == 1 %}
+                                        <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Plastic Border">
+                                    {% elif card.card_type == 2 %}
+                                        <img src="{% static 'images/profile/RecycleBlankBorder.png' %}" alt="Recycle Border">
+                                    {% elif card.card_type == 3 %}
+                                        <img src="{% static 'images/profile/PlantBlankBorder.png' %}" alt="Plant Border">
+                                    {% endif %}
+                                {% endif %}
+                            {% endwith %}
+                        </td>
+                        {% if forloop.counter|divisibleby:3 %}
+                            </tr><tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tr>
                 </table>
-            </div>
-
-            {{ cards_data|json_script:"cards-data" }}
-            {{ player_cards_data|json_script:"player-cards-data" }}
-
-            <p>Cards count: {{ cards|length }}</p>
-
-            
-            
             
         </div>
     
