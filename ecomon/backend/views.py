@@ -2,7 +2,9 @@ from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.templatetags.static import static
 from accounts.player_service import get_player_deck, has_deck, add_players_pack
+from accounts.models import Profile
 from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards
 from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown
 from .models import Gym
@@ -78,6 +80,47 @@ def render_gym_battle(request, gym_id):
 
 
     return render(request, "backend/gym_battle.html", {"gym_id": gym_id})
+
+# @login_required
+def render_gym_view(request, gym_id):
+    ''' 
+    Endpoint for scanning the QR code
+    '''
+    try:
+        gym = Gym.objects.get(id=gym_id)
+        profile = Profile.objects.filter(user=gym.owning_player).first()
+        owning_player_team = profile.team_name.name if profile else "No team"
+        
+        # Todo check to see if player has 3 cards in their deck
+        # Retrive PlayerCards objects and their associated Card images
+        player_deck_card1 = profile.deck_card_1.card.image.url if profile and profile.deck_card_1 else None
+        player_deck_card2 = profile.deck_card_2.card.image.url if profile and profile.deck_card_2 else None
+        player_deck_card3 = profile.deck_card_3.card.image.url if profile and profile.deck_card_3 else None
+        
+        # Todo change this default to be team fossil fuel icon mimicking the start of the day
+        team_icon_url = static('images/teams/team_fossil_fuel.png')
+        if profile and profile.team_name.icon:
+            team_icon_url = profile.team_name.icon.url
+
+        context = {
+            "gym_name": gym.name,
+            "gym_fact": gym.fact,
+            "gym_card1": gym.card1,
+            "gym_card2": gym.card2,
+            "gym_card3": gym.card3,
+            "gym_owning_player": gym.owning_player,
+            "gym_owning_player_team": owning_player_team,
+            "gym_cooldown": gym.cooldown,
+            "gym_team_icon": team_icon_url,
+            "player_deck_card1": player_deck_card1,
+            "player_deck_card2": player_deck_card2,
+            "player_deck_card3": player_deck_card3
+        }
+    except Gym.DoesNotExist:
+        # Todo update this to custom template
+        return HttpResponse('Gym does not exist')
+
+    return render(request, "backend/view_gym.html", context)
 
 @login_required
 def completed_gym_battle(request):

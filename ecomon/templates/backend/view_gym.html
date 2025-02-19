@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gym Battle</title>
+        <link rel="stylesheet" href="{% static 'css/backend/viewGym.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </head>
+    <body>
+        <div class="gym-content">
+            <div class="gym-images">
+                <img src="{{ gym_team_icon }}" alt="Gym Team Owner Logo" class="gym-owner-logo">
+                <img src="{% static 'images/backend/scanner/Ecomon1-removebg.png' %}" alt="ECOMON Logo" class="logo">
+                <img src="{{ gym_team_icon }}" alt="Gym Team Owner Logo" class="gym-owner-logo">
+            </div>
+
+            <div class="gym-info">
+                <span class="gym-desc">Gym Name: <a id ="gym-name-value" class="gym-value">{{ gym_name }}</a></span>
+                <span class="gym-desc">Owned By: <a id ="gym-player-value" class="gym-value">{{ gym_owning_player_team }}</a></span>
+                <span class="gym-desc">Owning Player: <a id ="gym-team-value" class="gym-value">{{ gym_owning_player }}</a></span>
+                <span class="gym-desc">Gym Fact: <a id ="gym-fact" class="gym-value">{{ gym_fact }}</a></span>
+                <span class="gym-desc">Cooldown: <a id ="gym-cooldown-value" class="gym-value">{{ gym_cooldown }}</a></span>
+            </div>
+
+            <hr class="line">
+
+            <div class="player-deck">
+                <a class="deck-title">Your Current Deck Loadout:</a>
+                <div class="deck-cards">
+                    {% if player_deck_card1 %}
+                    <img src="{{ player_deck_card1 }}" alt="Deck Card 1" class="deck-card">
+                    {% endif %}
+                
+                    {% if player_deck_card2 %}
+                        <img src="{{ player_deck_card2 }}" alt="Deck Card 2" class="deck-card">
+                    {% endif %}
+                
+                    {% if player_deck_card3 %}
+                        <img src="{{ player_deck_card3 }}" alt="Deck Card 3" class="deck-card">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="buttons-section">
+            <a href="/home" class="button back-button">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <button id="start-battle" class="button">Start Battle</button>
+            <button id="edit-deck" class="button">Edit Deck</button>
+        </div>
+    </body>
+</html>

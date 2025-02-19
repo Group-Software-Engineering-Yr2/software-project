@@ -1,0 +1,145 @@
+html {
+    background-color: #f5f5f5;
+}
+
+.gym-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 5px;
+    max-width: 90vw;
+    width: 800px;
+    margin: 0 auto;
+    padding-bottom: 15px;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+.gym-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 15px;
+}
+
+.gym-owner-logo {
+    width: clamp(50px, 12vw, 150px);
+    margin-top: 30px;
+}
+
+.gym-images img:first-child {
+    margin-left: 20px;
+}
+
+.gym-images img:last-child {
+    margin-right: 20px;
+}
+
+.logo {
+    /*  */
+    width: 80%;
+    min-width: 250px;
+    max-width: 400px;
+    /* width: 400px; */
+    /*  */
+}
+
+.gym-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+    row-gap: 5px;
+    text-align: center;
+}
+
+.gym-desc {
+    color:#84C44C;
+    font-weight: bold;
+    font-size: 18px;
+    /* font-size: clamp(14px, 2vw, 18px); */
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.gym-value {
+    color:#144E3F;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.line {
+    border:none;
+    height: 1.5px;
+    background-color: #84C44C;
+    width: 100%;
+}
+
+.player-deck {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.deck-title {
+    color: #144E3F;
+    font-weight: bold;
+    /* font-size: clamp(16px, 2vw, 20px); */
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.deck-cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    gap: 20px;
+}
+
+.deck-card {
+    width: 200px;
+}
+
+.buttons-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 20px;
+    gap: 20px;
+    position: relative;
+}
+
+/* General styling for all buttons, including the back button */
+.button {
+    background-color: #84C44C;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none; /* Removes underline from anchor button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+/* Hover effect for all buttons */
+.button:hover {
+    background-color: #144E3F;
+}
+
+.back-button {
+    position: absolute;
+    left: 20px;
+}

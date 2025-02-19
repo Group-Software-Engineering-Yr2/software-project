@@ -11,6 +11,7 @@ urlpatterns = [
     path('profile', views.profile),
     path('',views.index),
     path('scanner/', views.render_scanner, name='scanner'),
+    path('view-gym/<str:gym_id>/', views.render_gym_view, name='view-gym'),
     path('gym-battle/<str:gym_id>/', views.render_gym_battle, name='gym-battle'),
     path('gym-battle-completed/', views.completed_gym_battle, name='gym-battle-completed'),
 
