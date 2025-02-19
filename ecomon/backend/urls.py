@@ -16,4 +16,6 @@ urlpatterns = [
     path('scanner/', views.render_scanner, name='scanner'),
     path('gym-battle/<str:gym_id>/', views.render_gym_battle, name='gym-battle'),
     path('logout/', logout_view, name='logout'),
+    path('change_deck', views.change_deck, name='change_deck'),
+    path('update-deck/', views.update_deck, name='update_deck'),
 ]
