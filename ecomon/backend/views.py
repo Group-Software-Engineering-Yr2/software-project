@@ -11,19 +11,9 @@ def home(request):
     return render(request, 'backend/homePage.html')
 
 @login_required
-def packs(request):
-    return render(request, 'packs/packobject.html')
-
-@login_required
-def scanner(request):
-    return HttpResponse('temp')
-
-
-@login_required
 def profile(request):
     cards = Card.objects.all().order_by('card_type')
     players_cards = PlayerCards.objects.filter(player=request.user)  # Get logged-in user's cards
-    
     # Get deck cards for the user
     deck_card_1 = request.user.profile.deck_card_1
     deck_card_2 = request.user.profile.deck_card_2
@@ -60,19 +50,17 @@ def change_deck(request):
         "deck_card_2": deck_card_2,
         "deck_card_3": deck_card_3,
     }
-    return render(request, 'profile/changeDeck.html', context)
+    return render(request, 'backend/profile/changeDeck.html', context)
 
 @login_required
 def update_deck(request):
     if request.method == 'POST':
         user_profile = request.user.profile
         selected_cards = request.POST.getlist('selected_cards')
-        
         # Clear existing deck
         user_profile.deck_card_1 = None
         user_profile.deck_card_2 = None
         user_profile.deck_card_3 = None
-        
         # Add selected cards in order
         for i, card_name in enumerate(selected_cards[:3]):
             card = Card.objects.get(name=card_name)
@@ -84,7 +72,6 @@ def update_deck(request):
                 user_profile.deck_card_3 = card
                 
         user_profile.save()
-            
     return redirect('change_deck')
 
 
@@ -128,11 +115,11 @@ def opening_pack(request):
     return render(request, 'backend/packs/opening_pack.html', {'card_images': card_images})
 
 
-# @login_required
+@login_required
 def render_scanner(request):
     return render(request, 'backend/scanner.html')
 
-# @login_required
+@login_required
 def render_gym_battle(request, gym_id):
     return render(request, "backend/gym_battle.html", {"gym_id": gym_id})
 
