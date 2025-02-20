@@ -1,5 +1,4 @@
 from django.http import HttpResponse
-from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.templatetags.static import static
@@ -7,6 +6,7 @@ from accounts.player_service import get_player_deck, has_deck, add_players_pack
 from accounts.models import Profile
 from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards
 from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown
+from .bin_service import is_bin_full, increment_wrapper_count
 from .models import Gym
 
 # Create your views here
@@ -28,9 +28,12 @@ def index(request):
 
 @login_required
 def open_pack(request):
-    ''' Checks if there is a pack to open and shows the user confirmation'''
-    pack_count = get_pack_count(request.user)
+    ''' User confirmation for opening a pack '''
+    # Check if the user's bin is full
+    if is_bin_full(request.user):
+        return render(request, 'backend/packs/bin_full.html')
     # If packs simulate the packs and display to user
+    pack_count = get_pack_count(request.user)
     if pack_count > 0:
         return render(request, 'backend/packs/open_pack.html', {'pack_count': pack_count})
     return render(request, 'backend/packs/nopacks.html')
@@ -40,12 +43,16 @@ def opening_pack(request):
     '''
     Actual logic for opening a pack
     '''
+    # If the user has a pack
     pack_count = get_pack_count(request.user)
     if pack_count <= 0:
         return redirect('/packs')
 
-    # If the user has a pack
-
+    # If there bin is full
+    if is_bin_full(request.user):
+        return redirect('/packs')
+    # Increment the wrapper
+    increment_wrapper_count(request.user)
     # Generate the cards
     pack_cards = generate_pack()
     # Add the cards to the user's collection (PlayerCards)
@@ -59,6 +66,7 @@ def opening_pack(request):
 
 # @login_required
 def render_scanner(request):
+    '''Returns the scanner page'''
     return render(request, 'backend/scanner.html')
 
 # @login_required
@@ -90,13 +98,11 @@ def render_gym_view(request, gym_id):
         gym = Gym.objects.get(id=gym_id)
         profile = Profile.objects.filter(user=request.user).first()
         owning_player_team = profile.team_name.name if profile else "No team"
-        
         # Todo check to see if player has 3 cards in their deck as currently it assumes that there are 3 cards in a deck
         # Retrieve PlayerCards objects and their associated Card images
         player_deck_card1 = profile.deck_card_1.card.image.url if profile and profile.deck_card_1 else None
         player_deck_card2 = profile.deck_card_2.card.image.url if profile and profile.deck_card_2 else None
         player_deck_card3 = profile.deck_card_3.card.image.url if profile and profile.deck_card_3 else None
-        
         # Todo change this default to be team fossil fuel icon mimicking the start of the day
         team_icon_url = static('images/teams/team_fossil_fuel.png')
         if profile and profile.team_name.icon:
@@ -126,7 +132,6 @@ def render_gym_view(request, gym_id):
 # @login_required
 def render_gym_battle(request, gym_id):
     '''Endpoint after player starts a battle with a gym'''
-
     try:
         gym = Gym.objects.get(id=gym_id)
         profile = Profile.objects.filter(user=request.user).first()
