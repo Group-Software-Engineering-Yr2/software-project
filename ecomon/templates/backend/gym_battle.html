@@ -6,6 +6,16 @@
     <meta charset="UTF-8">
     <meta viewport="width=device-width, initial-scale=1.0">
     <title>Gym Battle</title>
+    <script type="text/javascript">
+        let activePlayerCard = JSON.parse('{{ player_deck_card1 | safe }}');
+        let playerCardSlot1 = JSON.parse('{{ player_deck_card2 | safe }}');
+        let playerCardSlot2 = JSON.parse('{{ player_deck_card3 | safe }}');
+        
+        let activeOpponentCard = JSON.parse('{{ gym_card1 | safe }}');
+        let opponentCardSlot1 = JSON.parse('{{ gym_card2 | safe }}');
+        let opponentCardSlot2 = JSON.parse('{{ gym_card3 | safe }}');
+    </script>
+    <script src="{% static 'js/backend/gymBattle.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/backend/gymBattle.css' %}">
 </head>
 
@@ -14,79 +24,63 @@
         <div class="player-slots-container">
             <img src="{% static 'images/EMButton1-Photoroom.png' %}" alt="ECOMON Logo" class="logo">
             <p>Slot 1</p>
-            {% if player_deck_card2 %}
-            <img src="{{ player_deck_card2.image.url }}" alt="Deck Card 2" class="slot-card">
-            {% endif %}
+            <img id="player-slot-1-icon" alt="Deck Card 2" class="slot-card">
             <p>Slot 2</p>
-            {% if player_deck_card3 %}
-            <img src="{{ player_deck_card3.image.url }}" alt="Deck Card 3" class="slot-card">
-            {% endif %}
+            <img id="player-slot-2-icon" alt="Deck Card 3" class="slot-card">
             <p>Player's Bench</p>
         </div>
 
         <div class="gym-battle-player-active">
             <div class="gym-battle-text">
                 <p>Player's Active Card:
-                    {% if player_deck_card1 %}
-                    <span class="player-active-card-name">{{ player_deck_card1.name }}</span>
-                    <span class="player-active-card-hp">HP: {{ player_deck_card1.health_points }}</span>
-                    {% endif %}
+                    <span id="player-active-card-name" class="player-active-card-name"></span>
+                    <span id="player-hp" class="player-active-card-hp"></span>
                 </p>
             </div>
             <div class="gym-battle-card">
-                {% if player_deck_card1 %}
-                <img src="{{ player_deck_card1.image.url }}" alt="Deck Card 1" class="active-card">
-                {% endif %}
+                <img id="player-active-card-icon" alt="Deck Card 1" class="active-card">
             </div>
         </div>
 
         <div class="versus-container">
+            <div class="battle-log-container">
+                <p>Battle Log:</p>
+                <div id="battle-log" class="battle-log" style="overflow-y: scroll; height: 200px;">
+                    <!-- <p></p> -->
+                </div>
+            </div>
             <img src="{% static 'images/versus.png' %}" alt="Verses Logo" class="vs-logo">
         </div>
 
         <div class="gym-battle-opponent-active">
             <div class="gym-battle-text">
                 <p>Opponent's Active Card:
-                    {% if gym_card1 %}
-                    <span class="opponent-active-card-name">{{ gym_card1.name }}</span>
-                    <span class="opponent-active-card-hp">HP: {{ gym_card1.health_points }}</span>
-                    {% endif %}
+                    <span id="opponent-active-card-name" class="opponent-active-card-name"></span>
+                    <span id="opponent-hp" class="opponent-active-card-hp"></span>
                 </p>
             </div>
             <div class="gym-battle-card">
-                {% if gym_card1 %}
-                <img src="{{ gym_card1.image.url }}" alt="Deck Card 1" class="active-card">
-                {% endif %}
+                <img id="opponent-active-card-icon" alt="Deck Card 1" class="active-card">
             </div>
         </div>
 
         <div class="opponent-slots-container">
             <p>Slot 1</p>
-            {% if gym_card2 %}
-            <img src="{{ gym_card2.image.url }}" alt="Deck Card 2" class="slot-card">
-            {% endif %}
+            <img id="opponent-slot-1-icon" alt="Deck Card 2" class="slot-card">
             <p>Slot 2</p>
-            {% if gym_card3 %}
-            <img src="{{ gym_card3.image.url }}" alt="Deck Card 3" class="slot-card">
-            {% endif %}
+            <img id="opponent-slot-2-icon" alt="Deck Card 3" class="slot-card">
             <p>Opponent's Bench</p>
         </div>
 
         <div class="action-buttons">
-            <button class="action-button ability-1">Ability 1:
-                {% if player_deck_card1 %}
-                <span class="ability-power1">{{ player_deck_card1.ability_power_1 }} Damage</span>
-                {% endif %}
+            <button id="player-move-1" class="action-button ability-1">Ability 1:
+                <span id="ability-power-1" class="ability-power1">Damage</span>
             </button>
-            <button class="action-button ability-2">Ability 2:
-                {% if player_deck_card1.ability_self_power_2 > 0 %}
-                <span class="ability-power2">+{{ player_deck_card1.ability_self_power_2 }} Health</span>
-                {% else %}
-                <span class="ability-power2">{{ player_deck_card1.ability_power_2 }} Damage</span>
-                {% endif %}
+            <button id="player-move-2" class="action-button ability-2">Ability 2:
+                <span id="ability-power-2"class="ability-power2"></span>
             </button>
-            <button class="action-button retreat-1">Retreat Active Card For Bench Card 1</button>
-            <button class="action-button retreat-2">Retreat Active Card For Bench Card 2</button>
+            <button id="player-retreat-1" class="action-button retreat-1">Retreat Active Card For Bench Card 1</button>
+            <button id="player-retreat-2"class="action-button retreat-2">Retreat Active Card For Bench Card 2</button>
         </div>
 
     </div>
