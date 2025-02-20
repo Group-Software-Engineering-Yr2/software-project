@@ -1,0 +1,197 @@
+/* Common styles */
+* {
+    color: #144E3F;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Layout containers */
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    padding: 25px;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px auto;
+    max-width: 1200px;
+    padding: 0 20px;
+}
+
+/* Navigation buttons */
+.Buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0 auto 20px;
+    padding: 0 20px;
+}
+
+.backButton, .logoutButton {
+    position: fixed;
+    top: 20px;
+    z-index: 1000;
+}
+
+.backButton {
+    left: 20px;
+}
+
+.logoutButton {
+    right: 20px;
+}
+
+.backButton button,
+.logoutButton button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    width: 75px;
+    height: 75px;
+    padding: 0;
+}
+
+.backButton button img,
+.logoutButton button img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.backButton a {
+    background-color: #84C44C;
+    color: white;
+    padding: 15px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+    font-size: 20px;
+}
+
+.backButton a:hover {
+    background-color: #144E3F;
+    cursor: pointer;
+}
+
+/* Profile section */
+.profile-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+    transform: scale(0.8);
+    transform-origin: center top;
+    margin-bottom: -50px; /* Reduce space below profile section even more */
+}
+
+.logo img,
+.profilepic img,
+.binimage img {
+    height: 250px;
+    width: auto;
+}
+
+.logo img {
+    padding: 25px;
+}
+
+.profilepic img {
+    border-radius: 10px;
+}
+
+/* Text styles */
+.details {
+    text-align: center;
+    font-size: 25px;
+}
+
+.binText {
+    text-align: center;
+    font-size: 20px;
+}
+
+.deckTitle,
+.cardTitle,
+.AchievementTitle {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Cards and Achievements sections */
+.cards-section {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 40px;
+}
+
+.achievements-section {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Table styles */
+.cardTable table,
+.AchievmentsTable table,
+.My.Deck table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.cardTable td,
+.AchievmentsTable td,
+.My.Deck td {
+    text-align: center;
+    padding: 4px;
+}
+
+.cardTable img,
+.AchievmentsTable img,
+.My.Deck img {
+    width: 180px;
+    height: auto;
+    margin: 5px;
+}
+
+/* Deck styles */
+.Deck {
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: -40px; /* Pull the Deck section closer */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.DeckButton {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.DeckButton button {
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #84C44C;
+    text-decoration: none;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.DeckButton button:hover {
+    background-color: #45a049;
+}
