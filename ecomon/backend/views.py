@@ -11,15 +11,6 @@ def home(request):
     return render(request, 'backend/homePage.html')
 
 @login_required
-def packs(request):
-    return render(request, 'packs/packobject.html')
-
-@login_required
-def scanner(request):
-    return HttpResponse('temp')
-
-
-@login_required
 def profile(request):
     cards = Card.objects.all().order_by('card_type')
     players_cards = PlayerCards.objects.filter(player=request.user)  # Get logged-in user's cards
@@ -60,7 +51,7 @@ def change_deck(request):
         "deck_card_2": deck_card_2,
         "deck_card_3": deck_card_3,
     }
-    return render(request, 'profile/changeDeck.html', context)
+    return render(request, 'backend/profile/changeDeck.html', context)
 
 @login_required
 def update_deck(request):
