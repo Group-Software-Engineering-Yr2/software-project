@@ -1,12 +1,28 @@
-// map functionality
 document.addEventListener('DOMContentLoaded', function() {
-    var map = L.map('map').setView([50.73514962, -3.53428346], 13);
+    // creating map object
+    var map = L.map('map', {minZoom: 15}).locate({setView: true, maxZoom: 25});
 
+    // creating map tile layer
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
+    
+    // creating custom user location icon
+    var userLocationIcon = L.icon({
+        iconUrl: 'static/images/backend/homePage/userLocationMarker.png',
+        iconSize: [40, 40],
+    });
+    
+    // function to add marker on user location
+    function onLocationFound(e) {
+        var radius = e.accuracy; 
+        L.marker(e.latlng, {icon: userLocationIcon}).addTo(map).bindPopup("This is you! (within " + Math.round(radius) + "m)").openPopup();
+    }
 
+    map.on('locationfound', onLocationFound);
+
+    // getting all gym locations and adding markers
     fetch('/get_gym_locations/')
         .then(response => response.json())
         .then(data => {
@@ -17,4 +33,5 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         })
         .catch(error => console.error('Error fetching gym locations:', error));
+        
 });
