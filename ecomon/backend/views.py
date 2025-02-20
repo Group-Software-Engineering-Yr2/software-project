@@ -8,6 +8,7 @@ from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, 
 from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown
 from .bin_service import is_bin_full, increment_wrapper_count
 from .models import Gym
+import json
 
 # Create your views here
 
@@ -140,16 +141,17 @@ def render_gym_battle(request, gym_id):
         player_deck_card1 = profile.deck_card_1.card if profile and profile.deck_card_1 else None
         player_deck_card2 = profile.deck_card_2.card if profile and profile.deck_card_2 else None
         player_deck_card3 = profile.deck_card_3.card if profile and profile.deck_card_3 else None
+        
 
         context = {
             "gym_id": gym_id,
-            "gym_card1": gym.card1,
-            "gym_card2": gym.card2,
-            "gym_card3": gym.card3,
+            "gym_card1": json.dumps(gym.card1.to_json()),
+            "gym_card2": json.dumps(gym.card2.to_json()),
+            "gym_card3": json.dumps(gym.card3.to_json()),
             "gym_owning_player": gym.owning_player,
-            "player_deck_card1": player_deck_card1,
-            "player_deck_card2": player_deck_card2,
-            "player_deck_card3": player_deck_card3
+            "player_deck_card1": json.dumps(player_deck_card1.to_json()),
+            "player_deck_card2": json.dumps(player_deck_card2.to_json()),
+            "player_deck_card3": json.dumps(player_deck_card3.to_json())
         }
     except Gym.DoesNotExist:
         # Todo update this to custom template
