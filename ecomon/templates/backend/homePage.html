@@ -12,15 +12,19 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>
     <link rel="stylesheet" href="{% static 'css/backend/homePage.css' %}">
+
+    <!-- local js -->
+    <script src="{% static 'js/backend/homePage.js' %}"></script>
+    
     <title>Ecomon Home</title>
 </head>
 <body>
     <div id="map"></div>
 
     <!-- locate button -->
-    <div id="locateButton">
+    <div id="locateButton-container">
         <a>
-            <button class="Button"><img src="{% static 'images/backend/homePage/userLocationMarker.png' %}" alt="Center Position"></button>
+            <button class="button" id="locateButton"><img src="{% static 'images/backend/homePage/userLocationMarker.png' %}" alt="Center Position"></button>
         </a>
     </div>
 
@@ -39,6 +43,5 @@
             <button class="button"><img src="{% static 'images/backend/homePage/profileIcon.png' %}" alt="Profile"></button>
         </a>
     </div>
-    <script src="{% static 'js/backend/homePage.js' %}"></script>
 </body>
 </html>
