@@ -10,7 +10,7 @@ class Team(models.Model):
     name = models.CharField(max_length=100,primary_key=True)
     color = models.CharField(max_length=100)
     icon = models.ImageField(upload_to='static/images/teams/')
-    user_selectable = models.BooleanField() # If the user can join this team or not
+    user_selectable = models.BooleanField(default=True) # If the user can join this team or not
 
 class Card(models.Model):
     '''
