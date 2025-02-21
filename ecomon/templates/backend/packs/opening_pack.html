@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pack Opening</title>
+    <link rel="stylesheet" href="{% static 'css/backend/packs/opening_pack.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Back Button -->
+    <div class="back-button">
+        <a href="/packs">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+
+    <div class="pack-container">
+        <div class="card left-card">
+            <div class="card-cover">
+                <img src="{% static 'images/pack_template.png' %}" alt="Card Cover">
+            </div>
+            <img src="{% static card_images.0 %}" alt="Card 1">
+        </div>
+
+        <div class="card center-card">
+            <div class="card-cover">
+                <img src="{% static 'images/pack_template.png' %}" alt="Card Cover">
+            </div>
+            <img src="{% static card_images.1 %}" alt="Card 2">
+        </div>
+
+        <div class="card right-card">
+            <div class="card-cover">
+                <img src="{% static 'images/pack_template.png' %}" alt="Card Cover">
+            </div>
+            <img src="{% static card_images.2 %}" alt="Card 3">
+        </div>
+    </div>
+</body>
+</html>
