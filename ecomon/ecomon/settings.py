@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'accounts',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -147,3 +148,9 @@ REST_FRAMEWORK = {
 
 LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = '/login'
+
+# Cron tab settings
+
+CRONJOBS = [
+    ('0 0 * * *', 'django.core.management.call_command', ['reset_gyms']),
+]
