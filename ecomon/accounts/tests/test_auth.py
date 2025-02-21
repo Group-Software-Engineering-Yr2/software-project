@@ -43,6 +43,28 @@ class APIAuthenticationTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(User.objects.filter(username="newuser").exists())
 
+    def test_user_gets_one_pack_on_registration(self):
+        """Test that new users receive one pack on registration"""
+
+        data = {
+            "username": "packuser",  # Changed username to avoid conflict
+            "email": "packuser@example.com",
+            "password": "testpassword123",
+            "team_name": "TestTeam"  # Match the team name from setUp
+        }
+
+        # Make POST request to register endpoint using correct path
+        response = self.client.post("/accounts/api/register/", data, format="json")
+        
+        # Check if registration was successful
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # Get the created user and verify pack count
+        new_user = User.objects.get(username="packuser")
+        profile = Profile.objects.get(user=new_user)
+        self.assertEqual(profile.pack_count, 1)
+
+
     def test_login_user(self):
         """Test user login"""
         data = {"username": "testuser", "password": "testpassword123"}
