@@ -48,7 +48,7 @@ class RegisterSerializer(serializers.ModelSerializer):
                 user=user,
                 team_name = team,
                 wrapper_count = 0,
-                pack_count = 0
+                pack_count = 1
             )
             return user
         except Exception as e:
