@@ -9,6 +9,7 @@ class Team(models.Model):
     '''
     name = models.CharField(max_length=100,primary_key=True)
     color = models.CharField(max_length=100)
+    icon = models.ImageField()
     icon = models.ImageField(upload_to='static/images/teams/')
     user_selectable = models.BooleanField(default=True) # If the user can join this team or not
 
@@ -17,7 +18,7 @@ class Card(models.Model):
     Card database model
     '''
     name = models.CharField(max_length=100, primary_key=True)
-    image = models.ImageField(upload_to="static/images/cards/")
+    image = models.ImageField()
     card_type = models.IntegerField()
     ability_name_1 = models.CharField(max_length=100)
     ability_power_1 = models.IntegerField()
@@ -58,7 +59,7 @@ class Achievement(models.Model):
     '''
     name = models.CharField(max_length=100, primary_key=True)
     tier = models.IntegerField()
-    icon = models.ImageField(upload_to='static/images/achievement/')
+    icon = models.ImageField()
 
 class PlayerAchievements(models.Model):
     '''
@@ -67,3 +68,5 @@ class PlayerAchievements(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
     date_unlocked = models.DateTimeField()
+
+

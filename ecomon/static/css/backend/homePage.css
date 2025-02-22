@@ -1,5 +1,8 @@
-body {
-    background: url('../../images/homePage/background.png');
+
+html, body, #map {
+    height: 99%;
+    width: 99vw;
+    z-index: 0;
 }
 
 .buttons-container {
@@ -15,10 +18,11 @@ body {
 .button {
     width: 50px;
     height: 50px;
-    background-color: white;
+    background-color: #84C44C;
     border: 2px solid #000; 
     border-radius: 10px;
     transition: transform 0.3s ease-in-out;
+    z-index: 500;
 }
 
 .button img {
@@ -29,4 +33,24 @@ body {
 
 .button:hover {
     transform: scale(1.1); 
+    background-color: #144E3F;
 }
+
+.leaflet-control-attribution.leaflet-control {
+    display: none;
+}
+
+#locateButton-container {
+    position: fixed;
+    top: 20px;  
+    right: 5%;
+    transition: transform 0.3s ease-in-out;
+    z-index: 500;
+}
+
+#locateButton-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+

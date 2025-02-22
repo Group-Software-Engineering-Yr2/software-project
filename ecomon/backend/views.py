@@ -1,8 +1,8 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards
-from .models import Card, PlayerCards
+from .models import Card, PlayerCards, Gym
 from django.contrib.auth import logout
 
 
@@ -119,13 +119,20 @@ def opening_pack(request):
     return render(request, 'backend/packs/opening_pack.html', {'card_images': card_images})
 
 
-# @login_required
+@login_required
 def render_scanner(request):
     return render(request, 'backend/scanner.html')
 
-# @login_required
+@login_required
 def render_gym_battle(request, gym_id):
     return render(request, "backend/gym_battle.html", {"gym_id": gym_id})
+
+
+@login_required
+def get_gym_locations(request):
+    gyms = Gym.objects.all()
+    gym_data = [{"name": gym.name, "latitude": gym.latitude, "longitude": gym.longitude} for gym in gyms]
+    return JsonResponse(gym_data, safe=False)
 
 @login_required
 def logout_view(request):

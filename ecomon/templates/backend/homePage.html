@@ -2,10 +2,33 @@
 <html>
 <head>
     {% load static %}
-    <title>Ecomon Home</title>
+    <!-- leaflet css -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+
+    <!-- leaflet js -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
     <link rel="stylesheet" href="{% static 'css/backend/homePage.css' %}">
+
+    <!-- local js -->
+    <script src="{% static 'js/backend/homePage.js' %}"></script>
+    
+    <title>Ecomon Home</title>
 </head>
 <body>
+    <div id="map"></div>
+
+    <!-- locate button -->
+    <div id="locateButton-container">
+        <a>
+            <button class="button" id="locateButton"><img src="{% static 'images/backend/homePage/userLocationMarker.png' %}" alt="Center Position"></button>
+        </a>
+    </div>
+
+    <!-- Bottom row buttons -->
     <div class="buttons-container">
         <!-- packs button -->
         <a href="/packs">
