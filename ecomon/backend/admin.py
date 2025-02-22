@@ -7,8 +7,10 @@ from .models import Team, Card, Gym, PlayerCards, Achievement, PlayerAchievement
 
 admin.site.register(Team)
 admin.site.register(Card)
-admin.site.register(Gym)
 admin.site.register(PlayerAchievements)
 admin.site.register(PlayerCards)
 admin.site.register(Achievement)
-
+class GymAdmin(admin.ModelAdmin):
+    '''Admin View for Gym'''
+    readonly_fields = ('id',)
+admin.site.register(Gym, GymAdmin)
