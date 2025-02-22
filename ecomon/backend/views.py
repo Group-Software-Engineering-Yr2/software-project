@@ -119,22 +119,22 @@ def opening_pack(request):
     return render(request, 'backend/packs/opening_pack.html', {'card_images': card_images})
 
 
-# @login_required
+@login_required
 def render_scanner(request):
     return render(request, 'backend/scanner.html')
 
-# @login_required
+@login_required
 def render_gym_battle(request, gym_id):
     return render(request, "backend/gym_battle.html", {"gym_id": gym_id})
 
-<<<<<<< HEAD
+
+@login_required
 def get_gym_locations(request):
     gyms = Gym.objects.all()
     gym_data = [{"name": gym.name, "latitude": gym.latitude, "longitude": gym.longitude} for gym in gyms]
     return JsonResponse(gym_data, safe=False)
-=======
+
 @login_required
 def logout_view(request):
     logout(request)
     return redirect('/accounts/login')
->>>>>>> 9538d51924424efab0c54813cf70a0c7c336f290
