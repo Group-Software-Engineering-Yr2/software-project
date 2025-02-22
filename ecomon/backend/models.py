@@ -67,6 +67,3 @@ class PlayerAchievements(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
     date_unlocked = models.DateTimeField()
-
-# class Pack(models.Model):
-    
