@@ -26,7 +26,7 @@
                 <input type="email" name="email" placeholder="Email address" required>
                 <input type="password" name="password1" placeholder="Password" required>
                 <input type="password" name="password2" placeholder="Confirm Password" required>
-            
+                
                 <!-- Team Selection -->
                 <select name="team" required>
                     <option value="" disabled selected>Select your team</option>
@@ -34,13 +34,22 @@
                         <option value="{{ team.name }}">{{ team.name }}</option>
                     {% endfor %}
                 </select>
+
+                <input type="checkbox" id="privacyCheck" required>
+                <label for="privacyCheck">
+                    <a href="{% url 'privacy' %}">Agree To Privacy policy</a>
+                </label>
             
                 <button type="submit" class="submit">Sign Up</button>
                 <p class="login-text">Already have an account? 
                     <a class="login-link" href="{% url 'login-page' %}">Login</a>
                 </p>
+
+            
             </form>
         </div>
     </div>
+    
+
 </body>
 </html>

@@ -126,3 +126,6 @@ def render_login(request):
             messages.error(request, "Invalid email or password.")
 
     return render(request, "accounts/login.html")
+
+def render_privacy(request):
+    return render(request, "accounts/privacy.html")
