@@ -82,7 +82,7 @@ class LoginView(APIView):
 
 def render_sign_up(request):
     '''Render sign-up page and handle user registration'''
-    teams = Team.objects.all()
+    teams = Team.objects.filter(user_selectable=True)
 
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
@@ -126,3 +126,6 @@ def render_login(request):
             messages.error(request, "Invalid email or password.")
 
     return render(request, "accounts/login.html")
+
+def render_privacy(request):
+    return render(request, "accounts/privacy.html")

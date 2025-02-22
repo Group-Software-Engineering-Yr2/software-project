@@ -93,6 +93,11 @@ select:valid {
     color: black;
 }
 
+#privacyCheck{
+    width: 20px;
+
+}
+
 /* .plant {
     top: 50%; */
     /* transform: translateY(-50%); */
