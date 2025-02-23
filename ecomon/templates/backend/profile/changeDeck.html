@@ -60,15 +60,17 @@
                 <table>
                     <tr>
                     {% for player_card in player_cards %}
-                        <td>
-                            <label class="card-select">
-                                <input type="checkbox" name="selected_cards" value="{{ player_card.card.name }}" 
-                                       onclick="limitSelections(this)" 
-                                       {% if player_card.card.name in deck_cards %}checked{% endif %}>
-                                <img src="{% static 'images/cards/'|add:player_card.card.name|replace_space|add:'.png' %}" 
-                                     alt="{{ player_card.card.name }}">
-                            </label>
-                        </td>
+                        {% if not player_card.in_gym %}
+                            <td>
+                                <label class="card-select">
+                                    <input type="checkbox" name="selected_cards" value="{{ player_card.card.name }}" 
+                                        onclick="limitSelections(this)" 
+                                        {% if player_card.card.name in deck_cards %}checked{% endif %}>
+                                    <img src="{% static 'images/cards/'|add:player_card.card.name|replace_space|add:'.png' %}" 
+                                        alt="{{ player_card.card.name }}">
+                                </label>
+                            </td>
+                        {% endif %}
                     {% endfor %}
                     </tr>
                 </table>
