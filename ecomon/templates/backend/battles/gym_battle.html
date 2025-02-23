@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta viewport="width=device-width, initial-scale=1.0">
     <title>Gym Battle</title>
+    <!-- JavaScript Variables Retrieved From Backend -->
     <script type="text/javascript">
         let activePlayerCard = JSON.parse('{{ player_deck_card1 | safe }}');
         let playerCardSlot1 = JSON.parse('{{ player_deck_card2 | safe }}');
@@ -17,12 +18,15 @@
         let opponent = '{{ gym_owning_player }}';
         let gymID = '{{ gym_id }}';
     </script>
+    <!-- JavaScript Using the Variables -->
     <script src="{% static 'js/backend/battles/gymBattle.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/backend/gymBattle.css' %}">
 </head>
 
 <body>
+    <!-- Container for entire battle content -->
     <div class="battle-content">
+        <!-- Container for the players bench -->
         <div class="player-slots-container">
             <img src="{% static 'images/backend/battles/EMButton1-Photoroom.png' %}" alt="ECOMON Logo" class="logo">
             <p>Slot 1</p>
@@ -32,6 +36,7 @@
             <p>{{ username }}'s Bench</p>
         </div>
 
+        <!-- Container for the players active card and stats -->
         <div class="gym-battle-player-active">
             <div class="gym-battle-text">
                 <p>{{ username }}'s Active Card:
@@ -44,6 +49,7 @@
             </div>
         </div>
 
+        <!-- Container for the versus logo and the battle log -->
         <div class="versus-container">
             <div class="battle-log-container">
                 <p>Battle Log:</p>
@@ -53,6 +59,7 @@
             <img src="{% static 'images/backend/battles/versus.png' %}" alt="Verses Logo" class="vs-logo">
         </div>
 
+        <!-- Container for the opponents active card and stats -->
         <div class="gym-battle-opponent-active">
             <div class="gym-battle-text">
                 <p>{{ gym_owning_player }}'s Active Card:
@@ -65,6 +72,7 @@
             </div>
         </div>
 
+        <!-- Container for the opponents bench -->
         <div class="opponent-slots-container">
             <p>Slot 1</p>
             <img id="opponent-slot-1-icon" alt="Deck Card 2" class="slot-card">
@@ -73,6 +81,7 @@
             <p>{{ gym_owning_player }}'s Bench</p>
         </div>
 
+         <!-- Container for the opponents bench -->
         <div class="action-buttons">
             <button id="player-move-1" class="action-button ability-1">
                 <span id="ability-power-1" class="ability-power1"></span>

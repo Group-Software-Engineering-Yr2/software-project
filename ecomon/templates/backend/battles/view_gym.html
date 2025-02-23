@@ -6,7 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>View Gym Battle</title>
         <link rel="stylesheet" href="{% static 'css/backend/battles/viewGym.css' %}">
+        <!-- CSS link for the back button -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <!-- JavaScript Variables Retrieved From Backend -->
         <script type="text/javascript">
             let gymLatitude = "{{ gym_latitude }}";
             let gymLongitude = "{{ gym_longitude }}";
@@ -14,16 +16,20 @@
             let gymTeam = "{{ gym_team }}";
             let playerTeam = "{{ owning_player_team }}";
         </script>
+        <!-- JavaScript Using the Variables -->
         <script src="{% static 'js/backend/battles/viewGym.js' %}"></script>
     </head>
     <body>
+        <!-- Main container that will showcase all relevant information to user -->
         <div class="gym-content">
+            <!-- Header of the content (images) -->
             <div class="gym-images">
                 <img src="{{ gym_team_icon }}" alt="Gym Team Owner Logo" class="gym-owner-logo">
                 <img src="{% static 'images/backend/scanner/Ecomon1-removebg.png' %}" alt="ECOMON Logo" class="logo">
                 <img src="{{ gym_team_icon }}" alt="Gym Team Owner Logo" class="gym-owner-logo">
             </div>
 
+            <!-- All Gym Information Relating to The Specific Gym -->
             <div class="gym-info">
                 <span class="gym-desc">Gym Name: <a id ="gym-name-value" class="gym-value">{{ gym_name }}</a></span>
                 <span class="gym-desc">Owning Team: <a id ="gym-player-value" class="gym-value">{{ gym_team }}</a></span>
@@ -32,10 +38,13 @@
                 <span class="gym-desc">Cooldown: <a id="gym-cooldown-value" class="gym-value" data-cooldown="{{ gym_cooldown }}"></a></span>
             </div>
 
+            <!-- Just a line for separation of content -->
             <hr class="line">
 
+            <!-- Div which holds the information of the players deck -->
             <div class="player-deck">
                 <a class="deck-title">Your Current Deck Loadout:</a>
+                <!-- Div which shows the images of the cards -->
                 <div class="deck-cards">
                     {% if player_deck_card1 %}
                         <img src="{{ player_deck_card1 }}" alt="Deck Card 1" class="deck-card">
@@ -58,6 +67,7 @@
             </div>
         </div>
 
+        <!-- Div to show the buttons that the user can interact with -->
         <div class="buttons-section">
             <a href="/home" class="button back-button">
                 <i class="fas fa-arrow-left"></i>

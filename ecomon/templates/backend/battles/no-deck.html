@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="{% static 'css/backend/battles/noDeck.css' %}">
 </head>
 <body>
+    <!-- Main container that holds all information displayed to user -->
     <div class="container">
         <img src="{% static 'images/backend/battles/Ecomonlogo.png' %}" alt="ECOMON Logo" class="logo">
             <h2> <span style="color: red;">Error: Battle Deck Not Found</span></h2>
             <p>Unfortunately, you do not have a set deck of 3 cards so you cannot battle this gym.</p>
             <p>Please go to the profile page and select your battle deck!</p>
 
+            <!-- Button to redirect user to profile page -->
             <div class="buttons" style="display: flex; justify-content: center;">
                 <a href="/profile" class="button">Profile Page</a>
             </div>
