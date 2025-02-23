@@ -28,6 +28,21 @@ class Card(models.Model):
     health_points = models.IntegerField()
     fact = models.CharField(max_length=200)
 
+    def to_json(self):
+        '''Return the card as a json object'''
+        return {
+            'name': self.name,
+            'image': self.image.url,
+            'card_type': self.card_type,
+            'ability_name_1': self.ability_name_1,
+            'ability_power_1': self.ability_power_1,
+            'ability_name_2': self.ability_name_2,
+            'ability_power_2': self.ability_power_2,
+            'ability_self_power_2': self.ability_self_power_2,
+            'health_points': self.health_points,
+            'fact': self.fact
+        }
+
 class Gym(models.Model):
     '''
     Gym database model

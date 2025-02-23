@@ -190,9 +190,9 @@ def render_gym_battle(request, gym_id):
         username = request.user.username
         
         # Retrieve PlayerCards objects
-        player_deck_card1 = profile.deck_card_1.card if profile and profile.deck_card_1 else None
-        player_deck_card2 = profile.deck_card_2.card if profile and profile.deck_card_2 else None
-        player_deck_card3 = profile.deck_card_3.card if profile and profile.deck_card_3 else None
+        player_deck_card1 = profile.deck_card_1 if profile and profile.deck_card_1 else None
+        player_deck_card2 = profile.deck_card_2 if profile and profile.deck_card_2 else None
+        player_deck_card3 = profile.deck_card_3 if profile and profile.deck_card_3 else None
         
 
         context = {
