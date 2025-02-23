@@ -3,17 +3,12 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from django.templatetags.static import static
 from accounts.player_service import get_player_deck, has_deck, add_players_pack
 from accounts.models import Profile
 from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards
 from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown
 from .bin_service import is_bin_full, increment_wrapper_count
 from .models import Gym
-import json
-from .models import Card, PlayerCards, Gym
-from django.contrib.auth import logout
-from .models import Card, PlayerCards, Gym
 
 
 @login_required
@@ -101,22 +96,28 @@ def index(request):
 def open_pack(request):
     ''' Checks if there is a pack to open and shows the user confirmation'''
     pack_count = get_pack_count(request.user)
+    # Check if the user's bin is full
+    if is_bin_full(request.user):
+        return render(request, 'backend/packs/bin_full.html')
     # If packs simulate the packs and display to user
     if pack_count > 0:
         return render(request, 'backend/packs/open_pack.html', {'pack_count': pack_count})
     return render(request, 'backend/packs/nopacks.html')
 
-@login_required
 def opening_pack(request):
     '''
     Actual logic for opening a pack
     '''
+    # If the user has a pack
     pack_count = get_pack_count(request.user)
     if pack_count <= 0:
         return redirect('/packs')
 
-    # If the user has a pack
-
+    # If there bin is full
+    if is_bin_full(request.user):
+        return redirect('/packs')
+    # Increment the wrapper
+    increment_wrapper_count(request.user)
     # Generate the cards
     pack_cards = generate_pack()
     # Add the cards to the user's collection (PlayerCards)
@@ -252,7 +253,7 @@ def completed_gym_battle(request):
     if did_win == 'true':
         player_collection_cards = get_player_deck(request.user)
         # Set the gym's cards & update the player's cards in use
-        update_gym_cards(player_collection_cards, gym)
+        update_gym_cards(request.user,player_collection_cards, gym)
         # Update the owning player
         update_owning_player(gym, request.user)
         # Update the cooldown of the gym
