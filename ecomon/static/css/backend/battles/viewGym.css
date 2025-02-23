@@ -13,8 +13,9 @@ html {
     width: 800px;
     margin: 0 auto;
     padding-bottom: 15px;
-    margin-top: 20px;
+    margin-top: 10px;
     box-sizing: border-box;
+    /* max-height: 680px; */
 }
 
 .gym-images {
@@ -39,7 +40,6 @@ html {
 }
 
 .logo {
-    /*  */
     width: 80%;
     min-width: 250px;
     max-width: 400px;
@@ -59,7 +59,6 @@ html {
     color:#84C44C;
     font-weight: bold;
     font-size: 18px;
-    /* font-size: clamp(14px, 2vw, 18px); */
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -86,7 +85,6 @@ html {
 .deck-title {
     color: #144E3F;
     font-weight: bold;
-    /* font-size: clamp(16px, 2vw, 20px); */
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -116,7 +114,7 @@ html {
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    margin-top: 20px;
+    margin-top: 15px;
     gap: 20px;
     position: relative;
 }
