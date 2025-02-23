@@ -181,6 +181,7 @@ def render_gym_view(request, gym_id):
             "gym_longitude": gym.longitude,
         }
     except Gym.DoesNotExist:
+        # Redirect to gym not found page
         return redirect('gym-not-found')
 
     return render(request, "backend/battles/view_gym.html", context)
@@ -188,6 +189,7 @@ def render_gym_view(request, gym_id):
 @login_required
 def render_gym_battle(request, gym_id):
     '''Endpoint after player starts a battle with a gym'''
+    # Get the gym object and player's profile
     try:
         gym = Gym.objects.get(id=gym_id)
         profile = Profile.objects.filter(user=request.user).first()
@@ -198,7 +200,7 @@ def render_gym_battle(request, gym_id):
         player_deck_card2 = profile.deck_card_2 if profile and profile.deck_card_2 else None
         player_deck_card3 = profile.deck_card_3 if profile and profile.deck_card_3 else None
         
-
+        # Context variables to pass to the template
         context = {
             "gym_id": gym_id,
             "username": username,
@@ -210,7 +212,9 @@ def render_gym_battle(request, gym_id):
             "player_deck_card2": json.dumps(player_deck_card2.to_json()),
             "player_deck_card3": json.dumps(player_deck_card3.to_json())
         }
+
     except Gym.DoesNotExist:
+        # Redirect to gym not found page
         return redirect('gym-not-found')
     
     return render(request, "backend/battles/gym_battle.html", context)
@@ -226,13 +230,15 @@ def completed_gym_battle(request):
     Example Request:
     host/gym-battle-completed?did_win=true&gym_id=1
     '''
+    # Get the GET parameters
     did_win = request.GET.get('did_win')
     gym_id = request.GET.get('gym_id')
 
+    # Ensure the required parameters are present
     if not did_win or not gym_id:
         return redirect('missing-battle-condition')
     else:
-        # Get the gym
+        # Get the gym object and user's profile with context variables
         try:
             gym = Gym.objects.get(id=gym_id)
             username = request.user.username
@@ -251,6 +257,7 @@ def completed_gym_battle(request):
                 "gym_previous_owner_team": gym_previous_owner_team
             }
 
+        # If the gym is not found, redirect to the gym not found page
         except Gym.DoesNotExist:
             return redirect('gym-not-found/')
     
