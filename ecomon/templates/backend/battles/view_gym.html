@@ -69,9 +69,6 @@
 
         <!-- Div to show the buttons that the user can interact with -->
         <div class="buttons-section">
-            <a href="/home" class="button back-button">
-                <i class="fas fa-arrow-left"></i>
-            </a>
             {% if player_deck_card1 and player_deck_card2 and player_deck_card3 %}
                 <button id="start-battle" class="button">Start Battle</button>
                 <button id="edit-deck" class="button" onclick="window.location.href='/change_deck'">Edit Deck</button>
@@ -80,5 +77,8 @@
                 <button id="edit-deck" class="button" onclick="window.location.href='/change_deck'">Edit Deck</button>
             {% endif %}
         </div>
+        <a href="/home" class="button back-button">
+            <i class="fas fa-arrow-left"></i>
+        </a>
     </body>
 </html>
