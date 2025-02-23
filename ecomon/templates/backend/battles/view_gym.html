@@ -5,17 +5,16 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>View Gym Battle</title>
-        <link rel="stylesheet" href="{% static 'css/backend/viewGym.css' %}">
+        <link rel="stylesheet" href="{% static 'css/backend/battles/viewGym.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <script type="text/javascript">
             let gymLatitude = "{{ gym_latitude }}";
             let gymLongitude = "{{ gym_longitude }}";
-            // let gymRadius = "{{ gym_radius }}";
             let gymID = "{{ gym_id }}";
             let gymTeam = "{{ gym_team }}";
             let playerTeam = "{{ owning_player_team }}";
         </script>
-        <script src="{% static 'js/backend/viewGym.js' %}"></script>
+        <script src="{% static 'js/backend/battles/viewGym.js' %}"></script>
     </head>
     <body>
         <div class="gym-content">

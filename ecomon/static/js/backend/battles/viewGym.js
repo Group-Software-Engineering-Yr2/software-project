@@ -1,7 +1,7 @@
 //todo comment the shit out of this
 document.addEventListener("DOMContentLoaded", function () {
     const cooldownElement = document.getElementById("gym-cooldown-value");
-    const gymRadius = 500;
+    const gymRadius = 10000;
     if (cooldownElement) {
         let cooldownEndTime = parseInt(cooldownElement.getAttribute("data-cooldown"), 10);
         function formatTime(remainingSeconds) {

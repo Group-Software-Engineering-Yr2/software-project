@@ -10,7 +10,6 @@
         let activePlayerCard = JSON.parse('{{ player_deck_card1 | safe }}');
         let playerCardSlot1 = JSON.parse('{{ player_deck_card2 | safe }}');
         let playerCardSlot2 = JSON.parse('{{ player_deck_card3 | safe }}');
-
         let activeOpponentCard = JSON.parse('{{ gym_card1 | safe }}');
         let opponentCardSlot1 = JSON.parse('{{ gym_card2 | safe }}');
         let opponentCardSlot2 = JSON.parse('{{ gym_card3 | safe }}');
@@ -18,14 +17,14 @@
         let opponent = '{{ gym_owning_player }}';
         let gymID = '{{ gym_id }}';
     </script>
-    <script src="{% static 'js/backend/gymBattle.js' %}"></script>
+    <script src="{% static 'js/backend/battles/gymBattle.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/backend/gymBattle.css' %}">
 </head>
 
 <body>
     <div class="battle-content">
         <div class="player-slots-container">
-            <img src="{% static 'images/EMButton1-Photoroom.png' %}" alt="ECOMON Logo" class="logo">
+            <img src="{% static 'images/backend/battles/EMButton1-Photoroom.png' %}" alt="ECOMON Logo" class="logo">
             <p>Slot 1</p>
             <img id="player-slot-1-icon" alt="Deck Card 2" class="slot-card">
             <p>Slot 2</p>
@@ -48,10 +47,10 @@
         <div class="versus-container">
             <div class="battle-log-container">
                 <p>Battle Log:</p>
-                <div id="battle-log" class="battle-log" style="overflow-y: scroll; height: 200px;">
+                <div id="battle-log" class="battle-log" style="overflow-y: scroll; height: 200px;"">
                 </div>
             </div>
-            <img src="{% static 'images/versus.png' %}" alt="Verses Logo" class="vs-logo">
+            <img src="{% static 'images/backend/battles/versus.png' %}" alt="Verses Logo" class="vs-logo">
         </div>
 
         <div class="gym-battle-opponent-active">
