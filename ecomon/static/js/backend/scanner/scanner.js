@@ -1,16 +1,21 @@
+// Initialize the HTML5 QR Code scanner
+// This script is used to initialize the HTML5 QR Code scanner and handle the scanning process.
 let html5QrCode = new Html5Qrcode("reader");
 let isScanning = false;
 
+// Function to handle the scanned URL (successful scan)
 function onScanSuccess(decodedText, decodedResult) {
     console.log(`Scanned URL: ${decodedText}`, decodedResult);
     // Directly use the scanned URL for redirection
     window.location.href = decodedText;
 }
 
+// Function to handle the scan failure
 function onScanFailure(error) {
     console.warn(`Scan error: ${error}`);
 }
 
+// Function to start the scanner
 function startScanner() {
     if (isScanning) return;
 
@@ -39,11 +44,11 @@ function startScanner() {
     });
 }
 
+// Function to stop the scanner
 function stopScanner() {
     if (!isScanning) return;
 
     html5QrCode.stop().then(() => {
-        console.log("Scanner stopped.");
         isScanning = false;
         document.getElementById("logo-and-text").style.display = "block";
         document.getElementById("start-scanner").style.display = "block";
@@ -56,6 +61,7 @@ function stopScanner() {
     });
 }
 
+// Function to check if the uploaded file is a valid image
 function isValidImage(file) {
     const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
     return validTypes.includes(file.type);
