@@ -8,7 +8,7 @@ from accounts.models import Profile
 from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards
 from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown
 from .bin_service import is_bin_full, increment_wrapper_count
-from .models import Gym
+from .models import Gym, Card, PlayerCards
 
 
 @login_required
@@ -255,7 +255,7 @@ def completed_gym_battle(request):
         # Set the gym's cards & update the player's cards in use
         update_gym_cards(request.user,player_collection_cards, gym)
         # Update the owning player
-        update_owning_player(gym, request.user)
+        update_owning_player(request.user,gym)
         # Update the cooldown of the gym
         update_cooldown(gym)
         # Add a pack to the user's profile
