@@ -1,4 +1,5 @@
 # Software Project
+# Software Project
 
 # Useful Links
 
@@ -43,6 +44,18 @@ Ensure cron jobs are added. May need to run twice:
 To run cron jobs locallyL
 
 `python3 manage.py crontab run {id}`
+
+# License
+
+# Members
+
+-   Adam O'Neill
+-   Lorenzo Meixieira
+-   Callum Ward
+-   Jake Mcallister
+-   Boris Cheung
+-   Angelo Thind
+-   Finay Fordham
 
 # License
 
