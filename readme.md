@@ -1,34 +1,8 @@
-# Ecomon
-
-## Group Team Beep
-
--   Adam O'Neill
--   Lorenzo Meixieira
--   Callum Ward
--   Jake Mcallister
--   Boris Cheung
--   Angelo Thind
--   Finay Fordham
+# Software Project
 
 # Useful Links
 
-## Process Documents
-
 https://trello.com/b/wzoUYlVk/group-software-project
-
-We have taken regular snapshots of the kanban board in trello to archive our progress. `/kanban_screenshots` directory
-
-Within process documents we have also included the meeting notes, agenda and minutes. **todo insert the dir**
-
-## Technical Documents
-
-Our technical documents are primarily managed on the github system. https://github.com/Group-Software-Engineering-Yr2/software-project
-
-Other technical docs are in **todo insert dir**
-
-## PRODUCT DOCUMENTS
-
-The UI and design documents for the client have also been archived in **todo insert dir**
 
 # Project
 
@@ -69,3 +43,15 @@ Ensure cron jobs are added. May need to run twice:
 To run cron jobs locallyL
 
 `python3 manage.py crontab run {id}`
+
+# License
+
+# Members
+
+-   Adam O'Neill
+-   Lorenzo Meixieira
+-   Callum Ward
+-   Jake Mcallister
+-   Boris Cheung
+-   Angelo Thind
+-   Finay Fordham

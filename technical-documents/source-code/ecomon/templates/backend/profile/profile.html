@@ -18,7 +18,7 @@
     <div class = "Buttons">
         <div class="backButton">
             <a href="/home">
-                <i class="fas fa-arrow-left"></i>
+                <i id="backButton" class="fas fa-arrow-left"></i>
             </a>
         </div>
         <div class="logoutButton">
@@ -93,7 +93,7 @@
                     </tr>
             </table>
         </div>
-        <a href="{% url 'change_deck' %}">
+        <a class="change-deck-text" href="{% url 'change_deck' %}">
             <div class = "DeckButton">
                 <button type="button">Change Deck</button>
             </div>

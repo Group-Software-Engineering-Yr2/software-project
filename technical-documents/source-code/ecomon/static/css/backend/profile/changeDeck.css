@@ -143,3 +143,7 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #144E3F;
 }
+
+.back-button {
+    color: white;
+}

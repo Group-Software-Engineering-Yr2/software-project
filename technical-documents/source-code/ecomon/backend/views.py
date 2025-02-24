@@ -42,6 +42,12 @@ def profile(request):
 
 @login_required
 def change_deck(request):
+    referer = request.META.get("HTTP_REFERER")
+
+    # Store referrer only if it's not `change_deck` itself
+    if referer and "change_deck" not in referer:
+        request.session["original_referrer"] = referer
+
     cards = Card.objects.all().order_by('card_type')
     players_cards = PlayerCards.objects.filter(player=request.user)
     deck_card_1 = request.user.profile.deck_card_1
@@ -55,6 +61,7 @@ def change_deck(request):
         "deck_card_1": deck_card_1,
         "deck_card_2": deck_card_2,
         "deck_card_3": deck_card_3,
+        "previous_page": request.session.get("original_referrer", "/view-gym")
     }
     return render(request, 'backend/profile/changeDeck.html', context)
 
@@ -80,10 +87,12 @@ def update_deck(request):
                 user_profile.deck_card_3 = card
                 
         user_profile.save()
+
+        # Get stored referrer and remove from session to avoid looping
+        original_referrer = request.session.pop("original_referrer", "/view-gym")
+        return redirect(original_referrer)
             
     return redirect('change_deck')
-
-
 
 def index(request):
     '''Redirects user based on authentication status'''
