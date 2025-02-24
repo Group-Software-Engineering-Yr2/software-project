@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battle Condition Error</title>
+    <link rel="stylesheet" href="{% static 'css/backend/battles/missingCondition.css' %}">
+</head>
+<body>
+    <!-- Div that represents white background to hold information -->
+    <div class="container">
+        <img src="{% static 'images/backend/battles/Ecomonlogo.png' %}" alt="ECOMON Logo" class="logo">
+        <h2><span style="color: red;">Error: Missing Data</span></h2>
+        <p>Unfortunately, we are missing the required information to process battle result.</p>
+        <p>Please ensure both the win condition and gym ID are provided in the url.</p>
+        <!-- Button to send user back home -->
+        <div class="buttons">
+            <a href="/home" class="button">Home Page</a>
+        </div>
+    </div>
+</body>
+</html>

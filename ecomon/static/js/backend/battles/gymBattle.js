@@ -1,0 +1,442 @@
+// Wait for the DOM to be fully loaded before executing the code
+document.addEventListener('DOMContentLoaded', function() {
+    // Initializing the start variables and rendering the cards
+    setPlayerActiveCard(activePlayerCard);
+    setPlayerCardSlot1(playerCardSlot1);
+    setPlayerCardSlot2(playerCardSlot2);
+    setOpponentActiveCard(activeOpponentCard);
+    setOpponentCardSlot1(opponentCardSlot1);
+    setOpponentCardSlot2(opponentCardSlot2);
+    // Assuming player goes first in this iteration
+    isPlayerTurn = true;
+
+    // Add event listeners for button clicks on the HTML page
+    // Player move 1
+    document.getElementById('player-move-1').addEventListener('click', function() {
+        // Check if it is the player's turn
+        if (isPlayerTurn) {
+            // Handle player's turn if the first move button is clicked
+            handlePlayerTurn(1);
+        }
+    });
+
+    // Player move 2
+    document.getElementById('player-move-2').addEventListener('click', function() {
+        // Check if it is the player's turn
+        if (isPlayerTurn) {
+            // Handle player's turn if the first move button is clicked
+            handlePlayerTurn(2);
+        }   
+    });
+
+    // Player retreat 1
+    document.getElementById('player-retreat-1').addEventListener('click', function() {
+        // Check if it is the player's turn
+        if (isPlayerTurn) {
+            // Check if the card in slot 1 is alive, if true, process the retreat
+            if (playerCardSlot1.health_points > 0) {
+                handlePlayerTurn(3);
+                setPlayerActiveCard(playerCardSlot1);
+                setPlayerCardSlot1(activePlayerCard);
+                let temp = activePlayerCard;
+                activePlayerCard = playerCardSlot1;
+                playerCardSlot1 = temp;
+            } else {
+                alert("Unable to retreat, the card in Slot 1 is dead!");
+            }
+        }
+    });
+
+    // Player retreat 2
+    document.getElementById('player-retreat-2').addEventListener('click', function() {     
+        // Check if it is the player's turn
+        if (isPlayerTurn) {
+            // Check if the card in slot 2 is alive, if true, process the retreat
+            if (playerCardSlot2.health_points > 0) {
+                handlePlayerTurn(4);
+                setPlayerActiveCard(playerCardSlot2);
+                setPlayerCardSlot2(activePlayerCard);
+                let temp = activePlayerCard;
+                activePlayerCard = playerCardSlot2;
+                playerCardSlot2 = temp;
+            } else {
+                alert("Unable to retreat, the card in Slot 2 is dead!");
+            }   
+        } 
+    });
+});
+
+// Function to set the player's active card on the HTML page
+function setPlayerActiveCard(card){
+    document.getElementById('player-active-card-icon').src = card.image;
+    document.getElementById('player-hp').textContent = `HP: ${card.health_points}`;
+    document.getElementById('player-active-card-name').textContent = card.name;
+    document.getElementById('player-move-1').textContent = card.ability_name_1 + ": " + card.ability_power_1 + " Damage";
+    // Check if the second sustainAbility is a damage move only
+    if (card.ability_power_2 > 0 && card.ability_self_power_2 == 0) {
+        document.getElementById('player-move-2').textContent = card.ability_name_2 + ": " + card.ability_power_2 + " Damage";
+    // Check if the second sustainAbility is a heal and damage move
+    } else if (card.ability_power_2 > 0 && card.ability_self_power_2 > 0) {
+        document.getElementById('player-move-2').textContent = card.ability_name_2 + ": " + card.ability_power_2 + " Damage and +" + card.ability_self_power_2 + " Health";
+    // Otherwise its a heal move only
+    } else {
+        document.getElementById('player-move-2').textContent = card.ability_name_2 + ": +" + card.ability_self_power_2 + " Health";
+    }
+    document.getElementById('player-retreat-1').textContent = "Retreat "+ card.name + " for Bench Card 1";
+    document.getElementById('player-retreat-2').textContent = "Retreat "+ card.name + " for Bench Card 2";
+}
+
+//Function to set the player's card in slot 1 on the HTML page
+function setPlayerCardSlot1(card){
+    document.getElementById('player-slot-1-icon').src = card.image;
+}
+
+//Function to set the player's card in slot 2 on the HTML page
+function setPlayerCardSlot2(card){
+    document.getElementById('player-slot-2-icon').src = card.image;
+}
+
+//Function to set the opponent's active card on the HTML page
+function setOpponentActiveCard(card){
+    document.getElementById('opponent-active-card-icon').src = card.image;
+    document.getElementById('opponent-hp').textContent = `HP: ${card.health_points}`;
+    document.getElementById('opponent-active-card-name').textContent = card.name;
+}
+
+//Function to set the opponent's card in slot 1 on the HTML page
+function setOpponentCardSlot1(card){
+    document.getElementById('opponent-slot-1-icon').src = card.image;
+}
+
+//Function to set the opponent's card in slot 2 on the HTML page
+function setOpponentCardSlot2(card){
+    document.getElementById('opponent-slot-2-icon').src = card.image;
+}
+
+// Handle player's turn
+function handlePlayerTurn(moveChoice) {
+    // Initialize variables, change to opponents turn after player's turn, and set the battle log
+    isPlayerTurn = false; 
+    let battleLog = document.querySelector('.battle-log');
+    //Handles First Move Button Click (First sustainAbility)
+    if (moveChoice === 1) {
+        let result = activeOpponentCard.health_points - activePlayerCard.ability_power_1;
+        // If the opponent's health points are less than or equal to 0 after the players move, set the health points to 0 and update the HTML
+        if (result <= 0) {
+            result = 0;
+            activeOpponentCard.health_points = result;
+            document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+
+            // Add to battle log
+            battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_1 + ` for ${activePlayerCard.ability_power_1} damage!</p>`;
+            battleLog.scrollTop = battleLog.scrollHeight;
+            battleLog.innerHTML += `<p>` + opponent + `'s `+ activeOpponentCard.name + ` fainted!</p>`;
+            // Check if the opponent has any more cards, if not, the player wins
+            checkOpponentDeadCard();
+        // If the opponent's health points are greater than 0 after the players move, therefore active card not dead, update the health points and HTML
+        } else {
+            activeOpponentCard.health_points = result;
+            document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+
+            // Add to battle log
+            battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_1 + ` for ${activePlayerCard.ability_power_1} damage!</p>`;
+            battleLog.scrollTop = battleLog.scrollHeight;
+        }
+    //Handles Second Move Button Click (Second sustainAbility)
+    } else if (moveChoice === 2) {
+        // If the second sustainAbility is a damage move
+        if (activePlayerCard.ability_power_2 > 0 && activePlayerCard.ability_self_power_2 == 0) {
+            let result = activeOpponentCard.health_points - activePlayerCard.ability_power_2;
+            // If the opponent's health points are less than or equal to 0 after the players move, set the health points to 0 and update the HTML
+            if (result <= 0) {
+                result = 0;
+                activeOpponentCard.health_points = result;
+                document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+            
+                // Add to battle log
+                battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage!</p>`;
+                battleLog.scrollTop = battleLog.scrollHeight;
+                battleLog.innerHTML += `<p>` + opponent + `'s `+ activeOpponentCard.name + ` fainted!</p>`;
+                // Check if the opponent has any more cards, if not, the player wins
+                checkOpponentDeadCard();
+            // If the opponent's health points are greater than 0 after the players move, therefore active card not dead, update the health points and HTML
+            } else {
+                activeOpponentCard.health_points = result;
+                document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+
+                // Add to battle log
+                battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage!</p>`;
+                battleLog.scrollTop = battleLog.scrollHeight;
+            }
+        // If the second sustainAbility is a heal and damage move
+        } else if (activePlayerCard.ability_power_2 > 0 && activePlayerCard.ability_self_power_2 > 0) {
+            let result = activeOpponentCard.health_points - activePlayerCard.ability_power_2;
+            let selfResult = activePlayerCard.health_points + activePlayerCard.ability_self_power_2;
+            // If the opponent's health points are less than or equal to 0 after the players move, set the health points to 0 and update the HTML
+            if (result <= 0) {
+                result = 0;
+                // Update the health points for both the player and opponent
+                activeOpponentCard.health_points = result;
+                document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+                activePlayerCard.health_points = selfResult;
+                document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+
+                // Add to battle log
+                battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage and healed ${activePlayerCard.ability_self_power_2} health!</p>`;
+                battleLog.scrollTop = battleLog.scrollHeight;
+                battleLog.innerHTML += `<p>` + opponent + `'s `+ activeOpponentCard.name + ` fainted!</p>`;
+                // Check if the opponent has any more cards, if not, the player wins
+                checkOpponentDeadCard();
+            } else {
+                activeOpponentCard.health_points = result;
+                document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+                activePlayerCard.health_points = selfResult;
+                document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+
+                // Add to battle log
+                battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage and healed + ${activePlayerCard.ability_self_power_2} health!</p>`;
+                battleLog.scrollTop = battleLog.scrollHeight;
+            }
+        // If the second sustainAbility is a heal move only
+        } else {
+            // Update the health points for the player
+            let result = activePlayerCard.health_points + activePlayerCard.ability_self_power_2;
+            activePlayerCard.health_points = result;
+            document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+
+            // Add to battle log
+            battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` to heal ${activePlayerCard.ability_self_power_2} health!</p>`;
+            battleLog.scrollTop = battleLog.scrollHeight;
+
+        }
+    } else if (moveChoice === 3) {
+        // Handles retreat action for slot 1
+        battleLog.innerHTML += `<p>` + username + ` retreated `+ activePlayerCard.name +` for `+ playerCardSlot1.name +`!</p>`;
+        battleLog.scrollTop = battleLog.scrollHeight;
+    } else if (moveChoice === 4) {
+        // Handles retreat action for slot 2
+        battleLog.innerHTML += `<p>` + username + ` retreated `+ activePlayerCard.name +` for `+ playerCardSlot2.name +`!</p>`;
+        battleLog.scrollTop = battleLog.scrollHeight;
+    }
+
+    // Check game over & start opponent's turn after a delay to mimic the opponent's turn
+    if (!checkOpponentGameOver()) {
+        setTimeout(() => {
+            handleOpponentTurn();
+        }, 1000);
+    } else {
+        isPlayerTurn = true;
+    }
+}
+
+// Handle opponent's turn
+function handleOpponentTurn() {
+    // Initialize battle log and choose a random move for the opponent
+    let battleLog = document.querySelector('.battle-log');
+    const moveChoice = Math.random() < 0.5 ? 1 : 2;
+
+    // If the opponent randomly chooses the first move
+    if (moveChoice === 1) {
+        let result = activePlayerCard.health_points - activeOpponentCard.ability_power_1;
+        // If the player's health points are less than or equal to 0 after the opponent's move, set the health points to 0 and update the HTML
+        if (result <= 0) {
+            result = 0;
+            activePlayerCard.health_points = result;
+            document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+
+            // Add to battle log
+            battleLog.innerHTML += `<p>` + opponent + ` used `+ activeOpponentCard.ability_name_1 + ` for ${activeOpponentCard.ability_power_1} damage!</p>`;
+            battleLog.scrollTop = battleLog.scrollHeight;
+            battleLog.innerHTML += `<p>` + username + `'s `+ activePlayerCard.name + ` fainted!</p>`;
+            // Check if the player has any more cards, if not, the opponent wins
+            checkPlayerDeadCard();
+        } else {
+            activePlayerCard.health_points = result;
+            document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+
+            // Add to battle log
+            battleLog.innerHTML += `<p>` + opponent + ` used `+ activeOpponentCard.ability_name_1 + ` for ${activeOpponentCard.ability_power_1} damage!</p>`;
+            battleLog.scrollTop = battleLog.scrollHeight;
+        }
+    // If the opponent randomly chooses the second move
+    } else if (moveChoice === 2) {
+        // If the second sustainAbility is a damage move
+        if (activeOpponentCard.ability_power_2 > 0 && activeOpponentCard.ability_self_power_2 == 0) {
+            let result = activePlayerCard.health_points - activeOpponentCard.ability_power_2;
+            // If the player's health points are less than or equal to 0 after the opponent's move, set the health points to 0 and update the HTML
+            if (result <= 0) {
+                result = 0;
+                activePlayerCard.health_points = result;
+                document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+            
+                // Add to battle log
+                battleLog.innerHTML += `<p>` + opponent + ` used `+ activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage!</p>`;
+                battleLog.scrollTop = battleLog.scrollHeight;
+                battleLog.innerHTML += `<p>` + username + `'s `+ activePlayerCard.name + ` fainted!</p>`;
+                // Check if the player has any more cards, if not, the opponent wins
+                checkPlayerDeadCard();
+            } else {
+                activePlayerCard.health_points = result;
+                document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+            
+                // Add to battle log
+                battleLog.innerHTML += `<p>` + opponent + ` used `+ activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage!</p>`;
+                battleLog.scrollTop = battleLog.scrollHeight;
+            }
+        // If the second sustainAbility is a heal and damage move
+        } else if (activeOpponentCard.ability_power_2 > 0 && activeOpponentCard.ability_self_power_2 > 0) {
+            let result = activePlayerCard.health_points - activeOpponentCard.ability_power_2;
+            let selfResult = activeOpponentCard.health_points + activeOpponentCard.ability_self_power_2;
+            // If the player's health points are less than or equal to 0 after the opponent's move, set the health points to 0 and update the HTML
+            if (result <= 0) {
+                result = 0;
+                activePlayerCard.health_points = result;
+                document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+                activeOpponentCard.health_points = selfResult;
+                document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+
+                // Add to battle log
+                battleLog.innerHTML += `<p>` + opponent + ` used `+ activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage and healed ${activeOpponentCard.ability_self_power_2} health!</p>`;
+                battleLog.scrollTop = battleLog.scrollHeight;
+                battleLog.innerHTML += `<p>` + username + `'s `+ activePlayerCard.name + ` fainted!</p>`;
+                // Check if the player has any more cards, if not, the opponent wins
+                checkPlayerDeadCard();
+            } else {
+                activePlayerCard.health_points = result;
+                document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+                activeOpponentCard.health_points = selfResult;
+                document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+
+                // Add to battle log
+                battleLog.innerHTML += `<p>` + opponent + ` used `+ activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage and healed ${activeOpponentCard.ability_self_power_2} health!</p>`;
+                battleLog.scrollTop = battleLog.scrollHeight;
+            }
+        // If the second sustainAbility is a heal move only
+        } else {
+            let result = activeOpponentCard.health_points + activeOpponentCard.ability_self_power_2;
+            activeOpponentCard.health_points = result;
+            document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+
+            // Add to battle log
+            battleLog.innerHTML += `<p>` + opponent + ` used `+ activeOpponentCard.ability_name_2 + ` to heal ${activeOpponentCard.ability_self_power_2} health!</p>`;
+            battleLog.scrollTop = battleLog.scrollHeight;
+
+        }
+    }
+
+    // Check for game over and set back to player's turn
+    if (!checkPlayerGameOver()) {   
+        isPlayerTurn = true;
+    }  else {
+        isPlayerTurn = false;
+        setTimeout(() => {
+            handleOpponentTurn();
+        }, 1000);
+    }
+}
+
+// Function to check if the opponent's active card is dead, if so, swap with first slot card, if that
+// card is dead, swap with second slot card, if that card is dead, all cards are dead and the player wins
+function checkOpponentDeadCard() {
+    // Initialize battle log
+    let battleLog = document.querySelector('.battle-log');
+    // Checks if the opponent's card in slot 1 is alive, if true, process the swap
+    if (opponentCardSlot1.health_points > 0) {
+        setOpponentActiveCard(opponentCardSlot1);
+        setOpponentCardSlot1(activeOpponentCard);
+        let temp = activeOpponentCard
+        activeOpponentCard = opponentCardSlot1;
+        opponentCardSlot1 = temp;
+        document.getElementById('opponent-slot-1-icon').classList.add('card-dead');
+        battleLog.innerHTML += `<p>` + opponent + ` swapped `+ opponentCardSlot1.name + ` for ${activeOpponentCard.name}</p>`;
+        battleLog.scrollTop = battleLog.scrollHeight;
+
+    // Checks if the opponent's card in slot 2 is alive, if true, process the swap
+    } else if (opponentCardSlot2.health_points > 0) {
+        setOpponentActiveCard(opponentCardSlot2);
+        setOpponentCardSlot2(activeOpponentCard);
+        let temp = activeOpponentCard;
+        activeOpponentCard = opponentCardSlot2;
+        opponentCardSlot2 = temp;
+        document.getElementById('opponent-slot-2-icon').classList.add('card-dead');
+        battleLog.innerHTML += `<p>` + opponent + ` swapped `+ opponentCardSlot2.name + ` for ${activeOpponentCard.name}</p>`;
+        battleLog.scrollTop = battleLog.scrollHeight;
+
+    // If both cards are dead, the player wins    
+    } else {
+        document.getElementById('opponent-active-card-icon').classList.add('card-dead');
+        alert("Opponent has no more cards! You win!");
+        battleLog.innerHTML += `<p>` + opponent + ` has no more cards! You win!</p>`;
+        completeGymBattle(true, gymID);
+        disableButtons();
+    }
+}
+
+// Function to check if the player's active card is dead, if so, swap with first slot card, if that
+// card is dead, swap with second slot card, if that card is dead, all cards are dead and the player loses
+function checkPlayerDeadCard() {
+    // Initialize battle log
+    let battleLog = document.querySelector('.battle-log');
+    // Checks if the player's card in slot 1 is alive, if true, process the swap
+    if (playerCardSlot1.health_points > 0) {
+        setPlayerActiveCard(playerCardSlot1);
+        setPlayerCardSlot1(activePlayerCard);
+        let temp = activePlayerCard
+        activePlayerCard = playerCardSlot1;
+        playerCardSlot1 = temp;
+        document.getElementById('player-slot-1-icon').classList.add('card-dead');
+        battleLog.innerHTML += `<p>` + username + ` swapped `+ playerCardSlot1.name + ` for ${activePlayerCard.name}</p>`;
+        battleLog.scrollTop = battleLog.scrollHeight;
+
+    // Checks if the player's card in slot 2 is alive, if true, process the swap    
+    } else if (playerCardSlot2.health_points > 0) {
+        setPlayerActiveCard(playerCardSlot2);
+        setPlayerCardSlot2(activePlayerCard);
+        let temp = activePlayerCard;
+        activePlayerCard = playerCardSlot2;
+        playerCardSlot2 = temp;
+        document.getElementById('player-slot-2-icon').classList.add('card-dead');
+        battleLog.innerHTML += `<p>` + username + ` swapped `+ playerCardSlot2.name + ` for ${activePlayerCard.name}</p>`;
+        battleLog.scrollTop = battleLog.scrollHeight;
+
+    // If both cards are dead, the player loses    
+    } else {
+        document.getElementById('player-active-card-icon').classList.add('card-dead');
+        alert("Player has no more cards! You lost!");
+        battleLog.innerHTML += `<p>` + username + ` has no more cards! You lost!</p>`;
+        completeGymBattle(false, gymID);
+        disableButtons();
+    }
+}
+
+// Function to check if the opponent has no more cards, if so, the player wins
+function checkOpponentGameOver() {
+    if (opponentCardSlot1.health_points == 0 && opponentCardSlot2.health_points == 0 && activeOpponentCard.health_points == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Function to check if the player has no more cards, if so, the player loses
+function checkPlayerGameOver() {
+    if (playerCardSlot1.health_points == 0 && playerCardSlot2.health_points == 0 && activePlayerCard.health_points == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Function to disable all buttons after the game is over
+function disableButtons() {
+    document.getElementById('player-move-1').disabled = true;
+    document.getElementById('player-move-2').disabled = true;
+    document.getElementById('player-retreat-1').disabled = true;
+    document.getElementById('player-retreat-2').disabled = true;
+}
+
+// Function to complete the gym battle and redirect to the gym battle completed page
+function completeGymBattle(didWin, gymId) {
+    const url = `/gym-battle-completed?did_win=${didWin}&gym_id=${gymId}`;
+    window.location.href = url;
+}

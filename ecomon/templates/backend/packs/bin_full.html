@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/backend/packs/nopacks.css' %}">
+    <title>Bin Full!</title>
+</head>
+<body>
+     <!-- Back Button -->
+     <div class="back-button">
+        <a href="/home">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+
+   <section>
+        <h1>You're Bin Is Full!</h1>
+        <p>Go and visit a gym to empty your pack wrappers</p>
+        <button class="return-button">
+            <a href="/home">Return to Home</a>
+        </button>
+   </section>
+
+</body>
+</html>

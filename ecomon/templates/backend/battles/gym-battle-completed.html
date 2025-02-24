@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Battle Summary</title>
+    <link rel="stylesheet" href="{% static 'css/backend/battles/gymBattleCompleted.css' %}">
+</head>
+<body>
+    <!-- Main container which holds all content -->
+    <div class="container">
+        <img src="{% static 'images/backend/battles/Ecomonlogo.png' %}" alt="ECOMON Logo" class="logo">
+        <!-- Checks if the user won and displays relevant information if so -->
+        {% if did_win == "true" %}
+            <h2>Congratulations <span style="color: #84C44C; font-weight: bold;" id="username">{{ username }}!</span></h2>
+            <p>You defeated <span style="color: red; font-weight: bold;" id="gym_username">{{ gym_previous_owner }}</span> and <span style="color: red; font-weight: bold;" id="gym_username">Team {{ gym_previous_owner_team }}</span> and earned a winning mystery pack!</p>
+            <p>You now own <span style="color: #84C44C; font-weight: bold;" id="gym_name">{{ gym_name }}</span> and your battle deck is defending it!</p>
+            <p>Another gym won for <span style="color: #84C44C; font-weight: bold;" id="team_name">Team {{ user_team }}</span> - keep it up!</p>
+            <!-- Buttons to navigate to different pages -->
+            <div class="buttons">
+                <a href="/packs" class="button">Go to your Packs</a>
+                <a href="/home" class="button">Return to Home Page</a>
+            </div>
+        <!-- When user loses battle display this information -->
+        {% else %}
+            <h2> <span style="color: red;">Defeat</span></h2>
+            <p>Unfortunately, you were defeated by <span style="color: red; font-weight: bold;" id="gym_username">{{ gym_previous_owner }}</span> and did not earn a mystery pack.</p>
+            <p>Keep training and try again!</p>
+            <!-- Button to navigate to home page -->
+            <div class="buttons" style="display: flex; justify-content: center;">
+                <a href="/home" class="button">Home Page</a>
+            </div>
+        {% endif %}
+
+    </div>
+</body>
+</html>

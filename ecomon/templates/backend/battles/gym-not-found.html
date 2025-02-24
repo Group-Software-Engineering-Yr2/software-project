@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Battle Summary</title>
+    <link rel="stylesheet" href="{% static 'css/backend/battles/gymNotFound.css' %}">
+</head>
+<body>
+    <!-- Main container that holds all content displayed to player -->
+    <div class="container">
+        <img src="{% static 'images/backend/battles/Ecomonlogo.png' %}" alt="ECOMON Logo" class="logo">
+            <h2> <span style="color: red;">Error: Gym Not Found</span></h2>
+            <p>Unfortunately, the gym you are trying to access does not exist.</p>
+            <p>Please check the home page map and locate the available gyms to battle!</p>
+
+            <!-- Button to redirect player to home page -->
+            <div class="buttons" style="display: flex; justify-content: center;">
+                <a href="/home" class="button">Home Page</a>
+            </div>
+    </div>
+</body>
+</html>

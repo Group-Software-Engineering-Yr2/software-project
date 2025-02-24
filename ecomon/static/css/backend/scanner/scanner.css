@@ -36,6 +36,7 @@ body {
     margin-top: 10px;
     border: none;
     transition: background-color 0.3s ease;
+    font-weight: bold;
 }
 
 .scan-button:hover {
@@ -52,6 +53,7 @@ body {
     text-align: center;
     margin-top: 10px;
     transition: background-color 0.3s ease;
+    font-weight: bold;
 }
 
 .upload-button:hover {
@@ -125,12 +127,12 @@ body {
 .back-button a {
     background-color: #84C44C;
     color: white;     
-    padding: 10px 15px;        
-    text-decoration: none;
+    padding: 10px 15px;    
     border-radius: 5px;  
     display: inline-block;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s ease;
+    font-weight: bold;
 }
 
 /* Hover effect for the back icon */
