@@ -79,6 +79,10 @@ header {
     cursor: pointer;
 }
 
+#backButton{
+    color: white;
+}
+
 /* Profile section */
 .profile-container {
     display: flex;
@@ -194,4 +198,8 @@ header {
 
 .DeckButton button:hover {
     background-color: #45a049;
+}
+
+.change-deck-text {
+    text-decoration: none;
 }
