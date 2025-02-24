@@ -24,13 +24,13 @@ jobs:
 
             - name: Install Dependencies
               run: |
+                  cd technical-documents/source-code
                   python -m pip install --upgrade pip
                   pip install -r requirements.txt
-
             - name: Run Migrations and Tests
               env:
                   DJANGO_SETTINGS_MODULE: ecomon.settings
               run: |
-                  cd ecomon
+                  cd technical-documents/source-code/ecomon
                   python manage.py migrate
                   python manage.py test
