@@ -32,6 +32,8 @@ The UI and design documents for the client have also been archived in **todo ins
 
 # Project
 
+Project located in /technical-documents/source-code/ecomon
+
 ## Installation
 
 All requirements are serialized in requirements.txt
@@ -48,7 +50,7 @@ Then run the local development server
 
 `pyhton3 manage.py runserver`
 
-and navigate [here](https://localhost:8000/) to begin
+and navigate [here](http://localhost:8000/) to begin
 
 ## Custom Commands
 
