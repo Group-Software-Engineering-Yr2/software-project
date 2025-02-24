@@ -10,16 +10,19 @@
     </head>
 <body>
 
+    <!-- Back Button -->
     <div class="backButton">
         <a class="back-button" href="{{ previous_page }}">
             <i class="fas fa-arrow-left"></i>
         </a>
     </div>
 
+    <!-- Current Deck Container -->
     <div class = "Deck">
         <div class = "deckTitle">
             <p>Currently Selected Deck</p>
         </div>
+        <!-- Container that has deck cards -->
         <div class = "My Deck">
             <table>
                     <tr>
@@ -52,6 +55,7 @@
         </div>
     </div>
 
+    <!-- Cards Collection Container -->
     <div class="cards-selection">
         <h2>Your Cards</h2>
         <form method="POST" action="{% url 'update_deck' %}">
@@ -75,11 +79,14 @@
                     </tr>
                 </table>
             </div>
-            <button type="submit">Update Deck</button>
+            <!-- Button to Update Deck -->
+            <button type="submit" onclick=" return lessThanThree()">Update Deck</button>
         </form>
     </div>
     
+    <!-- Script to limit the amount of cards a player can select to 3 -->
     <script>
+    // Limit the amount of cards a player can select to 3
     function limitSelections(checkbox) {
         const maxAllowed = 3;
         let checkboxes = document.getElementsByName('selected_cards');
@@ -88,6 +95,16 @@
         if (checked.length > maxAllowed) {
             checkbox.checked = false;
         }
+    }
+
+    // Check if the player has selected 3 cards
+    function lessThanThree() {
+    let checked = document.querySelectorAll('input[name="selected_cards"]:checked');
+    if (checked.length < 3) {
+        alert("You must select 3 cards to update your deck.");
+        return false;
+    }
+    return true;
     }
     </script>
 </body>

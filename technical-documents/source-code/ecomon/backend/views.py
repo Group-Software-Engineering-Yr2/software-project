@@ -282,6 +282,11 @@ def completed_gym_battle(request):
             player_collection_cards = get_player_deck(request.user)
             # Set the gym's cards & update the player's cards in use
             update_gym_cards(request.user,player_collection_cards, gym)
+            # Clear the cards used by the player in the battle from their deck
+            request.user.profile.deck_card_1 = None
+            request.user.profile.deck_card_2 = None
+            request.user.profile.deck_card_3 = None
+            request.user.profile.save() 
             # Update the owning player
             update_owning_player(request.user,gym)
             # Update the cooldown of the gym
