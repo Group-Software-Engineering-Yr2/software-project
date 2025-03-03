@@ -13,6 +13,11 @@
     crossorigin=""></script>
     <link rel="stylesheet" href="{% static 'css/backend/home/homePage.css' %}">
 
+    <!-- Embedding gym locations -->
+    <script>
+        var gyms = {{ gyms|safe }};
+    </script>
+
     <!-- local js -->
     <script src="{% static 'js/backend/home/homePage.js' %}"></script>
     
