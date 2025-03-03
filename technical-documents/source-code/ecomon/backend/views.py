@@ -302,11 +302,12 @@ def completed_gym_battle(request):
             # Add a pack to the user's profile
             add_players_pack(request.user)
 
-        
+        # Increment use count for each card used in the battle
         for card in player_deck_cards:
             player_card = PlayerCards.objects.get(player=request.user, card=card)
             player_card.increment_use()
 
+        # Get the players cards and filter out the cards that have reached max uses
         players_cards = PlayerCards.objects.filter(player=request.user)
         # Check and remove cards that have reached max uses
         for player_card in players_cards:
