@@ -76,24 +76,22 @@
             <table>
                     <tr>
                         <td>
-                            
-
                             {% if deck_card_1 %}
-                                <img src="{% static 'images/cards/'|add:deck_card_1.name|replace_space|add:'.png' %}" alt="{{ deck_card_1.name }}">
+                                <img src="{{ deck_card_1.image.url }}" alt="{{ deck_card_1.name }}">
                             {% else %}
                                 <img src="{% static 'images/backend/profile/PlasticBlankBorder.png' %}" alt="Deck Card 1">
                             {% endif %}
                         </td>
                         <td>
                             {% if deck_card_2 %}
-                                <img src="{% static 'images/cards/'|add:deck_card_2.name|replace_space|add:'.png' %}" alt="{{ deck_card_2.name }}">
+                                <img src="{{ deck_card_2.image.url }}" alt="{{ deck_card_2.name }}">
                             {% else %}
                                 <img src="{% static 'images/backend/profile/PlasticBlankBorder.png' %}" alt="Deck Card 2">
                             {% endif %}
                         </td>
                         <td>
                             {% if deck_card_3 %}
-                                <img src="{% static 'images/cards/'|add:deck_card_3.name|replace_space|add:'.png' %}" alt="{{ deck_card_3.name }}">
+                                <img src="{{ deck_card_3.image.url }}" alt="{{ deck_card_3.name }}">
                             {% else %}
                                 <img src="{% static 'images/backend/profile/PlasticBlankBorder.png' %}" alt="Deck Card 3">
                             {% endif %}
@@ -122,7 +120,7 @@
                         <td>
                             {% with player_card=player_cards|findcard:card.name %}
                                 {% if player_card %}
-                                    <img src="{% static 'images/cards/'|add:card.name|replace_space|add:'.png' %}" alt="{{ card.name }}">
+                                    <img src="{{ card.image.url }}" alt="{{ card.name }}">
                                 {% else %}
                                     {% if card.card_type == 1 %}
                                         <img src="{% static 'images/backend/profile/PlasticBlankBorder.png' %}" alt="Plastic Border">
@@ -185,3 +183,4 @@
         </div>
     </div>
 </body>
+</html>

@@ -91,11 +91,10 @@ header {
     padding: 5px;
     transform: scale(0.8);
     transform-origin: center top;
-    margin-bottom: -50px; /* Reduce space below profile section even more */
+    margin-bottom: -50px;
 }
 
 .logo img,
-.profilepic img,
 .binimage img {
     height: 250px;
     width: auto;
@@ -106,13 +105,22 @@ header {
 }
 
 .profilepic img {
+    height: 250px;
+    width: auto;
     border-radius: 10px;
+    transition: transform 0.5s ease;
+}
+
+/* Profile pic spin effect on hover */
+.profilepic img:hover {
+    transform: rotate(360deg);
+    cursor: pointer;
 }
 
 /* Text styles */
 .details {
     text-align: center;
-    font-size: 25px;
+    font-size: 35px;
 }
 
 .binText {
@@ -165,6 +173,16 @@ header {
     width: 180px;
     height: auto;
     margin: 5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for obtained cards */
+.cardTable img:hover,
+.AchievmentsTable img:hover,
+.My.Deck img:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
 }
 
 /* Deck styles */

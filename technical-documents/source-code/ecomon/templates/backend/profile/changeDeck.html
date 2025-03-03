@@ -6,7 +6,6 @@
         <title>Ecomon Profile</title>
         <link rel="stylesheet" href="{% static 'css/backend/profile/changeDeck.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
     </head>
 <body>
 
@@ -18,39 +17,36 @@
     </div>
 
     <!-- Current Deck Container -->
-    <div class = "Deck">
-        <div class = "deckTitle">
+    <div class="Deck">
+        <div class="deckTitle">
             <p>Currently Selected Deck</p>
         </div>
         <!-- Container that has deck cards -->
-        <div class = "My Deck">
+        <div class="My Deck">
             <table>
-                    <tr>
-                        <td>
-                            
-    
-                            {% if deck_card_1 %}
-                                <img src="{% static 'images/cards/'|add:deck_card_1.name|replace_space|add:'.png' %}" alt="{{ deck_card_1.name }}">
-                            {% else %}
-                                <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 1">
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if deck_card_2 %}
-                                <img src="{% static 'images/cards/'|add:deck_card_2.name|replace_space|add:'.png' %}" alt="{{ deck_card_2.name }}">
-                            {% else %}
-                                <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 2">
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if deck_card_3 %}
-                                <img src="{% static 'images/cards/'|add:deck_card_3.name|replace_space|add:'.png' %}" alt="{{ deck_card_3.name }}">
-                            {% else %}
-                                <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 3">
-                            {% endif %}
-                        </td>
-                        
-                    </tr>
+                <tr>
+                    <td>
+                        {% if deck_card_1 %}
+                            <img src="{{ deck_card_1.image.url }}" alt="{{ deck_card_1.name }}">
+                        {% else %}
+                            <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 1">
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if deck_card_2 %}
+                            <img src="{{ deck_card_2.image.url }}" alt="{{ deck_card_2.name }}">
+                        {% else %}
+                            <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 2">
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if deck_card_3 %}
+                            <img src="{{ deck_card_3.image.url }}" alt="{{ deck_card_3.name }}">
+                        {% else %}
+                            <img src="{% static 'images/profile/PlasticBlankBorder.png' %}" alt="Deck Card 3">
+                        {% endif %}
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
@@ -70,7 +66,7 @@
                                     <input type="checkbox" name="selected_cards" value="{{ player_card.card.name }}" 
                                         onclick="limitSelections(this)" 
                                         {% if player_card.card.name in deck_cards %}checked{% endif %}>
-                                    <img src="{% static 'images/cards/'|add:player_card.card.name|replace_space|add:'.png' %}" 
+                                    <img src="{{ player_card.card.image.url }}" 
                                         alt="{{ player_card.card.name }}">
                                 </label>
                             </td>
@@ -80,7 +76,7 @@
                 </table>
             </div>
             <!-- Button to Update Deck -->
-            <button type="submit" onclick=" return lessThanThree()">Update Deck</button>
+            <button type="submit" onclick="return lessThanThree()">Update Deck</button>
         </form>
     </div>
     
@@ -99,12 +95,12 @@
 
     // Check if the player has selected 3 cards
     function lessThanThree() {
-    let checked = document.querySelectorAll('input[name="selected_cards"]:checked');
-    if (checked.length < 3) {
-        alert("You must select 3 cards to update your deck.");
-        return false;
-    }
-    return true;
+        let checked = document.querySelectorAll('input[name="selected_cards"]:checked');
+        if (checked.length < 3) {
+            alert("You must select 3 cards to update your deck.");
+            return false;
+        }
+        return true;
     }
     </script>
 </body>
