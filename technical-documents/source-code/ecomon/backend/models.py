@@ -98,6 +98,18 @@ class PlayerCards(models.Model):
         max_allowed = self.get_use_count()
 
         if self.use_count >= max_allowed:
+
+            #clears deck if card is deleted
+            profile = self.player.profile
+            if profile.deck_card_1 == self.card:
+                profile.deck_card_1 = None
+            if profile.deck_card_2 == self.card:
+                profile.deck_card_2 = None
+            if profile.deck_card_3 == self.card:
+                profile.deck_card_3 = None
+
+
+            profile.save()
             self.delete()
             return True
         return False
