@@ -95,7 +95,7 @@ class PlayerCards(models.Model):
         Check if the card is to be removed
         '''
 
-        max_allowed = self.get_max_uses()
+        max_allowed = self.get_use_count()
 
         if self.use_count >= max_allowed:
             self.delete()
