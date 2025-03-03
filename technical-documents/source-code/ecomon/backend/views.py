@@ -13,7 +13,8 @@ from .models import Gym, Card, PlayerCards
 
 @login_required
 def home(request):
-    return render(request, 'backend/home/homePage.html')
+    gyms = list(Gym.objects.values('name', 'latitude', 'longitude'))
+    return render(request, 'backend/home/homePage.html', {'gyms': gyms})
 
 @login_required
 def profile(request):

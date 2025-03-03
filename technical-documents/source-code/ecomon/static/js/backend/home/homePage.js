@@ -40,18 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // moving map to user location on startup
     map.on('locationfound', onLocationFound);
-    
-    
-    // getting all gym locations and adding markers
-    fetch('/get_gym_locations/')
-    .then(response => response.json())
-    .then(data => {
-            console.log(data);
-            data.forEach(gym => {
-                var marker = L.marker([gym.latitude, gym.longitude]).addTo(map);
-                marker.bindPopup(`<b>${gym.name}</b>`);
-            });
-        })
-        .catch(error => console.error('Error fetching gym locations:', error));
-    
+
+    // Getting all gym locations and adding markers (no AJAX)
+    gyms.forEach(gym => {
+        var marker = L.marker([gym.latitude, gym.longitude]).addTo(map);
+        marker.bindPopup(`<b>${gym.name}</b>`);
+    })   
 });
