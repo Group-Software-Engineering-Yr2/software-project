@@ -103,10 +103,9 @@ class PlayerCards(models.Model):
         return False
     
     def increment_use(self):
-        """Increment use count and check if card should be deleted"""
+        """Increment use count"""
         self.use_count += 1
         self.save()
-        return self.check_and_delete()
 
 
 
