@@ -39,3 +39,16 @@ def update_cooldown(gym:Gym):
     '''Updates the cooldown of the gym'''
     gym.cooldown = timezone.now() + timedelta(minutes=30)
     gym.save()
+
+def increase_win_count(user:User):
+    '''Increases the win count of the user'''
+    profile = Profile.objects.get(user=user)
+    profile.battles_won += 1
+    profile.save()
+
+def increase_bins_emptied(user.User):
+    '''Increases the bins emptied count of the user'''
+    profile = Profile.objects.get(user=user)
+    profile.bins_emptied += 1
+    profile.save()
+

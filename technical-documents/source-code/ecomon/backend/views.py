@@ -6,7 +6,7 @@ from django.contrib.auth import logout
 from accounts.player_service import get_player_deck, has_deck, add_players_pack
 from accounts.models import Profile
 from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards
-from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown
+from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown, increase_win_count, increase_bins_emptied
 from .bin_service import is_bin_full, increment_wrapper_count
 from .models import Gym, Card, PlayerCards
 
@@ -277,6 +277,9 @@ def completed_gym_battle(request):
         # Reset the user's wrapper count to 0
         reset_profile_wrappers(request.user)
 
+        # Also increase bins emptied count
+        increase_bins_emptied(request.user)
+
         # Process the result of the gym battle
         if did_win == 'true':
             player_collection_cards = get_player_deck(request.user)
@@ -293,6 +296,8 @@ def completed_gym_battle(request):
             update_cooldown(gym)
             # Add a pack to the user's profile
             add_players_pack(request.user)
+            #Increase the win count in the user's profile
+            increase_win_count(request.user)
 
         return render(request, 'backend/battles/gym-battle-completed.html', context)
 
