@@ -171,7 +171,7 @@
                                 <td>
                                     {% if user.profile.battles_won < 10 %}
                                         <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
-                                    {% elif user.profile.battles_won > 10 %}
+                                    {% elif user.profile.battles_won >= 10 %}
                                         <img src="{% static 'images/backend/profile/bronzemedal.png' %}" alt="Bronze Medal">
                                     {% endif %}
                                 </td>
@@ -204,7 +204,7 @@
                                 <td>
                                     {% if user.profile.bins_emptied < 10 %}
                                         <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
-                                    {% elif user.profile.bins_emptied > 10 %}
+                                    {% elif user.profile.bins_emptied >= 10 %}
                                         <img src="{% static 'images/backend/profile/bronzemedal.png' %}" alt="Bronze Medal">
                                     {% endif %}
                                 </td>
@@ -237,7 +237,7 @@
                                 <td>
                                     {% if user.profile.packs_opened < 10 %}
                                         <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
-                                    {% elif user.profile.packs_opened > 10 %}
+                                    {% elif user.profile.packs_opened >= 10 %}
                                         <img src="{% static 'images/backend/profile/bronzemedal.png' %}" alt="Bronze Medal">
                                     {% endif %}
                                 </td>
