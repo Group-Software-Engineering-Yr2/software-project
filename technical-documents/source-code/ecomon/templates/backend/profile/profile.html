@@ -69,7 +69,10 @@
         <!-- Div for Wrapper Bin Stats -->
         <div class="bin">
             <div class="binimage">
-                <img src="{% static 'images/backend/profile/binplaceholder.png' %}" alt="Bin Image">
+                <div class="bin-container">
+                    <img class="bin-open" src="{% static 'images/backend/profile/binplaceholder.png' %}" alt="Bin Image">
+                    <img class="bin-closed" src="{% static 'images/backend/profile/binclosed.png' %}" alt="Bin Closed">
+                </div>
             </div>
             <div class="binText">
                 <p>Wrappers: {{ user.profile.wrapper_count }}/3</p>
