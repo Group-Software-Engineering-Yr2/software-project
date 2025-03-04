@@ -12,7 +12,8 @@
 
     /* Container styling */
     .container {
-        width: 95%;
+        display: flex;
+        width: 100%;
         max-width: 500px;
         margin: 0 auto;
         padding: 10px;
