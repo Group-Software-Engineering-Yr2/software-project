@@ -6,6 +6,7 @@
         <title>Ecomon Profile</title>
         <link rel="stylesheet" href="{% static 'css/backend/profile/profilestyle.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <script src="{% static 'js/backend/profile/profile.js' %}"></script>
     </head>
 <!-- Header for Logo -->
 <header>
@@ -127,33 +128,33 @@
             <div class="cardTitle">
                 <p>Obtained Cards</p>
             </div>
-            <div class="cardTable">
-                <table>
-                    <tr>
-                    {% for card in cards %}
-                        <td>
-                            {% with player_card=player_cards|findcard:card.name %}
-                                {% if player_card %}
-                                    <img src="{{ card.image.url }}" alt="{{ card.name }}">
-                                {% else %}
-                                    {% if card.card_type == 1 %}
-                                        <img src="{% static 'images/backend/profile/PlasticBlankBorder.png' %}" alt="Plastic Border">
-                                    {% elif card.card_type == 2 %}
-                                        <img src="{% static 'images/backend/profile/RecycleBlankBorder.png' %}" alt="Recycle Border">
-                                    {% elif card.card_type == 3 %}
-                                        <img src="{% static 'images/backend/profile/PlantBlankBorder.png' %}" alt="Plant Border">
+            <!-- Replace the existing cardTable section in your template with this: -->
+                <div class="cardTable">
+                    <table>
+                        <tr>
+                        {% for card in cards %}
+                            <td>
+                                {% with player_card=player_cards|findcard:card.name %}
+                                    {% if player_card %}
+                                        <img src="{{ card.image.url }}" alt="{{ card.name }}" data-card-type="{{ card.card_type }}">
+                                    {% else %}
+                                        {% if card.card_type == 1 %}
+                                            <img src="{% static 'images/backend/profile/PlasticBlankBorder.png' %}" alt="Plastic Border">
+                                        {% elif card.card_type == 2 %}
+                                            <img src="{% static 'images/backend/profile/RecycleBlankBorder.png' %}" alt="Recycle Border">
+                                        {% elif card.card_type == 3 %}
+                                            <img src="{% static 'images/backend/profile/PlantBlankBorder.png' %}" alt="Plant Border">
+                                        {% endif %}
                                     {% endif %}
-                                {% endif %}
-                            {% endwith %}
-                        </td>
-                        {% if forloop.counter|divisibleby:3 %}
-                            </tr><tr>
-                        {% endif %}
-                    {% endfor %}
-                    </tr>
-                </table>
-            
-        </div>
+                                {% endwith %}
+                            </td>
+                            {% if forloop.counter|divisibleby:3 %}
+                                </tr><tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tr>
+                    </table>
+                </div>
     
         <!-- Achievements Section -->
         <div class="achievements-section">
