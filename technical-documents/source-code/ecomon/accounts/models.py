@@ -24,9 +24,9 @@ class Profile(models.Model):
     pack_count = models.IntegerField()
 
     # Stats for achievements
-    battles_won = models.IntegerField()
-    bins_emptied = models.IntegerField()
-    packs_opened = models.IntegerFields() 
+    battles_won = models.IntegerField(default=0)
+    bins_emptied = models.IntegerField(default=0)
+    packs_opened = models.IntegerField(default=0) 
 
 
 
