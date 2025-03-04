@@ -156,46 +156,114 @@
                     </table>
                 </div>
     
-        <!-- Achievements Section -->
-        <div class="achievements-section">
-            <div class="AchievementTitle">
-                <p>Achievements</p>
-            </div>
-            <div class="AchievmentsTable">
-                <table>
-                    <tr>
-                        <td><img src="{% static 'images/backend/profile/silvermedal.jpg' %}" alt="Silver Medal"></td>
-                        <td><img src="{% static 'images/backend/profile/goldmedal.jpg' %}" alt="Gold Medal"></td>
-                        <td><img src="{% static 'images/backend/profile/bronzemedal.jpg' %}" alt="Bronze Medal"></td>
-                    </tr>
-                    <tr>
-                        <td>Silver Medal Example</td>
-                        <td>Gold Medal Example</td>
-                        <td>Bronze Medal Example</td>
-                    </tr>
-                    <tr>
-                        <td><img src="{% static 'images/backend/profile/silvermedal.jpg' %}" alt="Silver Medal"></td>
-                        <td><img src="{% static 'images/backend/profile/goldmedal.jpg' %}" alt="Gold Medal"></td>
-                        <td><img src="{% static 'images/backend/profile/bronzemedal.jpg' %}" alt="Bronze Medal"></td>
-                    </tr>
-                    <tr>
-                        <td>Silver Medal Example</td>
-                        <td>Gold Medal Example</td>
-                        <td>Bronze Medal Example</td>
-                    </tr>
-                    <tr>
-                        <td><img src="{% static 'images/backend/profile/silvermedal.jpg' %}" alt="Silver Medal"></td>
-                        <td><img src="{% static 'images/backend/profile/goldmedal.jpg' %}" alt="Gold Medal"></td>
-                        <td><img src="{% static 'images/backend/profile/bronzemedal.jpg' %}" alt="Bronze Medal"></td>
-                    </tr>
-                    <tr>
-                        <td>Silver Medal Example</td>
-                        <td>Gold Medal Example</td>
-                        <td>Bronze Medal Example</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+                
+                <div class="achievements-section">
+                    <div class="AchievementTitle">
+                        <p>Achievements</p>
+                    </div>
+                    <div class="AchievmentsTable">
+                        <table>
+                            <!-- Battles Won Achievements -->
+                            <tr>
+                                <td colspan="3" class="achievement-total">Battles Won Total: {{ user.profile.battles_won }}</td>
+                            </tr>
+                            <tr class="medal-row">
+                                <td>
+                                    {% if user.profile.battles_won <= 10 %}
+                                        <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
+                                    {% elif user.profile.battles_won > 10 %}
+                                        <img src="{% static 'images/backend/profile/bronzemedal.png' %}" alt="Bronze Medal">
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if user.profile.battles_won <= 50 %}
+                                        <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
+                                    {% else %}
+                                        <img src="{% static 'images/backend/profile/goldmedal.png' %}" alt="Gold Medal">
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if user.profile.battles_won <= 25 %}
+                                        <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
+                                    {% else %}
+                                        <img src="{% static 'images/backend/profile/silvermedal.png' %}" alt="Silver Medal">
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr class="medal-labels">
+                                <td>Bronze</td>
+                                <td>Gold</td>
+                                <td>Silver</td>
+                            </tr>
+            
+                            <!-- Bins Emptied Achievements -->
+                            <tr>
+                                <td colspan="3" class="achievement-total">Bins Emptied Total: {{ user.profile.bins_emptied }}</td>
+                            </tr>
+                            <tr class="medal-row">
+                                <td>
+                                    {% if user.profile.bins_emptied <= 10 %}
+                                        <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
+                                    {% elif user.profile.bins_emptied > 10 %}
+                                        <img src="{% static 'images/backend/profile/bronzemedal.png' %}" alt="Bronze Medal">
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if user.profile.bins_emptied <= 50 %}
+                                        <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
+                                    {% else %}
+                                        <img src="{% static 'images/backend/profile/goldmedal.png' %}" alt="Gold Medal">
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if user.profile.bins_emptied <= 25 %}
+                                        <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
+                                    {% else %}
+                                        <img src="{% static 'images/backend/profile/silvermedal.png' %}" alt="Silver Medal">
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr class="medal-labels">
+                                <td>Bronze</td>
+                                <td>Gold</td>
+                                <td>Silver</td>
+                            </tr>
+            
+                            <!-- Packs Opened Achievements -->
+                            <tr>
+                                <td colspan="3" class="achievement-total">Packs Opened Total: {{ user.profile.packs_opened }}</td>
+                            </tr>
+                            <tr class="medal-row">
+                                <td>
+                                    {% if user.profile.packs_opened <= 10 %}
+                                        <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
+                                    {% elif user.profile.packs_opened > 10 %}
+                                        <img src="{% static 'images/backend/profile/bronzemedal.png' %}" alt="Bronze Medal">
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if user.profile.packs_opened <= 50 %}
+                                        <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
+                                    {% else %}
+                                        <img src="{% static 'images/backend/profile/goldmedal.png' %}" alt="Gold Medal">
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if user.profile.packs_opened <= 25 %}
+                                        <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
+                                    {% else %}
+                                        <img src="{% static 'images/backend/profile/silvermedal.png' %}" alt="Silver Medal">
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr class="medal-labels">
+                                <td>Bronze</td>
+                                <td>Gold</td>
+                                <td>Silver</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
     </div>
 </body>
 </html>
