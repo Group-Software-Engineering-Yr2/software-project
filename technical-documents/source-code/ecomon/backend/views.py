@@ -368,3 +368,57 @@ def team_leaderboard(request):
         'teams': teams_data,
     }
     return render(request, 'backend/leaderboard/team_leaderboard.html', context)
+
+@login_required
+def player_leaderboard(request):
+    """
+    Renders the Player Leaderboard, excluding any players whose team is 'Fossil Fuels'.
+    Shows the top 10 players ordered by the number of gyms they own (descending).
+    """
+
+    # Exclude any profiles whose team_name is "Fossil Fuels"
+    profiles = Profile.objects.select_related('user', 'team_name') \
+                              .exclude(team_name__name="Fossil Fuels")
+
+    players_data = []
+
+    for profile in profiles:
+        user = profile.user
+        username = user.username
+        team = profile.team_name.name  # e.g. "Recycle", "Reuse", etc.
+
+        # Count how many gyms this user owns
+        owning_gyms = Gym.objects.filter(owning_player=user).count()
+
+        # Gather all PlayerCards for this user
+        player_cards = PlayerCards.objects.filter(player=user)
+
+        # Count cards by type (adjust card_type values if your logic differs)
+        plastic_cards_owned = player_cards.filter(card__card_type=3).count()
+        recycle_cards_owned = player_cards.filter(card__card_type=1).count()
+        plant_cards_owned = player_cards.filter(card__card_type=2).count()
+
+        # Collection total could be the sum of these counts
+        collection_total = plastic_cards_owned + recycle_cards_owned + plant_cards_owned
+
+        players_data.append({
+            'username': username,
+            'team_name': team,
+            'owning_gyms': owning_gyms,
+            'plastic_cards_owned': plastic_cards_owned,
+            'recycle_cards_owned': recycle_cards_owned,
+            'plant_cards_owned': plant_cards_owned,
+            'collection_total': collection_total,
+        })
+
+    # Sort the list in descending order by owning_gyms
+    players_data.sort(key=lambda p: p['owning_gyms'], reverse=True)
+
+    # Take the top 10 players
+    players_data = players_data[:10]
+
+    context = {
+        'players': players_data,
+    }
+
+    return render(request, 'backend/leaderboard/player_leaderboard.html', context)

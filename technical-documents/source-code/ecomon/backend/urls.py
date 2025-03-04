@@ -13,6 +13,7 @@ urlpatterns = [
     path('opening_pack', views.opening_pack),
     path('profile', views.profile),
     path('team_leaderboard', views.team_leaderboard),
+    path('player_leaderboard', views.player_leaderboard),
     path('scanner/', views.render_scanner, name='scanner'),
     path('view-gym/<str:gym_id>/', views.render_gym_view, name='view-gym'),
     path('gym-battle/<str:gym_id>/', views.render_gym_battle, name='gym-battle'),
