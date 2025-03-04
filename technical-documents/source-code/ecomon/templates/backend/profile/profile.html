@@ -169,21 +169,21 @@
                             </tr>
                             <tr class="medal-row">
                                 <td>
-                                    {% if user.profile.battles_won <= 10 %}
+                                    {% if user.profile.battles_won < 10 %}
                                         <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
                                     {% elif user.profile.battles_won > 10 %}
                                         <img src="{% static 'images/backend/profile/bronzemedal.png' %}" alt="Bronze Medal">
                                     {% endif %}
                                 </td>
                                 <td>
-                                    {% if user.profile.battles_won <= 50 %}
+                                    {% if user.profile.battles_won < 50 %}
                                         <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
                                     {% else %}
                                         <img src="{% static 'images/backend/profile/goldmedal.png' %}" alt="Gold Medal">
                                     {% endif %}
                                 </td>
                                 <td>
-                                    {% if user.profile.battles_won <= 25 %}
+                                    {% if user.profile.battles_won < 25 %}
                                         <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
                                     {% else %}
                                         <img src="{% static 'images/backend/profile/silvermedal.png' %}" alt="Silver Medal">
@@ -202,21 +202,21 @@
                             </tr>
                             <tr class="medal-row">
                                 <td>
-                                    {% if user.profile.bins_emptied <= 10 %}
+                                    {% if user.profile.bins_emptied < 10 %}
                                         <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
                                     {% elif user.profile.bins_emptied > 10 %}
                                         <img src="{% static 'images/backend/profile/bronzemedal.png' %}" alt="Bronze Medal">
                                     {% endif %}
                                 </td>
                                 <td>
-                                    {% if user.profile.bins_emptied <= 50 %}
+                                    {% if user.profile.bins_emptied < 50 %}
                                         <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
                                     {% else %}
                                         <img src="{% static 'images/backend/profile/goldmedal.png' %}" alt="Gold Medal">
                                     {% endif %}
                                 </td>
                                 <td>
-                                    {% if user.profile.bins_emptied <= 25 %}
+                                    {% if user.profile.bins_emptied < 25 %}
                                         <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
                                     {% else %}
                                         <img src="{% static 'images/backend/profile/silvermedal.png' %}" alt="Silver Medal">
@@ -235,21 +235,21 @@
                             </tr>
                             <tr class="medal-row">
                                 <td>
-                                    {% if user.profile.packs_opened <= 10 %}
+                                    {% if user.profile.packs_opened < 10 %}
                                         <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
                                     {% elif user.profile.packs_opened > 10 %}
                                         <img src="{% static 'images/backend/profile/bronzemedal.png' %}" alt="Bronze Medal">
                                     {% endif %}
                                 </td>
                                 <td>
-                                    {% if user.profile.packs_opened <= 50 %}
+                                    {% if user.profile.packs_opened < 50 %}
                                         <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
                                     {% else %}
                                         <img src="{% static 'images/backend/profile/goldmedal.png' %}" alt="Gold Medal">
                                     {% endif %}
                                 </td>
                                 <td>
-                                    {% if user.profile.packs_opened <= 25 %}
+                                    {% if user.profile.packs_opened < 25 %}
                                         <img src="{% static 'images/backend/profile/blankmedal.png' %}" alt="Blank medal">
                                     {% else %}
                                         <img src="{% static 'images/backend/profile/silvermedal.png' %}" alt="Silver Medal">
