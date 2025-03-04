@@ -8,6 +8,7 @@ from accounts.models import Profile
 from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards, increase_packs_opened
 from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown, increase_win_count, increase_bins_emptied
 from .bin_service import is_bin_full, increment_wrapper_count
+from .profile_service import check_achievements
 from .models import Gym, Card, PlayerCards
 
 
@@ -135,6 +136,8 @@ def opening_pack(request):
     reduce_user_pack_count(request.user)
     # Increase the packs opened count
     increase_packs_opened(request.user)
+    # Check if they have reached an achievement milestone
+    check_achievements(request.user)
      # Show the user the cards they got
     card_images = [str(pack.image).replace('static/', '') for pack in pack_cards]
     return render(request, 'backend/packs/opening_pack.html', {'card_images': card_images})
@@ -308,6 +311,8 @@ def completed_gym_battle(request):
             #Increase the win count in the user's profile
             increase_win_count(request.user)
 
+        # Check if the user has reached an achievement milestone
+        check_achievements(request.user)
         return render(request, 'backend/battles/gym-battle-completed.html', context)
 
 @login_required
