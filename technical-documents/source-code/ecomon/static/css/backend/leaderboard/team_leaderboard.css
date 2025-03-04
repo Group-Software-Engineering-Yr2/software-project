@@ -1,0 +1,73 @@
+body{
+    font-family: Arial, sans-serif;
+}
+
+.leaderboard-container {
+    max-width: max(80vw,600px);
+    margin: 0 auto;
+    text-align: center;
+}
+.leaderboard-table {
+    width: 100%;
+    margin-top: 10vh;
+    border-collapse: collapse;
+}
+.leaderboard-table thead th {
+    padding: 0.75rem;
+    border: none;
+}
+.leaderboard-table td,
+.leaderboard-table th {
+    padding: 0.75rem;
+    border: none;
+}
+.leaderboard-table thead th img {
+    display: block;
+    margin: 0 auto 0.25rem;
+    height: 100px; 
+    margin-bottom: 10px;
+}
+.metric-label {
+    text-align: left;
+    font-weight: bold;
+    width: 120px;
+}
+
+.button {
+    background-color: #84C44C;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+        .button:hover {
+    background-color: #144E3F;
+}
+
+.button a {
+    color: white;
+    text-decoration: none;
+}
+
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;   
+}
+
+.title-logo{
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+    margin-bottom: 1rem;
+}

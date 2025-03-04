@@ -3,47 +3,19 @@
 <head>
     {% load static %}
     <title>Ecomon Home</title>
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-        }
-
-        .leaderboard-container {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .leaderboard-title {
-            font-size: 24px;
-            margin-bottom: 1rem;
-        }
-        .leaderboard-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .leaderboard-table thead th {
-            background-color: #f5f5f5;
-            padding: 0.75rem;
-        }
-        .leaderboard-table td,
-        .leaderboard-table th {
-            border: 1px solid #ccc;
-            padding: 0.75rem;
-        }
-        .leaderboard-table thead th img {
-            display: block;
-            margin: 0 auto 0.25rem;
-            height: 24px; 
-        }
-        .metric-label {
-            text-align: left;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/backend/leaderboard/team_leaderboard.css' %}">
 </head>
 <body>
+    <!-- Floating Back Button -->
+    <a href="/home" class="button back-button">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
     <div class="leaderboard-container">
-        <div class="leaderboard-title">Team Leaderboard</div>
+        <img class="title-logo" alt="ecomon logo" src="{% static 'images/backend/scanner/Ecomon1-removebg.png' %}">
+        <h1>Team Leaderboard</h1>
         <table class="leaderboard-table">
             <thead>
                 <tr>
