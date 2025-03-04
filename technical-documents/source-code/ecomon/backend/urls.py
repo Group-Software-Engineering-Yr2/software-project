@@ -7,11 +7,12 @@ from .views import logout_view
 
 
 urlpatterns = [
+    path('', views.index),
     path('home', views.home),
     path('packs', views.open_pack),
     path('opening_pack', views.opening_pack),
     path('profile', views.profile),
-    path('', views.index),
+    path('team_leaderboard', views.team_leaderboard),
     path('scanner/', views.render_scanner, name='scanner'),
     path('view-gym/<str:gym_id>/', views.render_gym_view, name='view-gym'),
     path('gym-battle/<str:gym_id>/', views.render_gym_battle, name='gym-battle'),

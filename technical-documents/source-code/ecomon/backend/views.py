@@ -8,7 +8,7 @@ from accounts.models import Profile
 from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards
 from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown
 from .bin_service import is_bin_full, increment_wrapper_count
-from .models import Gym, Card, PlayerCards
+from .models import Gym, Card, PlayerCards,Team
 
 
 @login_required
@@ -327,3 +327,44 @@ def get_gym_locations(request):
 def logout_view(request):
     logout(request)
     return redirect('/accounts/login')
+
+@login_required
+def team_leaderboard(request):
+    """Renders template for the team leaderboard"""
+
+    # Get teams that users can select
+    teams = Team.objects.filter(user_selectable=True)
+
+    teams_data = []
+    for team in teams:
+        # Filter gyms owned by players whose profile has this team
+        gyms = Gym.objects.filter(owning_player__profile__team_name=team)
+        gyms_owned = gyms.count()
+
+        recycle_cards_in_use = 0
+        plant_cards_in_use = 0
+        plastic_cards_in_use = 0
+
+        # Iterate through each gym to check the cards used in that gym
+        for gym in gyms:
+            for card in (gym.card1, gym.card2, gym.card3):
+                if card.card_type == 2:
+                    recycle_cards_in_use += 1
+                elif card.card_type == 3:
+                    plant_cards_in_use += 1
+                elif card.card_type == 1:
+                    plastic_cards_in_use += 1
+
+        teams_data.append({
+            'icon_url': team.icon.url,
+            'name': team.name,
+            'currently_owned_gyms': gyms_owned,
+            'recycle_cards_in_use': recycle_cards_in_use,
+            'plant_cards_in_use': plant_cards_in_use,
+            'plastic_cards_in_use': plastic_cards_in_use,
+        })
+
+    context = {
+        'teams': teams_data,
+    }
+    return render(request, 'backend/leaderboard/team_leaderboard.html', context)
