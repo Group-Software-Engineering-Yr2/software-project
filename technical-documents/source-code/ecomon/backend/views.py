@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from accounts.player_service import get_player_deck, has_deck, add_players_pack
 from accounts.models import Profile
-from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards
+from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards, increase_packs_opened
 from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown, increase_win_count, increase_bins_emptied
 from .bin_service import is_bin_full, increment_wrapper_count
 from .models import Gym, Card, PlayerCards
@@ -133,8 +133,9 @@ def opening_pack(request):
     add_player_cards(request.user, pack_cards)
     # Decrement pack count from the user's profile
     reduce_user_pack_count(request.user)
-    # Show the user the cards they got
-
+    # Increase the packs opened count
+    increase_packs_opened(request.user)
+     # Show the user the cards they got
     card_images = [str(pack.image).replace('static/', '') for pack in pack_cards]
     return render(request, 'backend/packs/opening_pack.html', {'card_images': card_images})
 
