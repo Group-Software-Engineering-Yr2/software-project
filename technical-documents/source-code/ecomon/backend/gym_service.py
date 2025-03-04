@@ -3,12 +3,59 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from accounts.models import Profile
 from .models import Gym, PlayerCards
+from django.db import transaction
 
-def reset_profile_wrappers(user:User):
+@transaction.atomic
+def reset_profile_wrappers(user: User):
     '''Resets the wrapper count for the user'''
-    profile = Profile.objects.get(user=user)
-    profile.wrapper_count = 0
-    profile.save()
+    #Nested transaction safety fixed bin not emptying bug - kept debug statements incase reoccurs
+    with transaction.atomic():
+        try:
+            print(f"Resetting wrappers for user {user.username}")
+            profile = Profile.objects.select_for_update().get(user=user)
+            initial_count = profile.wrapper_count
+            print(f"Initial wrapper count: {initial_count}")
+            
+            profile.wrapper_count = 0
+            profile.save()
+            
+            # Force a refresh from database
+            profile = Profile.objects.get(user=user)
+            print(f"Final wrapper count: {profile.wrapper_count}")
+            
+            if profile.wrapper_count != 0:
+                raise Exception(f"Failed to reset wrapper count. Still at {profile.wrapper_count}")
+                
+            return True
+        except Exception as e:
+            print(f"Error in reset_profile_wrappers: {str(e)}")
+            raise
+
+@transaction.atomic
+def increase_bins_emptied(user: User):
+    '''Increases the bins emptied count'''
+    #Nested transaction safety fixed wrappers disposed - kept debug statements incase reoccurs
+    with transaction.atomic():
+        try:
+            print(f"Increasing bins emptied for user {user.username}")
+            profile = Profile.objects.select_for_update().get(user=user)
+            initial_count = profile.bins_emptied
+            print(f"Initial bins emptied: {initial_count}")
+            
+            profile.bins_emptied += 1
+            profile.save()
+            
+            # Force a refresh from database
+            profile = Profile.objects.get(user=user)
+            print(f"Final bins emptied: {profile.bins_emptied}")
+            
+            if profile.bins_emptied <= initial_count:
+                raise Exception(f"Failed to increase bins emptied. Before: {initial_count}, After: {profile.bins_emptied}")
+                
+            return True
+        except Exception as e:
+            print(f"Error in increase_bins_emptied: {str(e)}")
+            raise
 
 def update_gym_cards(user:User,cards,gym:Gym):
     '''Update cards in gym & holds player's cards'''
@@ -46,9 +93,4 @@ def increase_win_count(user:User):
     profile.battles_won += 1
     profile.save()
 
-def increase_bins_emptied(user.User):
-    '''Increases the bins emptied count of the user'''
-    profile = Profile.objects.get(user=user)
-    profile.bins_emptied += 1
-    profile.save()
 

@@ -274,11 +274,19 @@ def completed_gym_battle(request):
         if not has_deck(request.user):
             return redirect('battle-deck-empty/')
 
-        # Reset the user's wrapper count to 0
-        reset_profile_wrappers(request.user)
+        # Get initial values for verification
+        initial_bins_emptied = request.user.profile.bins_emptied
 
-        # Also increase bins emptied count
+        # Reset wrappers and increase bins emptied
+        reset_profile_wrappers(request.user)
         increase_bins_emptied(request.user)
+
+        # Verify changes were saved
+        request.user.profile.refresh_from_db()
+        if request.user.profile.wrapper_count != 0:
+            raise Exception(f"Wrapper count not reset. Current: {request.user.profile.wrapper_count}")
+        if request.user.profile.bins_emptied <= initial_bins_emptied:
+            raise Exception(f"Bins emptied not increased. Before: {initial_bins_emptied}, After: {request.user.profile.bins_emptied}")
 
         # Process the result of the gym battle
         if did_win == 'true':
