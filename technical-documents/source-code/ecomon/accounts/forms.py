@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile, Team
+from django.utils.timezone import now
 
 class CustomUserCreationForm(UserCreationForm):
     '''Creating Ecomon User'''
@@ -23,7 +24,8 @@ class CustomUserCreationForm(UserCreationForm):
                 user=user,
                 team_name=team,
                 wrapper_count=0,
-                pack_count=1
+                pack_count=1,
+                last_pack_allocation=now()
             )
         return user
 
