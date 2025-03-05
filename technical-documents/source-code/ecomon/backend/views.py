@@ -15,7 +15,8 @@ from .models import Gym, Card, PlayerCards
 
 @login_required
 def home(request):
-    return render(request, 'backend/home/homePage.html')
+    gyms = list(Gym.objects.values('name', 'latitude', 'longitude'))
+    return render(request, 'backend/home/homePage.html', {'gyms': gyms})
 
 @login_required
 def profile(request):
@@ -248,6 +249,14 @@ def completed_gym_battle(request):
     did_win = request.GET.get('did_win')
     gym_id = request.GET.get('gym_id')
 
+    #get players deck
+    player_deck_cards = get_player_deck(request.user)
+
+    # Increment use count for each card used in battle
+    for card in player_deck_cards:
+        player_card = PlayerCards.objects.get(player=request.user, card=card)
+        player_card.increment_use()
+
     # Ensure the required parameters are present
     if not did_win or not gym_id:
         return redirect('missing-battle-condition')
@@ -274,7 +283,7 @@ def completed_gym_battle(request):
         # If the gym is not found, redirect to the gym not found page
         except Gym.DoesNotExist:
             return redirect('gym-not-found/')
-    
+
         # Ensure the user has a selected deck
         if not has_deck(request.user):
             return redirect('battle-deck-empty/')
@@ -299,7 +308,6 @@ def completed_gym_battle(request):
             with transaction.atomic():
                 #Increase the win count in the user's profile
                 increase_win_count(request.user)
-
                 check_and_award_achievements(request.user, 'BATTLES')
                 player_collection_cards = get_player_deck(request.user)
                 # Set the gym's cards & update the player's cards in use
@@ -318,6 +326,17 @@ def completed_gym_battle(request):
 
 
         # Check if the user has reached an achievement milestone
+        # Increment use count for each card used in the battle
+        for card in player_deck_cards:
+            player_card = PlayerCards.objects.get(player=request.user, card=card)
+            player_card.increment_use()
+
+        # Get the players cards and filter out the cards that have reached max uses
+        players_cards = PlayerCards.objects.filter(player=request.user)
+        # Check and remove cards that have reached max uses
+        for player_card in players_cards:
+            player_card.check_and_remove()
+
         return render(request, 'backend/battles/gym-battle-completed.html', context)
 
 @login_required
