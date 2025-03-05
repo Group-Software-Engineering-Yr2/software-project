@@ -68,6 +68,59 @@ class PlayerCards(models.Model):
     in_gym = models.BooleanField()
     use_count = models.IntegerField() # Depends on the card type, check if this record is removed
 
+    def get_use_count(self):
+        '''
+        Get the maximum number of uses for the card
+        '''
+        base_max_uses = {
+            1: 8, #Plastic cards
+            2: 5, #Recycling cards
+            3: 3 #Plant cards
+
+        }
+
+        player_team = self.player.profile.team_name.name.lower()
+        card_type = self.card.card_type
+
+        max_uses = base_max_uses[card_type]
+
+        if (player_team == 'reuse'): 
+            max_uses += 3
+
+        return max_uses
+
+
+    def check_and_remove(self):
+        '''
+        Check if the card is to be removed
+        '''
+
+        max_allowed = self.get_use_count()
+
+        if self.use_count >= max_allowed:
+
+            #clears deck if card is deleted
+            profile = self.player.profile
+            if profile.deck_card_1 == self.card:
+                profile.deck_card_1 = None
+            if profile.deck_card_2 == self.card:
+                profile.deck_card_2 = None
+            if profile.deck_card_3 == self.card:
+                profile.deck_card_3 = None
+
+
+            profile.save()
+            self.delete()
+            return True
+        return False
+    
+    def increment_use(self):
+        """Increment use count"""
+        self.use_count += 1
+        self.save()
+
+
+
 class Achievement(models.Model):
     '''
     Achievement database model
