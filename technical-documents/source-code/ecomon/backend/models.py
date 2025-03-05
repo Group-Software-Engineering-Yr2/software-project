@@ -1,6 +1,7 @@
 '''Defining models for the dabase'''
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class Team(models.Model):
@@ -125,16 +126,36 @@ class Achievement(models.Model):
     '''
     Achievement database model
     '''
+    ACHIEVEMENT_TYPES = [
+        ('PACKS', 'Packs Opened'),
+        ('BATTLES', 'Battles Won'),
+        ('BINS', 'Bins Emptied')
+    ]
+
+    ICON_CHOICES = [
+        ("static/images/backend/profile/bronzemedal.png", "Bronze"),
+        ("static/images/backend/profile/silvermedal.png", "Silver"),
+        ("static/images/backend/profile/goldmedal.png", "Gold")
+    ]
+
     name = models.CharField(max_length=100, primary_key=True)
-    tier = models.IntegerField()
-    icon = models.ImageField()
+    type = models.CharField(max_length=20, choices=ACHIEVEMENT_TYPES, default='PACKS')
+    threshold = models.IntegerField(default = 0)  # e.g., 10, 25, 50
+    tier = models.IntegerField(default = 1)  # e.g., 1, 2, 3
+    icon = models.CharField(max_length=255, choices=ICON_CHOICES, default="achievements/bronze.png")
 
 class PlayerAchievements(models.Model):
     '''
     PlayerAchievements database model
     '''
     player = models.ForeignKey(User, on_delete=models.CASCADE)
-    achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
-    date_unlocked = models.DateTimeField()
+    achievement = models.ForeignKey(
+        Achievement, 
+        on_delete=models.CASCADE,
+        null=True,  # Allow null temporarily for migration
+        default=None
+    )
+    date_achieved = models.DateTimeField(default=timezone.now)
+    pack_awarded = models.BooleanField(default=False)
 
 

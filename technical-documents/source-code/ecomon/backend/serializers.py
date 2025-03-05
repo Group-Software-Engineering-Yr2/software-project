@@ -52,9 +52,9 @@ class AchievementSerializer(serializers.ModelSerializer):
     class Meta:
         '''Meta class'''
         model = Achievement
-        fields = ['name', 'tier', 'icon']
+        fields = ['ACHIEVEMENT_TYPES','ICON_CHOICES', 'name', 'type', 'threshold', 'tier', 'icon']
 
-
+    
 class PlayerAchievementsSerializer(serializers.ModelSerializer):
     '''PlayerAchievements Serializer'''
     player = serializers.StringRelatedField()  # Returns username instead of ID
@@ -63,4 +63,7 @@ class PlayerAchievementsSerializer(serializers.ModelSerializer):
     class Meta:
         '''Meta class'''
         model = PlayerAchievements
-        fields = ['player', 'achievement', 'date_unlocked']
+        fields = [
+            'player', 'achievement', 'date_achieved', 'pack_awarded'
+        ]
+

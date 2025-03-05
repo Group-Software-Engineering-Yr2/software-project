@@ -1,0 +1,169 @@
+@media screen and (max-width: 768px) {
+    /* Base styles */
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100vw;
+        overflow-x: hidden;
+    }
+
+    /* Container styling */
+    .container {
+        display: flex;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 10px;
+    }
+
+    /* Header Adjustments */
+    header {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0;
+    }
+
+    .logo {
+        display: flex;
+        justify-content: center;
+    }
+
+    .logo img {
+        height: 80px;
+        width: auto;
+    }
+
+    /* Profile Section */
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding: 15px;
+        width: 100%;
+    }
+
+    .profilepic {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+
+    .profilepic img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .details {
+        text-align: center;
+        width: 100%;
+    }
+
+    /* Deck Section */
+    .Deck {
+        width: 100%;
+        margin: 15px 0;
+    }
+
+    .My.Deck {
+        display: flex;
+        justify-content: center;
+    }
+
+    .My.Deck table {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .My.Deck td {
+        padding: 5px;
+        text-align: center;
+    }
+
+    .My.Deck img {
+        width: 100%;
+        max-width: 100px;
+        height: auto;
+    }
+
+    /* Achievements Section */
+    .achievements-section {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .AchievmentsTable {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .AchievmentsTable td {
+        text-align: center;
+        padding: 5px;
+    }
+
+    /* Bin Section */
+    .bin-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 15px 0;
+    }
+
+    /* Navigation Buttons */
+    .nav-buttons {
+        position: fixed;
+        bottom: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        z-index: 1000;
+    }
+
+    .backButton, .logoutButton {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        padding: 10px;
+    }
+
+    /* Action Buttons */
+    .DeckButton {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 15px 0;
+    }
+
+    .DeckButton button {
+        width: 80%;
+        max-width: 300px;
+        padding: 12px;
+        border-radius: 25px;
+    }
+}
+
+/* Additional styles for very small screens */
+@media screen and (max-width: 380px) {
+    * {
+        font-size: 14px;
+    }
+
+    .profilepic {
+        width: 120px;
+        height: 120px;
+    }
+
+    .My.Deck img {
+        max-width: 80px;
+    }
+}

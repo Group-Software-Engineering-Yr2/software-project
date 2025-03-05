@@ -1,10 +1,10 @@
-/* Common styles */
+/* Global Colour and font */
 * {
     color: #144E3F;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Layout containers */
+
 header {
     display: flex;
     justify-content: center;
@@ -22,7 +22,7 @@ header {
     padding: 0 20px;
 }
 
-/* Navigation buttons */
+/* Back button and logout button */
 .Buttons {
     display: flex;
     justify-content: space-between;
@@ -37,16 +37,10 @@ header {
     z-index: 1000;
 }
 
-.backButton {
-    left: 20px;
-}
+.backButton { left: 20px; }
+.logoutButton { right: 20px; }
 
-.logoutButton {
-    right: 20px;
-}
-
-.backButton button,
-.logoutButton button {
+.backButton button, .logoutButton button {
     border: none;
     background: none;
     cursor: pointer;
@@ -55,8 +49,7 @@ header {
     padding: 0;
 }
 
-.backButton button img,
-.logoutButton button img {
+.backButton button img, .logoutButton button img {
     width: 80px;
     height: 80px;
     object-fit: contain;
@@ -79,11 +72,9 @@ header {
     cursor: pointer;
 }
 
-#backButton{
-    color: white;
-}
+#backButton { color: white; }
 
-/* Profile section */
+/* Profile Section */
 .profile-container {
     display: flex;
     justify-content: space-around;
@@ -91,28 +82,32 @@ header {
     padding: 5px;
     transform: scale(0.8);
     transform-origin: center top;
-    margin-bottom: -50px; /* Reduce space below profile section even more */
-}
-
-.logo img,
-.profilepic img,
-.binimage img {
-    height: 250px;
-    width: auto;
+    margin-bottom: -50px;
 }
 
 .logo img {
+    height: 250px;
+    width: auto;
     padding: 25px;
 }
 
 .profilepic img {
+    height: 250px;
+    width: auto;
     border-radius: 10px;
+    transition: transform 0.5s ease;
 }
 
-/* Text styles */
+/* Profile Spin */
+.profilepic img:hover {
+    transform: rotate(360deg);
+    cursor: pointer;
+}
+
+
 .details {
     text-align: center;
-    font-size: 25px;
+    font-size: 35px;
 }
 
 .binText {
@@ -120,16 +115,14 @@ header {
     font-size: 20px;
 }
 
-.deckTitle,
-.cardTitle,
-.AchievementTitle {
+.deckTitle, .cardTitle, .AchievementTitle {
     font-size: 32px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 10px;
 }
 
-/* Cards and Achievements sections */
+
 .cards-section {
     width: 100%;
     max-width: 800px;
@@ -142,36 +135,64 @@ header {
     margin: 0 auto;
 }
 
-/* Table styles */
-.cardTable table,
-.AchievmentsTable table,
-.My.Deck table {
+/* Table Styling */
+.cardTable table, .AchievmentsTable table, .My.Deck table {
     width: 100%;
     max-width: 800px;
     border-collapse: collapse;
     margin: 0 auto;
 }
 
-.cardTable td,
-.AchievmentsTable td,
-.My.Deck td {
+.cardTable td, .AchievmentsTable td, .My.Deck td {
     text-align: center;
     padding: 4px;
 }
 
-.cardTable img,
-.AchievmentsTable img,
-.My.Deck img {
+.cardTable img, .AchievmentsTable img, .My.Deck img {
     width: 180px;
     height: auto;
     margin: 5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Deck styles */
+/* Achievements Section */
+.AchievmentsTable {
+    width: 100%;
+    border-spacing: 0 15px;
+}
+
+.AchievmentsTable .achievement-total {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    color: #144E3F;
+    padding: 10px 0;
+    background-color: rgba(132, 196, 76, 0.2);
+    border-radius: 5px;
+}
+
+.AchievmentsTable .medal-row {
+    text-align: center;
+}
+
+.AchievmentsTable .medal-labels {
+    font-weight: bold;
+    color: #84C44C;
+    padding: 10px 0;
+    font-size: 15px;
+}
+
+.AchievmentsTable img {
+    max-width: 100px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+/* Deck Section */
 .Deck {
     width: 100%;
     margin-bottom: 10px;
-    margin-top: -40px; /* Pull the Deck section closer */
+    margin-top: -40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -188,7 +209,6 @@ header {
     font-size: 18px;
     font-weight: bold;
     background-color: #84C44C;
-    text-decoration: none;
     color: white;
     border: none;
     border-radius: 5px;
@@ -202,4 +222,104 @@ header {
 
 .change-deck-text {
     text-decoration: none;
+}
+
+/* Bin Section */
+.bin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.binimage {
+    display: flex;
+    justify-content: center;
+    margin-right: -70px;
+}
+
+.bin-container {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    display: inline-block;
+}
+
+.bin-open, .bin-closed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 250px;
+    width: auto;
+    transition: opacity 0.5s ease;
+}
+
+.bin-closed {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.bin-container:hover .bin-closed {
+    opacity: 1;
+}
+
+.bin-container:hover .bin-open {
+    opacity: 0;
+}
+
+/* Card Flip */
+.card-container {
+    perspective: 1000px;
+    width: 180px;
+    height: 250px;
+    margin: 5px;
+    display: inline-block;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.card-container.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.card-front {
+    z-index: 2;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+.card-front img, .card-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Hover Effects */
+.cardTable img:hover {
+    transform: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.AchievmentsTable img:hover {
+    transform: none;
+    box-shadow: none;
+    cursor: default;
 }
