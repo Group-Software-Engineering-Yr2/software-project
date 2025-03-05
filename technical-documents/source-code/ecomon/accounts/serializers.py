@@ -19,7 +19,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = [
             'user', 'team', 'deck_card_1', 'deck_card_2', 'deck_card_3',
-            'wrapper_count', 'pack_count'
+            'wrapper_count', 'pack_count', 'battles_won', 'bins_emptied', 'packs_opened'
         ]
 
 class RegisterSerializer(serializers.ModelSerializer):

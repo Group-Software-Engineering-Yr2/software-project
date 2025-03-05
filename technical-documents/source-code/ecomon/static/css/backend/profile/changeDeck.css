@@ -147,3 +147,12 @@ button[type="submit"]:hover {
 .back-button {
     color: white;
 }
+
+.use-count {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 5px;
+    font-size: 16px;
+    color: #144E3F;
+}

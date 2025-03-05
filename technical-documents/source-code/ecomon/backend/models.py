@@ -1,6 +1,7 @@
 '''Defining models for the dabase'''
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class Team(models.Model):
@@ -68,20 +69,93 @@ class PlayerCards(models.Model):
     in_gym = models.BooleanField()
     use_count = models.IntegerField() # Depends on the card type, check if this record is removed
 
+    def get_use_count(self):
+        '''
+        Get the maximum number of uses for the card
+        '''
+        base_max_uses = {
+            1: 8, #Plastic cards
+            2: 5, #Recycling cards
+            3: 3 #Plant cards
+
+        }
+
+        player_team = self.player.profile.team_name.name.lower()
+        card_type = self.card.card_type
+
+        max_uses = base_max_uses[card_type]
+
+        if (player_team == 'reuse'): 
+            max_uses += 3
+
+        return max_uses
+
+
+    def check_and_remove(self):
+        '''
+        Check if the card is to be removed
+        '''
+
+        max_allowed = self.get_use_count()
+
+        if self.use_count >= max_allowed:
+
+            #clears deck if card is deleted
+            profile = self.player.profile
+            if profile.deck_card_1 == self.card:
+                profile.deck_card_1 = None
+            if profile.deck_card_2 == self.card:
+                profile.deck_card_2 = None
+            if profile.deck_card_3 == self.card:
+                profile.deck_card_3 = None
+
+
+            profile.save()
+            self.delete()
+            return True
+        return False
+    
+    def increment_use(self):
+        """Increment use count"""
+        self.use_count += 1
+        self.save()
+
+
+
 class Achievement(models.Model):
     '''
     Achievement database model
     '''
+    ACHIEVEMENT_TYPES = [
+        ('PACKS', 'Packs Opened'),
+        ('BATTLES', 'Battles Won'),
+        ('BINS', 'Bins Emptied')
+    ]
+
+    ICON_CHOICES = [
+        ("static/images/backend/profile/bronzemedal.png", "Bronze"),
+        ("static/images/backend/profile/silvermedal.png", "Silver"),
+        ("static/images/backend/profile/goldmedal.png", "Gold")
+    ]
+
     name = models.CharField(max_length=100, primary_key=True)
-    tier = models.IntegerField()
-    icon = models.ImageField()
+    type = models.CharField(max_length=20, choices=ACHIEVEMENT_TYPES, default='PACKS')
+    threshold = models.IntegerField(default = 0)  # e.g., 10, 25, 50
+    tier = models.IntegerField(default = 1)  # e.g., 1, 2, 3
+    icon = models.CharField(max_length=255, choices=ICON_CHOICES, default="achievements/bronze.png")
 
 class PlayerAchievements(models.Model):
     '''
     PlayerAchievements database model
     '''
     player = models.ForeignKey(User, on_delete=models.CASCADE)
-    achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
-    date_unlocked = models.DateTimeField()
+    achievement = models.ForeignKey(
+        Achievement, 
+        on_delete=models.CASCADE,
+        null=True,  # Allow null temporarily for migration
+        default=None
+    )
+    date_achieved = models.DateTimeField(default=timezone.now)
+    pack_awarded = models.BooleanField(default=False)
 
 

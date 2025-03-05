@@ -69,3 +69,11 @@ def add_player_cards(user:User, cards:list[Card]) -> None:
             use_count = 0
         )
         entry.save()
+
+def increase_packs_opened(user:User) -> None:
+    '''
+    Increases the packs opened count for the user
+    '''
+    profile = Profile.objects.get(user=user)
+    profile.packs_opened += 1
+    profile.save()

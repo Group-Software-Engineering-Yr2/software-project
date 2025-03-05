@@ -140,3 +140,130 @@ body {
     background-color: #144E3F;
     cursor: pointer;
 }
+
+/* #reader {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+} */
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+    .container {
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .scanner-container {
+        width: 100%;
+    }
+
+    video {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .title h1 {
+        font-size: 1.5rem;
+    }
+
+    video {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .teams-information {
+        flex-direction: row;
+        margin-top: 10px;
+        gap: 20px;
+    }
+
+
+    .team {
+        width: 90%;
+    }
+
+    .team img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .team img.reuse-icon {
+        width: 110px;
+        height: 110px;
+    }
+
+    .team p {
+        font-size: 18px;
+        margin-top: 5px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .logo {
+        width: 350px;
+    }
+
+    .container {
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .title h1 {
+        font-size: 1.2rem;
+    }
+
+    .scanner-container {
+        width: 400px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    video {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .teams-information {
+        flex-direction: row;
+        margin-top: 10px;
+        gap: 20px;
+    }
+
+    .team .image-container {
+        height: 100px;
+    }
+
+    .team {
+        width: 90%;
+    }
+
+    .team img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .team img.reuse-icon {
+        width: 90px;
+        height: 90px;
+    }
+
+    .team p {
+        font-size: 16px;
+        margin-top: 0px;
+    }
+
+    .scan-button, .upload-button {
+        font: 14px Arial, sans-serif;
+        font-weight: bold;
+    }
+}

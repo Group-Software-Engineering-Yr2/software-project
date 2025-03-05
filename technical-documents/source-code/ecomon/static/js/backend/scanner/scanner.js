@@ -2,12 +2,20 @@
 // This script is used to initialize the HTML5 QR Code scanner and handle the scanning process.
 let html5QrCode = new Html5Qrcode("reader");
 let isScanning = false;
+// Define the allowed URL pattern using a regular expression
+const allowedPattern = /^http:\/\/127\.0\.0\.1:8000\/view-gym\/\d+$/;
 
 // Function to handle the scanned URL (successful scan)
 function onScanSuccess(decodedText, decodedResult) {
     console.log(`Scanned URL: ${decodedText}`, decodedResult);
-    // Directly use the scanned URL for redirection
-    window.location.href = decodedText;
+
+    // Validate the scanned URL
+    if (allowedPattern.test(decodedText)) {
+        window.location.href = decodedText;
+    } else {
+        alert("Invalid QR Code. Please scan a valid recycling gym QR code.");
+        console.warn("Scanned QR code does not match the expected format.");
+    }
 }
 
 // Function to handle the scan failure
@@ -68,9 +76,11 @@ function isValidImage(file) {
 }
 
 // Add click handler for the file input label
-document.querySelector('label[for="qr-input-file"]').addEventListener('click', function(e) {
+document.querySelector('label[for="qr-input-file"]').addEventListener('click', function (e) {
+    // Check if the scanner is running
     if (isScanning) {
         e.preventDefault();
+        // Stop scanner and open file input
         stopScanner();
         setTimeout(() => {
             document.getElementById('qr-input-file').click();
@@ -79,26 +89,36 @@ document.querySelector('label[for="qr-input-file"]').addEventListener('click', f
 });
 
 // Updated file upload handler
-document.getElementById("qr-input-file").addEventListener("change", function(e) {
+document.getElementById("qr-input-file").addEventListener("change", function (e) {
     e.preventDefault();
-    
+
+    // Check if the file input is empty
     if (e.target.files.length === 0) return;
-    
+
+    // Get the uploaded file
     const fileInput = this;
+    // Get the uploaded image file
     const imageFile = e.target.files[0];
-    
+
     fileInput.value = "";
-    
+
+    // Check if the uploaded file is a valid image
     if (!isValidImage(imageFile)) {
         alert("Please upload a valid image (PNG, JPG, or JPEG only).");
         return;
     }
-    
+
     html5QrCode.scanFile(imageFile, true)
         .then(decodedText => {
-            console.log("File scanned successfully:", decodedText);
             // Directly use the scanned URL for redirection
-            window.location.href = decodedText;
+            // Validate the scanned URL
+            if (allowedPattern.test(decodedText)) {
+                window.location.href = decodedText;
+            } else {
+                alert("Invalid QR Code. Please upload a valid recycling gym QR code.");
+                console.warn("Scanned QR code does not match the expected format.");
+            }
+            // Hide the QR code canvas if it was scanning beforehand
             if (document.getElementById("qr-canvas-visible")) {
                 document.getElementById("qr-canvas-visible").style.display = "none";
             }

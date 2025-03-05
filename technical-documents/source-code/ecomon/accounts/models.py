@@ -23,6 +23,13 @@ class Profile(models.Model):
     wrapper_count = models.IntegerField()
     pack_count = models.IntegerField()
 
+    # Stats for achievements
+    battles_won = models.IntegerField(default=0)
+    bins_emptied = models.IntegerField(default=0)
+    packs_opened = models.IntegerField(default=0) 
+
+
+
     def __str__(self):
         # Ignore python warning
         return f"{self.user.username}'s Profile"

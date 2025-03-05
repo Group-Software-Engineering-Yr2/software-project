@@ -3,17 +3,20 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.db import transaction
 from accounts.player_service import get_player_deck, has_deck, add_players_pack
 from accounts.models import Profile
-from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards
-from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown
+from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards, increase_packs_opened
+from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown, increase_win_count, increase_bins_emptied
 from .bin_service import is_bin_full, increment_wrapper_count
 from .models import Gym, Card, PlayerCards,Team
+from .achievement_service import check_and_award_achievements
 
 
 @login_required
 def home(request):
-    return render(request, 'backend/home/homePage.html')
+    gyms = list(Gym.objects.values('name', 'latitude', 'longitude'))
+    return render(request, 'backend/home/homePage.html', {'gyms': gyms})
 
 @login_required
 def profile(request):
@@ -133,8 +136,11 @@ def opening_pack(request):
     add_player_cards(request.user, pack_cards)
     # Decrement pack count from the user's profile
     reduce_user_pack_count(request.user)
-    # Show the user the cards they got
-
+    # Increase the packs opened count
+    increase_packs_opened(request.user)
+    # Check if they have reached an achievement milestone
+    check_and_award_achievements(request.user, 'PACKS')
+     # Show the user the cards they got
     card_images = [str(pack.image).replace('static/', '') for pack in pack_cards]
     return render(request, 'backend/packs/opening_pack.html', {'card_images': card_images})
 
@@ -243,6 +249,14 @@ def completed_gym_battle(request):
     did_win = request.GET.get('did_win')
     gym_id = request.GET.get('gym_id')
 
+    #get players deck
+    player_deck_cards = get_player_deck(request.user)
+
+    # Increment use count for each card used in battle
+    for card in player_deck_cards:
+        player_card = PlayerCards.objects.get(player=request.user, card=card)
+        player_card.increment_use()
+
     # Ensure the required parameters are present
     if not did_win or not gym_id:
         return redirect('missing-battle-condition')
@@ -269,30 +283,59 @@ def completed_gym_battle(request):
         # If the gym is not found, redirect to the gym not found page
         except Gym.DoesNotExist:
             return redirect('gym-not-found/')
-    
+
         # Ensure the user has a selected deck
         if not has_deck(request.user):
             return redirect('battle-deck-empty/')
 
-        # Reset the user's wrapper count to 0
+        # Get initial values for verification
+        initial_bins_emptied = request.user.profile.bins_emptied
+
+        # Reset wrappers and increase bins emptied
         reset_profile_wrappers(request.user)
+        increase_bins_emptied(request.user)
+        check_and_award_achievements(request.user, 'BINS')
+
+        # Verify changes were saved
+        request.user.profile.refresh_from_db()
+        if request.user.profile.wrapper_count != 0:
+            raise Exception(f"Wrapper count not reset. Current: {request.user.profile.wrapper_count}")
+        if request.user.profile.bins_emptied <= initial_bins_emptied:
+            raise Exception(f"Bins emptied not increased. Before: {initial_bins_emptied}, After: {request.user.profile.bins_emptied}")
 
         # Process the result of the gym battle
         if did_win == 'true':
-            player_collection_cards = get_player_deck(request.user)
-            # Set the gym's cards & update the player's cards in use
-            update_gym_cards(request.user,player_collection_cards, gym)
-            # Clear the cards used by the player in the battle from their deck
-            request.user.profile.deck_card_1 = None
-            request.user.profile.deck_card_2 = None
-            request.user.profile.deck_card_3 = None
-            request.user.profile.save() 
-            # Update the owning player
-            update_owning_player(request.user,gym)
-            # Update the cooldown of the gym
-            update_cooldown(gym)
-            # Add a pack to the user's profile
-            add_players_pack(request.user)
+            with transaction.atomic():
+                #Increase the win count in the user's profile
+                increase_win_count(request.user)
+                check_and_award_achievements(request.user, 'BATTLES')
+                player_collection_cards = get_player_deck(request.user)
+                # Set the gym's cards & update the player's cards in use
+                update_gym_cards(request.user,player_collection_cards, gym)
+                # Clear the cards used by the player in the battle from their deck
+                request.user.profile.deck_card_1 = None
+                request.user.profile.deck_card_2 = None
+                request.user.profile.deck_card_3 = None
+                request.user.profile.save() 
+                # Update the owning player
+                update_owning_player(request.user,gym)
+                # Update the cooldown of the gym
+                update_cooldown(gym)
+                # Add a pack to the user's profile
+                add_players_pack(request.user)
+
+
+        # Check if the user has reached an achievement milestone
+        # Increment use count for each card used in the battle
+        for card in player_deck_cards:
+            player_card = PlayerCards.objects.get(player=request.user, card=card)
+            player_card.increment_use()
+
+        # Get the players cards and filter out the cards that have reached max uses
+        players_cards = PlayerCards.objects.filter(player=request.user)
+        # Check and remove cards that have reached max uses
+        for player_card in players_cards:
+            player_card.check_and_remove()
 
         return render(request, 'backend/battles/gym-battle-completed.html', context)
 
