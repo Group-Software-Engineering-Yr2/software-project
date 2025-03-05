@@ -6,8 +6,17 @@ let isScanning = false;
 // Function to handle the scanned URL (successful scan)
 function onScanSuccess(decodedText, decodedResult) {
     console.log(`Scanned URL: ${decodedText}`, decodedResult);
-    // Directly use the scanned URL for redirection
-    window.location.href = decodedText;
+
+    // Define the allowed URL pattern using a regular expression
+    const allowedPattern = /^http:\/\/127\.0\.0\.1:8000\/view-gym\/\d+$/;
+
+    // Validate the scanned URL
+    if (allowedPattern.test(decodedText)) {
+        window.location.href = decodedText;
+    } else {
+        alert("Invalid QR Code. Please scan a valid recycling gym QR code.");
+        console.warn("Scanned QR code does not match the expected format.");
+    }
 }
 
 // Function to handle the scan failure
