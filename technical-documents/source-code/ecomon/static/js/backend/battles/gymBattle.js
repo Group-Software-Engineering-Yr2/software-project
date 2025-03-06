@@ -1,15 +1,166 @@
 // Wait for the DOM to be fully loaded before executing the code
 document.addEventListener('DOMContentLoaded', function() {
-    // Initializing the start variables and rendering the cards
+    // Create and show the coin flip overlay
+    createCoinFlipOverlay();
+    
+    // Perform the coin flip
+    performCoinFlip();
+
+    // Initialize the start variables
     setPlayerActiveCard(activePlayerCard);
     setPlayerCardSlot1(playerCardSlot1);
     setPlayerCardSlot2(playerCardSlot2);
     setOpponentActiveCard(activeOpponentCard);
     setOpponentCardSlot1(opponentCardSlot1);
     setOpponentCardSlot2(opponentCardSlot2);
-    // Assuming player goes first in this iteration
-    isPlayerTurn = true;
+});
 
+// Function to create the coin flip overlay
+function createCoinFlipOverlay() {
+    // Create overlay div
+    const overlay = document.createElement('div');
+    overlay.id = 'coin-flip-overlay';
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    overlay.style.display = 'flex';
+    overlay.style.flexDirection = 'column';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.zIndex = '1000';
+    
+    // Create text for coin flip
+    const text = document.createElement('div');
+    text.id = 'coin-flip-text';
+    text.textContent = 'Flipping coin to decide who goes first...';
+    text.style.color = 'white';
+    text.style.fontSize = '24px';
+    text.style.marginBottom = '30px';
+    text.style.fontFamily = 'Arial, sans-serif';
+    text.style.fontWeight = 'bold';
+    
+    // Create coin container
+    const coinContainer = document.createElement('div');
+    coinContainer.id = 'coin-container';
+    coinContainer.style.width = '150px';
+    coinContainer.style.height = '150px';
+    coinContainer.style.position = 'relative';
+    coinContainer.style.perspective = '1000px';
+    
+    // Create the coin
+    const coin = document.createElement('div');
+    coin.id = 'coin';
+    coin.style.width = '100%';
+    coin.style.height = '100%';
+    coin.style.position = 'relative';
+    coin.style.transformStyle = 'preserve-3d';
+    coin.style.transition = 'transform 1s ease-in';
+    
+    // Create heads side
+    const heads = document.createElement('div');
+    heads.className = 'coin-side heads';
+    heads.style.width = '100%';
+    heads.style.height = '100%';
+    heads.style.position = 'absolute';
+    heads.style.backfaceVisibility = 'hidden';
+    heads.style.borderRadius = '50%';
+    heads.style.backgroundColor = '#84C44C';
+    heads.style.display = 'flex';
+    heads.style.justifyContent = 'center';
+    heads.style.alignItems = 'center';
+    heads.style.fontSize = '24px';
+    heads.style.fontWeight = 'bold';
+    heads.style.color = 'white';
+    heads.textContent = username;
+    
+    // Create tails side
+    const tails = document.createElement('div');
+    tails.className = 'coin-side tails';
+    tails.style.width = '100%';
+    tails.style.height = '100%';
+    tails.style.position = 'absolute';
+    tails.style.backfaceVisibility = 'hidden';
+    tails.style.borderRadius = '50%';
+    tails.style.backgroundColor = '#FF0000';
+    tails.style.transform = 'rotateY(180deg)';
+    tails.style.display = 'flex';
+    tails.style.justifyContent = 'center';
+    tails.style.alignItems = 'center';
+    tails.style.fontSize = '24px';
+    tails.style.fontWeight = 'bold';
+    tails.style.color = 'white';
+    tails.textContent = opponent;
+    
+    // Assemble the elements
+    coin.appendChild(heads);
+    coin.appendChild(tails);
+    coinContainer.appendChild(coin);
+    overlay.appendChild(text);
+    overlay.appendChild(coinContainer);
+    document.body.appendChild(overlay);
+}
+
+function performCoinFlip() {
+    const coin = document.getElementById('coin');
+    const text = document.getElementById('coin-flip-text');
+    const overlay = document.getElementById('coin-flip-overlay');
+
+    // Ensure coin starts at 0 rotation
+    coin.style.transform = "rotateY(0deg)";
+
+    // Force a reflow before applying the animation
+    setTimeout(() => {
+        // Random number of rotations (5 to 10)
+        const rotations = 5 + Math.floor(Math.random() * 5);
+        const isHeads = Math.random() < 0.5;
+        const finalRotation = rotations * 360 + (isHeads ? 0 : 180);
+
+        // Apply the rotation to the coin
+        coin.style.transition = "transform 1s ease-in-out";
+        coin.style.transform = `rotateY(${finalRotation}deg)`;
+
+        setTimeout(() => {
+            text.textContent = isHeads ? `${username} goes first!` : `${opponent} goes first!`;
+            isPlayerTurn = isHeads;
+
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                overlay.style.transition = 'opacity 0.5s ease';
+
+                setTimeout(() => {
+                    document.body.removeChild(overlay);
+                    startGame();
+                }, 500);
+            }, 1500);
+        }, 1000);
+    }, 50); // Tiny delay to trigger reflow
+}
+
+// Function to start the game after the coin flip
+function startGame() {
+    // Initialize the start variables and rendering the cards
+    setPlayerActiveCard(activePlayerCard);
+    setPlayerCardSlot1(playerCardSlot1);
+    setPlayerCardSlot2(playerCardSlot2);
+    setOpponentActiveCard(activeOpponentCard);
+    setOpponentCardSlot1(opponentCardSlot1);
+    setOpponentCardSlot2(opponentCardSlot2);
+    
+    // Initialize battle log
+    let battleLog = document.querySelector('.battle-log');
+    battleLog.innerHTML += `<p>Coin flip result: ${isPlayerTurn ? username : opponent} goes first!</p>`;
+    battleLog.scrollTop = battleLog.scrollHeight;
+    
+    // If opponent goes first, start their turn
+    if (!isPlayerTurn) {
+        setTimeout(() => {
+            handleOpponentTurn();
+        }, 1000);
+    }
+    
     // Add event listeners for button clicks on the HTML page
     // Player move 1
     document.getElementById('player-move-1').addEventListener('click', function() {
@@ -64,9 +215,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }   
         } 
     });
-});
+}
 
-// Function to set the player's active card on the HTML page
+// The rest of your existing functions remain unchanged
 function setPlayerActiveCard(card){
     document.getElementById('player-active-card-icon').src = card.image;
     document.getElementById('player-hp').textContent = `HP: ${card.health_points}`;
