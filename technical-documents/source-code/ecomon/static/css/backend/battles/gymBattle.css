@@ -30,7 +30,7 @@
 }
 
 .opponent-slots-container {
-    margin-top: clamp(30px, 130px, 15vh);
+    margin-top: 30px;
     margin-left: auto;
 }
 
