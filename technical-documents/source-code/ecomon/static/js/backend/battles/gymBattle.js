@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
     setOpponentCardSlot2(opponentCardSlot2);
 });
 
+let maxPlayerHealth;
+let maxOpponentHealth;
+
 // Function to create the coin flip overlay
 function createCoinFlipOverlay() {
     // Create overlay div
@@ -219,6 +222,7 @@ function startGame() {
 
 // The rest of your existing functions remain unchanged
 function setPlayerActiveCard(card){
+    maxPlayerHealth = card.health_points;
     document.getElementById('player-active-card-icon').src = card.image;
     document.getElementById('player-hp').textContent = `HP: ${card.health_points}`;
     document.getElementById('player-active-card-name').textContent = card.name;
@@ -249,6 +253,7 @@ function setPlayerCardSlot2(card){
 
 //Function to set the opponent's active card on the HTML page
 function setOpponentActiveCard(card){
+    maxOpponentHealth = card.health_points;
     document.getElementById('opponent-active-card-icon').src = card.image;
     document.getElementById('opponent-hp').textContent = `HP: ${card.health_points}`;
     document.getElementById('opponent-active-card-name').textContent = card.name;
@@ -323,6 +328,11 @@ function handlePlayerTurn(moveChoice) {
         } else if (activePlayerCard.ability_power_2 > 0 && activePlayerCard.ability_self_power_2 > 0) {
             let result = activeOpponentCard.health_points - activePlayerCard.ability_power_2;
             let selfResult = activePlayerCard.health_points + activePlayerCard.ability_self_power_2;
+            let message = "";
+            if (selfResult > maxPlayerHealth) {
+                selfResult = maxPlayerHealth;
+                message = ` and healed ${maxPlayerHealth - activePlayerCard.health_points} health!`;
+            }
             // If the opponent's health points are less than or equal to 0 after the players move, set the health points to 0 and update the HTML
             if (result <= 0) {
                 result = 0;
@@ -333,7 +343,12 @@ function handlePlayerTurn(moveChoice) {
                 document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
 
                 // Add to battle log
-                battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage and healed ${activePlayerCard.ability_self_power_2} health!</p>`;
+                if (message === "") {
+                    battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage and healed ${activePlayerCard.ability_self_power_2} health!</p>`;
+                } else {
+                    battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage` + message + `</p>`;
+                }
+                // battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage and healed ${activePlayerCard.ability_self_power_2} health!</p>`;
                 battleLog.scrollTop = battleLog.scrollHeight;
                 battleLog.innerHTML += `<p>` + opponent + `'s `+ activeOpponentCard.name + ` fainted!</p>`;
                 // Check if the opponent has any more cards, if not, the player wins
@@ -345,18 +360,34 @@ function handlePlayerTurn(moveChoice) {
                 document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
 
                 // Add to battle log
-                battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage and healed + ${activePlayerCard.ability_self_power_2} health!</p>`;
+                if (message === "") {
+                    battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage and healed ${activePlayerCard.ability_self_power_2} health!</p>`;
+                } else {
+                    battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage` + message + `</p>`;
+                }
+                // battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage and healed + ${activePlayerCard.ability_self_power_2} health!</p>`;
                 battleLog.scrollTop = battleLog.scrollHeight;
             }
         // If the second sustainAbility is a heal move only
         } else {
             // Update the health points for the player
             let result = activePlayerCard.health_points + activePlayerCard.ability_self_power_2;
+            let message = "";
+            if (result > maxPlayerHealth) {
+                result = maxPlayerHealth;
+                message = ` ${maxPlayerHealth - activePlayerCard.health_points} health!`;
+                console.log(message);
+            }
             activePlayerCard.health_points = result;
             document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
 
             // Add to battle log
-            battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` to heal ${activePlayerCard.ability_self_power_2} health!</p>`;
+            if (message === "") {
+                battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` to heal ${activePlayerCard.ability_self_power_2} health!</p>`;
+            } else {
+                battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` to heal` + message + `</p>`;
+            }
+            // battleLog.innerHTML += `<p>` + username + ` used `+ activePlayerCard.ability_name_2 + ` to heal ${activePlayerCard.ability_self_power_2} health!</p>`;
             battleLog.scrollTop = battleLog.scrollHeight;
 
         }

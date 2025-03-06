@@ -71,6 +71,10 @@
     gap: 20px;
 }
 
+.gym-battle-player-active p, .gym-battle-opponent-active p{
+    width: 400px;
+}
+
 .vs-logo {
     width: clamp(300px, 340px, 12vw);
     height: auto;
