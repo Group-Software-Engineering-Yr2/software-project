@@ -75,3 +75,10 @@ html, body, #map {
     pointer-events: auto;
     cursor: pointer;
 }
+
+@media (max-width: 500px) {  
+    .button {
+        width: 60px;
+        height: 60px;
+    }
+}
