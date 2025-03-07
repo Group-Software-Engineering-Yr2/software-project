@@ -1,0 +1,141 @@
+/* Global styling */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2; 
+    font-family: Arial, sans-serif;
+}
+
+/* Wrapper centers the content */
+.leaderboard-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container with card-style design */
+.leaderboard-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    padding: 2rem;
+    max-width: 1200px;
+    width: 90%;
+    min-height: 70vh;
+    text-align: center;
+}
+
+/* Logo styling */
+.title-logo {
+    display: block;
+    margin: 0 auto 1rem auto;
+    width: 200px;
+}
+
+/* Heading styling */
+h1 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    color: #333;
+}
+
+/* Table wrapper to enable horizontal scrolling on small screens */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+/* Table styling */
+.styled-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.styled-table thead tr {
+    background-color: #84C44C;
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.styled-table img{
+    height: 40px;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f8f8f8;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #84C44C;
+}
+
+.metric-label {
+    text-align: left;
+    font-weight: bold;
+}
+
+
+.button {
+    width: 22px;
+    height: 22px;
+    background-color: #84C44C;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px; 
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-image{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter: invert();
+}
+
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.leaderboard-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.button:hover {
+    background-color: #144E3F;
+}
+
+.button a {
+    color: white;
+    text-decoration: none;
+}
+
