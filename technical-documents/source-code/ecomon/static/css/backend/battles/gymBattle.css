@@ -13,6 +13,7 @@
     width: 65px;
 }
 
+/* Player and Opponents Bench Slot CSS */
 .player-slots-container,
 .opponent-slots-container {
     display: flex;
