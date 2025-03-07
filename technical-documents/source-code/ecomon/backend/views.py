@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.utils import timezone
 from django.db import transaction
 from accounts.player_service import get_player_deck, has_deck, add_players_pack
 from accounts.models import Profile
@@ -11,11 +12,28 @@ from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning
 from .bin_service import is_bin_full, increment_wrapper_count
 from .achievement_service import check_and_award_achievements
 from .models import Gym, Card, PlayerCards
-
+from datetime import timedelta
 
 @login_required
 def home(request):
     gyms = list(Gym.objects.values('name', 'latitude', 'longitude'))
+
+    # getting last allocation from DB
+    last_pack_allocation = Profile.objects.get(user=request.user).last_pack_allocation
+
+    # getting 3 days ago
+    threeDaysAgo = timezone.now().date() - timedelta(days=3)
+    last_pack_allocation = timezone.now().date() - timedelta(days=3)
+    
+    # checking if more than three days or more ago
+    if threeDaysAgo >= last_pack_allocation:
+        add_players_pack(request.user)
+        
+        # updating last allocated time (not gonna create a service file cuz it's one operation)
+        profile = Profile.objects.get(user=request.user)
+        profile.last_pack_allocation = timezone.now().date()
+        profile.save()
+        
     return render(request, 'backend/home/homePage.html', {'gyms': gyms})
 
 @login_required
