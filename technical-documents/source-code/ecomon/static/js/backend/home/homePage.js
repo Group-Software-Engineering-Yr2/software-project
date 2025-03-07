@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // finding offset
     let buttonRect = rightmostButton.getBoundingClientRect();
-    let rightOffset = window.innerWidth - buttonRect.right;
+    let leftOffset = window.innerWidth - (buttonRect.left *1.5);
 
     // setting offset
-    locateButtonContainer.style.left = `${rightOffset}px`;
+    locateButtonContainer.style.right = `${leftOffset}px`;
     
     // getting locate button and adding function to center on user 
     let locateButton = document.getElementById("locateButton");
