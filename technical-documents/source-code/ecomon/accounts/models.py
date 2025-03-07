@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from backend.models import Team, Card
+from django.utils.timezone import now
 
 # Create your models here.
 
@@ -22,13 +23,12 @@ class Profile(models.Model):
                                     null=True)
     wrapper_count = models.IntegerField()
     pack_count = models.IntegerField()
+    last_pack_allocation = models.DateField(default=now)
 
     # Stats for achievements
     battles_won = models.IntegerField(default=0)
     bins_emptied = models.IntegerField(default=0)
     packs_opened = models.IntegerField(default=0)
-
-
 
     def __str__(self):
         # Ignore python warning
