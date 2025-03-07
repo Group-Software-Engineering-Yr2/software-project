@@ -130,3 +130,29 @@ h1 {
     object-fit: cover;
     filter: invert();
 }
+
+/* Card types */
+
+.cards-td{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.cards-td span{
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.plastic-span{
+    background-color: #9a9a9a4c;
+}
+
+.recycle-span{
+    background-color: #0b78ed5e;
+}
+
+.plant-span{
+    background-color: #27932b64;
+}

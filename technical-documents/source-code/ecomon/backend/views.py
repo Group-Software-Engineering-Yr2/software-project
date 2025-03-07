@@ -444,6 +444,10 @@ def player_leaderboard(request):
         # Collection total could be the sum of these counts
         collection_total = plastic_cards_owned + recycle_cards_owned + plant_cards_owned
 
+        battles_won = profile.battles_won
+        bins_emptied = profile.bins_emptied
+        packs_opened = profile.packs_opened
+
         players_data.append({
             'username': username,
             'team_name': team,
@@ -452,6 +456,9 @@ def player_leaderboard(request):
             'recycle_cards_owned': recycle_cards_owned,
             'plant_cards_owned': plant_cards_owned,
             'collection_total': collection_total,
+            'battles_won': battles_won,
+            'bins_emptied': bins_emptied,
+            'packs_opened': packs_opened,
         })
 
     # Sort the list in descending order by owning_gyms

@@ -35,9 +35,10 @@
                             <th>Username</th>
                             <th>Team</th>
                             <th>Owning Gyms</th>
-                            <th>Plastic Cards Owned</th>
-                            <th>Recycle Cards Owned</th>
-                            <th>Plant Cards Owned</th>
+                            <th>Battles Won</th>
+                            <th>Bins Emptied</th>
+                            <th>Packs Opened</th>
+                            <th>Card Types Owned</th>
                             <th>Collection Total</th>
                         </tr>
                     </thead>
@@ -47,9 +48,10 @@
                             <td>{{ player.username }}</td>
                             <td>{{ player.team_name }}</td>
                             <td>{{ player.owning_gyms }}</td>
-                            <td>{{ player.plastic_cards_owned }}</td>
-                            <td>{{ player.recycle_cards_owned }}</td>
-                            <td>{{ player.plant_cards_owned }}</td>
+                            <td>{{ player.battles_won }}</td>
+                            <td>{{ player.bins_emptied }}</td>
+                            <td>{{ player.packs_opened }}</td>
+                            <td class="cards-td"><span class="plastic-span">{{ player.plastic_cards_owned }}</span><span class="recycle-span">{{ player.recycle_cards_owned }}</span><span class="plant-span">{{ player.plant_cards_owned }}</span></td>
                             <td>{{ player.collection_total }}</td>
                         </tr>
                         {% endfor %}
