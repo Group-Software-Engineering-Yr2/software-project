@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>Ecomon Player Leaderboard</title>
+    <!-- Font Awesome for icons (back button) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS file for player leaderboard styling -->
+    <link rel="stylesheet" href="{% static 'css/backend/leaderboard/player_leaderboard.css' %}">
+</head>
+<body>
+    <!-- Floating Back Button -->
+    <a href="/home" class="button back-button">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <!-- Team leaderboard -->
+    <a href="/team_leaderboard" class="button leaderboard-button" >
+        <img src="{% static 'images/backend/leaderboard/playerIcon.png' %}" alt="Player Leaderboard" class="button-image">
+    </a>
+
+    <div class="leaderboard-wrapper">
+        <div class="leaderboard-container">
+            <!-- Logo -->
+            <img class="title-logo" alt="ecomon logo" 
+                src="{% static 'images/backend/scanner/Ecomon1-removebg.png' %}">
+            <h1>Player Leaderboard</h1>
+
+            <div class="table-wrapper">
+                <table class="leaderboard-table styled-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Team</th>
+                            <th>Owning Gyms ↓</th>
+                            <th>Battles Won</th>
+                            <th>Bins Emptied</th>
+                            <th>Packs Opened</th>
+                            <th>Card Types Owned</th>
+                            <th>Collection Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for player in players %}
+                        <tr>
+                            <td>{{ player.username }}</td>
+                            <td>{{ player.team_name }}</td>
+                            <td>{{ player.owning_gyms }}</td>
+                            <td>{{ player.battles_won }}</td>
+                            <td>{{ player.bins_emptied }}</td>
+                            <td>{{ player.packs_opened }}</td>
+                            <td class="cards-td"><span class="plastic-span">{{ player.plastic_cards_owned }}</span><span class="recycle-span">{{ player.recycle_cards_owned }}</span><span class="plant-span">{{ player.plant_cards_owned }}</span></td>
+                            <td>{{ player.collection_total }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

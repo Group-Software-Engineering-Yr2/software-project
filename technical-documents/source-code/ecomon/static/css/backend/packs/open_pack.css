@@ -66,3 +66,53 @@ p {
     filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 1));
     margin-block: 2vh;
 }
+
+/* Info Icon */
+.info-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;  /* Positions in the top-right */
+}
+
+.info-icon button {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #1d1c1c; /* Circular border */
+    border-radius: 60%; /* Makes it a circle */
+    background-color: transparent;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-icon-i{
+    font-size: larger;
+    font-weight: 650;
+    
+}
+
+.info-icon button:hover {
+    background-color: #27932A; /* Light gray on hover */
+}
+
+.tooltip {
+    display: none;  /* Hide initially */
+    position: absolute;
+    top: 40px; /* Position below the button */
+    right: 0;
+    background-color: #333;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+/* Show tooltip on hover */
+.info-icon:hover .tooltip {
+    display: block;
+}
