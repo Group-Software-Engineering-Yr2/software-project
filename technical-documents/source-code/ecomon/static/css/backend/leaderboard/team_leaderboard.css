@@ -86,7 +86,6 @@ h1 {
     border-bottom: 2px solid #84C44C;
 }
 
-/* Left-align the metric label column */
 .metric-label {
     text-align: left;
     font-weight: bold;
@@ -94,22 +93,44 @@ h1 {
 
 
 .button {
+    width: 22px;
+    height: 22px;
     background-color: #84C44C;
     color: white;
     font-weight: bold;
-    padding: 10px 15px;
+    padding: 10px 15px; 
     border: none;
     border-radius: 5px;
     text-align: center;
-    text-decoration: none; 
-    display: flex;
+    display: inline-flex; 
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-        .button:hover {
+.button-image{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter: invert();
+}
+
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.leaderboard-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.button:hover {
     background-color: #144E3F;
 }
 
@@ -118,9 +139,3 @@ h1 {
     text-decoration: none;
 }
 
-.back-button {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;   
-}

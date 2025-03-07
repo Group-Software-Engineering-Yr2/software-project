@@ -70,3 +70,8 @@ html, body, #map {
     max-height: 100%;
     object-fit: contain;
 }
+
+.pointer{
+    pointer-events: auto;
+    cursor: pointer;
+}

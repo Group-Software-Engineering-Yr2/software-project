@@ -27,32 +27,32 @@
     <div id="map"></div>
 
     <!-- locate button -->
-    <div id="locateButton-container">
+    <div id="locateButton-container" class="pointer">
         <a>
             <button class="button" id="locateButton"><img src="{% static 'images/backend/homePage/userLocationMarker.png' %}" alt="Center Position"></button>
         </a>
     </div>
 
 
-        <!-- Leaderboard -->
-        <div id="leaderboardButton-container">
-            <a href="/team_leaderboard">
-                <button class="button" id="leaderboardButton"><img src="{% static 'images/backend/homePage/.png' %}" alt="Leaderboard"></button>
-            </a>
-        </div>
+    <!-- Leaderboard -->
+    <div id="leaderboardButton-container" class="pointer">
+        <a href="/team_leaderboard">
+            <button class="button" id="leaderboardButton"><img src="{% static 'images/backend/homePage/leaderboardIcon.png' %}" alt="Leaderboard"></button>
+        </a>
+    </div>
 
     <!-- Bottom row buttons -->
     <div class="buttons-container">
         <!-- packs button -->
-        <a href="/packs">
+        <a href="/packs" class="pointer">
             <button class="button"><img src="{% static 'images/backend/homePage/packsIcon.PNG' %}" alt="Packs"></button>
         </a>
         <!-- scanner button -->
-        <a href="/scanner">
+        <a href="/scanner" class="pointer">
             <button class="button"><img src="{% static 'images/backend/homePage/QRCodeIcon.png' %}" alt="Scanner"></button>
         </a>
         <!-- profile button -->
-        <a href="/profile">
+        <a href="/profile" class="pointer">
             <button class="button"><img src="{% static 'images/backend/homePage/profileIcon.png' %}" alt="Profile"></button>
         </a>
     </div>
