@@ -15,13 +15,7 @@
         <div class="signup-box">
             <h2>Sign Up</h2>
             <form method="post">
-                {% csrf_token %}
-                            {% if messages %}
-                    {% for message in messages %}
-                        <p class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
-                    {% endfor %}
-                {% endif %}
-            
+                {% csrf_token %}            
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="email" name="email" placeholder="Email address" required>
                 <input type="password" name="password1" placeholder="Password" required>
@@ -39,6 +33,12 @@
                 <label for="privacyCheck">
                     <a href="{% url 'privacy' %}">Agree To Privacy policy</a>
                 </label>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
             
                 <button type="submit" class="submit">Sign Up</button>
                 <p class="login-text">Already have an account? 

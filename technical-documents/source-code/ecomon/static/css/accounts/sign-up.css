@@ -117,3 +117,9 @@ select:valid {
 .plant img:last-child {
     transform: scaleX(-1);
 } */
+
+
+.error{
+    color: red;
+    margin: 0;
+}

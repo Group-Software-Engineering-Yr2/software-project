@@ -96,7 +96,7 @@ def render_sign_up(request):
         else:
             for field, errors in form.errors.items():
                 for error in errors:
-                    messages.error(request, f"{field.capitalize()}: {error}")
+                    messages.error(request, f"{error}")
 
     else:
         form = CustomUserCreationForm()
