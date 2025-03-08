@@ -120,7 +120,7 @@ def render_login(request):
 
         if user is not None:
             login(request, user)
-            messages.success(request, "Login successful!")
+            messages.success(request,"")
             return redirect("/home")  # Redirect to homepage
         else:
             messages.error(request, "Invalid email or password.")

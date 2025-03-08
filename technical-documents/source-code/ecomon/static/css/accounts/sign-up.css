@@ -122,4 +122,16 @@ select:valid {
 .error{
     color: red;
     margin: 0;
+    text-align: left;
+}
+
+.privacy-container{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    margin:0;
+
+    p{
+        margin: 0;
+    }
 }

@@ -28,19 +28,20 @@
                         <option value="{{ team.name }}">{{ team.name }}</option>
                     {% endfor %}
                 </select>
+                
+                <div class="privacy-container">
+                    <input type="checkbox" id="privacyCheck" required>
+                    <label for="privacyCheck">
+                        <p>I agree to the <a href="{% url 'privacy' %}" target="_blank">privacy policy</a></p>
+                    </label>
+                </div>
 
-                <input type="checkbox" id="privacyCheck" required>
-                <label for="privacyCheck">
-                    <a href="{% url 'privacy' %}">Agree To Privacy policy</a>
-                </label>
-
+                <button type="submit" class="submit">Sign Up</button>
                 {% if messages %}
                     {% for message in messages %}
                         <p class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
                     {% endfor %}
                 {% endif %}
-            
-                <button type="submit" class="submit">Sign Up</button>
                 <p class="login-text">Already have an account? 
                     <a class="login-link" href="{% url 'login-page' %}">Login</a>
                 </p>

@@ -19,18 +19,18 @@
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <button type="submit" class="submit">Login</button>
-                
+                <!-- Display error messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
 
                 <p>Don't have an account? 
                     <a class="login-link" href="{% url 'register-page' %}">Sign up</a>
                 </p>
             </form>
-            <!-- Display error messages -->
-            {% if messages %}
-                {% for message in messages %}
-                    <p class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
-                {% endfor %}
-            {% endif %}
+          
         </div>
     </div>
 </body>
