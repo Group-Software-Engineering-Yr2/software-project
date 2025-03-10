@@ -233,7 +233,42 @@ def render_gym_battle(request, gym_id):
         player_deck_card1 = profile.deck_card_1 if profile and profile.deck_card_1 else None
         player_deck_card2 = profile.deck_card_2 if profile and profile.deck_card_2 else None
         player_deck_card3 = profile.deck_card_3 if profile and profile.deck_card_3 else None
+
+        # Retrieve Player's and Gym Owning teams
+        user_team = profile.team_name.name if profile else "No team"
+        gym_team = gym.owning_player.profile.team_name.name if gym.owning_player else "No team"
         
+        # Apply battle benefits based on the user's team
+        if user_team == "Recycle":
+            if player_deck_card1 and player_deck_card1.card_type == 2:
+                player_deck_card1.ability_power_1 += 10
+                if player_deck_card1.ability_power_2 != 0:
+                    player_deck_card1.ability_power_2 += 10
+            if player_deck_card2 and player_deck_card2.card_type == 2:
+                player_deck_card2.ability_power_1 += 10
+                if player_deck_card2.ability_power_2 != 0:
+                    player_deck_card2.ability_power_2 += 10
+            if player_deck_card3 and player_deck_card3.card_type == 2:
+                player_deck_card3.ability_power_1 += 10
+                if player_deck_card3.ability_power_2 != 0:
+                    player_deck_card3.ability_power_2 += 10
+        
+        # Apply battle benefits based on the gym's team
+        if gym_team == "Recycle":
+            if gym.card1.card_type == 2:
+                gym.card1.ability_power_1 += 10
+                if gym.card1.ability_power_2 != 0:
+                    gym.card1.ability_power_2 += 10
+            if gym.card2.card_type == 2:
+                gym.card2.ability_power_1 += 10
+                if gym.card2.ability_power_2 != 0:
+                    gym.card2.ability_power_2 += 10
+            if gym.card3.card_type == 2:
+                gym.card3.ability_power_1 += 10
+                if gym.card3.ability_power_2 != 0:
+                    gym.card3.ability_power_2 += 10
+            
+
         # Context variables to pass to the template
         context = {
             "gym_id": gym_id,
@@ -244,7 +279,9 @@ def render_gym_battle(request, gym_id):
             "gym_owning_player": gym.owning_player,
             "player_deck_card1": json.dumps(player_deck_card1.to_json()),
             "player_deck_card2": json.dumps(player_deck_card2.to_json()),
-            "player_deck_card3": json.dumps(player_deck_card3.to_json())
+            "player_deck_card3": json.dumps(player_deck_card3.to_json()),
+            "user_team": user_team,
+            "gym_team": gym_team,
         }
 
     except Gym.DoesNotExist:

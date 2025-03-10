@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     setOpponentCardSlot2(opponentCardSlot2);
 });
 
+// Initialize variables to keep track of the player's and opponent's cards health points
 let maxPlayerHealth;
 let maxOpponentHealth;
 
@@ -145,14 +146,6 @@ function performCoinFlip() {
 
 // Function to start the game after the coin flip
 function startGame() {
-    // Initialize the start variables and rendering the cards
-    setPlayerActiveCard(activePlayerCard);
-    setPlayerCardSlot1(playerCardSlot1);
-    setPlayerCardSlot2(playerCardSlot2);
-    setOpponentActiveCard(activeOpponentCard);
-    setOpponentCardSlot1(opponentCardSlot1);
-    setOpponentCardSlot2(opponentCardSlot2);
-
     // Initialize battle log
     let battleLog = document.querySelector('.battle-log');
     battleLog.innerHTML += `<p>Coin flip result: ${isPlayerTurn ? username : opponent} goes first!</p>`;

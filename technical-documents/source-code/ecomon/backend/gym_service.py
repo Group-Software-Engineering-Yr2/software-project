@@ -92,5 +92,4 @@ def increase_win_count(user:User):
     profile = Profile.objects.get(user=user)
     profile.battles_won += 1
     profile.save()
-
-
+    
