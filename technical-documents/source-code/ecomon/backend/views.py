@@ -252,6 +252,16 @@ def render_gym_battle(request, gym_id):
                 player_deck_card3.ability_power_1 += 10
                 if player_deck_card3.ability_power_2 != 0:
                     player_deck_card3.ability_power_2 += 10
+        elif user_team == "Reduce":
+            gym.card1.ability_power_1 -= 5
+            gym.card2.ability_power_1 -= 5
+            gym.card3.ability_power_1 -= 5
+            if gym.card1.ability_power_2 != 0:
+                gym.card1.ability_power_2 -= 5
+            if gym.card2.ability_power_2 != 0:
+                gym.card2.ability_power_2 -= 5
+            if gym.card3.ability_power_2 != 0:
+                gym.card3.ability_power_2 -= 5
         
         # Apply battle benefits based on the gym's team
         if gym_team == "Recycle":
@@ -267,6 +277,17 @@ def render_gym_battle(request, gym_id):
                 gym.card3.ability_power_1 += 10
                 if gym.card3.ability_power_2 != 0:
                     gym.card3.ability_power_2 += 10
+        elif gym_team == "Reduce":
+            if player_deck_card1 and player_deck_card2 and player_deck_card3:
+                player_deck_card1.ability_power_1 -= 5
+                player_deck_card2.ability_power_1 -= 5
+                player_deck_card3.ability_power_1 -= 5
+                if player_deck_card1.ability_power_2 != 0:
+                    player_deck_card1.ability_power_2 -= 5
+                if player_deck_card2.ability_power_2 != 0:
+                    player_deck_card2.ability_power_2 -= 5
+                if player_deck_card3.ability_power_2 != 0:
+                    player_deck_card3.ability_power_2 -= 5
             
 
         # Context variables to pass to the template

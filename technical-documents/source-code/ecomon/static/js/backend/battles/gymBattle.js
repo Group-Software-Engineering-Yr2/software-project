@@ -414,7 +414,6 @@ function handleOpponentTurn() {
     // Initialize battle log and choose a random move for the opponent
     let battleLog = document.querySelector('.battle-log');
     const moveChoice = Math.random() < 0.5 ? 1 : 2;
-
     // If the opponent randomly chooses the first move
     if (moveChoice === 1) {
         let result = activePlayerCard.health_points - activeOpponentCard.ability_power_1;
