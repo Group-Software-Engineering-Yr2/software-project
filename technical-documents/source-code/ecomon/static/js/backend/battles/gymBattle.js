@@ -1,5 +1,5 @@
 // Wait for the DOM to be fully loaded before executing the code
-// TODO: Commenting new features
+// TODO: Commenting all new features
 document.addEventListener('DOMContentLoaded', function () {
     // Create and show the coin flip overlay
     createCoinFlipOverlay();
