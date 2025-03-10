@@ -343,3 +343,140 @@ html {
     min-height: 100vh;
     width: 100%;
 }
+
+/* Card Animations */
+@keyframes attack-animation {
+    0% { transform: scale(1) rotate(25deg); }
+    25% { transform: scale(1.2) rotate(25deg) translateY(-20px); }
+    75% { transform: scale(1.2) rotate(25deg) translateX(40px); }
+    100% { transform: scale(1) rotate(25deg); }
+}
+
+@keyframes opponent-attack-animation {
+    0% { transform: scale(1) rotate(-25deg); }
+    25% { transform: scale(1.2) rotate(-25deg) translateY(-20px); }
+    75% { transform: scale(1.2) rotate(-25deg) translateX(-40px); }
+    100% { transform: scale(1) rotate(-25deg); }
+}
+
+@keyframes damage-animation {
+    0% { transform: scale(1) rotate(-25deg); }
+    25% { transform: scale(0.8) rotate(-30deg); filter: brightness(70%) contrast(150%); }
+    50% { transform: scale(0.85) rotate(-20deg); filter: brightness(90%) contrast(120%); }
+    100% { transform: scale(1) rotate(-25deg); filter: brightness(100%) contrast(100%); }
+}
+
+@keyframes player-damage-animation {
+    0% { transform: scale(1) rotate(25deg); }
+    25% { transform: scale(0.8) rotate(30deg); filter: brightness(70%) contrast(150%); }
+    50% { transform: scale(0.85) rotate(20deg); filter: brightness(90%) contrast(120%); }
+    100% { transform: scale(1) rotate(25deg); filter: brightness(100%) contrast(100%); }
+}
+
+@keyframes heal-animation {
+    0% { transform: scale(1) rotate(25deg); filter: brightness(100%); }
+    50% { transform: scale(1.1) rotate(25deg); filter: brightness(130%) sepia(50%) hue-rotate(120deg) drop-shadow(0 0 10px green); }
+    100% { transform: scale(1) rotate(25deg); filter: brightness(100%); }
+}
+
+@keyframes opponent-heal-animation {
+    0% { transform: scale(1) rotate(-25deg); filter: brightness(100%); }
+    50% { transform: scale(1.1) rotate(-25deg); filter: brightness(130%) sepia(50%) hue-rotate(120deg) drop-shadow(0 0 10px green); }
+    100% { transform: scale(1) rotate(-25deg); filter: brightness(100%); }
+}
+
+@keyframes retreat-animation {
+    0% { transform: rotate(25deg) translateX(0); opacity: 1; }
+    50% { transform: rotate(25deg) translateX(-150px); opacity: 0.5; }
+    51% { transform: rotate(25deg) translateX(150px); opacity: 0.5; }
+    100% { transform: rotate(25deg) translateX(0); opacity: 1; }
+}
+
+@keyframes opponent-retreat-animation {
+    0% { transform: rotate(-25deg) translateX(0); opacity: 1; }
+    50% { transform: rotate(-25deg) translateX(150px); opacity: 0.5; }
+    51% { transform: rotate(-25deg) translateX(-150px); opacity: 0.5; }
+    100% { transform: rotate(-25deg) translateX(0); opacity: 1; }
+}
+
+@keyframes damage-number {
+    0% { opacity: 0; transform: scale(0.5); }
+    30% { opacity: 1; transform: scale(1.5); }
+    70% { opacity: 1; transform: scale(1.2) translateY(-20px); }
+    100% { opacity: 0; transform: scale(1) translateY(-40px); }
+}
+
+@keyframes heal-number {
+    0% { opacity: 0; transform: scale(0.5); }
+    30% { opacity: 1; transform: scale(1.5); }
+    70% { opacity: 1; transform: scale(1.2) translateY(-20px); }
+    100% { opacity: 0; transform: scale(1) translateY(-40px); }
+}
+
+@keyframes log-update {
+    0% { background-color: rgba(255, 255, 255, 0); }
+    50% { background-color: rgba(173, 255, 47, 0.2); }
+    100% { background-color: rgba(255, 255, 255, 0); }
+}
+
+/* Animation classes */
+.card-attacking {
+    animation: attack-animation 1s ease-in-out;
+    z-index: 10;
+}
+
+.gym-battle-opponent-active .card-attacking {
+    animation: opponent-attack-animation 1s ease-in-out;
+}
+
+.card-receiving-damage {
+    animation: damage-animation 0.8s ease-in-out;
+}
+
+.gym-battle-player-active .card-receiving-damage {
+    animation: player-damage-animation 0.8s ease-in-out;
+}
+
+.card-healing {
+    animation: heal-animation 1s ease-in-out;
+}
+
+.gym-battle-opponent-active .card-healing {
+    animation: opponent-heal-animation 1s ease-in-out;
+}
+
+.card-retreating {
+    animation: retreat-animation 1.5s ease-in-out;
+}
+
+.gym-battle-opponent-active .card-retreating {
+    animation: opponent-retreat-animation 1.5s ease-in-out;
+}
+
+.damage-number {
+    position: absolute;
+    color: #ff5555;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    animation: damage-number 1.5s ease-out;
+    font-family: Arial, sans-serif;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.heal-number {
+    position: absolute;
+    color: #55ff55;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    animation: heal-number 1.5s ease-out;
+    font-family: Arial, sans-serif;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.battle-log-flash {
+    animation: log-update 1s ease-out;
+}
