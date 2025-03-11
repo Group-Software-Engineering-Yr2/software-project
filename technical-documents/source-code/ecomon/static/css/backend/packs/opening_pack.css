@@ -85,3 +85,14 @@ button {
         opacity: 0;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .pack-container {
+        flex-direction: column;
+    }
+
+    .card {
+        margin-bottom: 20px;
+    }
+    
+}
