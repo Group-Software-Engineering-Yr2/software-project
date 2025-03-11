@@ -96,7 +96,7 @@ def render_sign_up(request):
         else:
             for field, errors in form.errors.items():
                 for error in errors:
-                    messages.error(request, f"{field.capitalize()}: {error}")
+                    messages.error(request, f"{error}")
 
     else:
         form = CustomUserCreationForm()
@@ -120,7 +120,7 @@ def render_login(request):
 
         if user is not None:
             login(request, user)
-            messages.success(request, "Login successful!")
+            messages.success(request,"")
             return redirect("/home")  # Redirect to homepage
         else:
             messages.error(request, "Invalid email or password.")
