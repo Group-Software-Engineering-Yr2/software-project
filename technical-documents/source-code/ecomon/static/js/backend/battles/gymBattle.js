@@ -441,13 +441,6 @@ function handlePlayerTurn(moveChoice) {
             
             setTimeout(() => {
                 let result = activeOpponentCard.health_points - activePlayerCard.ability_power_2;
-                let selfResult = activePlayerCard.health_points + activePlayerCard.ability_self_power_2;
-                let message = "";
-                if (selfResult > maxPlayerHealth) {
-                    selfResult = maxPlayerHealth;
-                    message = ` and healed ${maxPlayerHealth - activePlayerCard.health_points} health!`;
-                }
-                
                 // Process damage part first
                 if (result <= 0) {
                     result = 0;
@@ -457,22 +450,29 @@ function handlePlayerTurn(moveChoice) {
 
                     // Now do the heal animation after damage is done
                     setTimeout(() => {
-                        animateAttack(playerCardElement, playerCardElement, activePlayerCard.ability_self_power_2, true);
+                        let selfResult = activePlayerCard.health_points + activePlayerCard.ability_self_power_2;
+                        let message = "";
+                        if (selfResult > maxPlayerHealth) {
+                            selfResult = maxPlayerHealth;
+                            message = ` and healed ${maxPlayerHealth - activePlayerCard.health_points} health!`;
+                            // Trigger heal animation
+                            animateAttack(playerCardElement, playerCardElement, maxPlayerHealth - activePlayerCard.health_points, true);
+                            activePlayerCard.health_points = result;
+                            document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+                            battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage` + message + `</p>`;
+                        } else {
+                            // Trigger heal animation
+                            animateAttack(playerCardElement, playerCardElement, activePlayerCard.ability_self_power_2, true);
+                            activePlayerCard.health_points = selfResult;
+                            document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+                            battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage and healed ${activePlayerCard.ability_self_power_2} health!</p>`;
+                        }
                         
                         // Update player's health after a slight delay
                         setTimeout(() => {
                             activePlayerCard.health_points = selfResult;
                             document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
-                            
-                            // Add to battle log
-                            if (message === "") {
-                                battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage and healed ${activePlayerCard.ability_self_power_2} health!</p>`;
-                            } else {
-                                battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage` + message + `</p>`;
-                            }
-                            battleLog.scrollTop = battleLog.scrollHeight;
-                            flashBattleLog();
-                            
+                
                             setTimeout(() => {
                                 battleLog.innerHTML += `<p>` + opponent + `'s ` + activeOpponentCard.name + ` fainted!</p>`;
                                 battleLog.scrollTop = battleLog.scrollHeight;
@@ -489,21 +489,28 @@ function handlePlayerTurn(moveChoice) {
                     
                     // Now do the heal animation after damage is done
                     setTimeout(() => {
-                        animateAttack(playerCardElement, playerCardElement, activePlayerCard.ability_self_power_2, true);
+                        let selfResult = activePlayerCard.health_points + activePlayerCard.ability_self_power_2;
+                        let message = "";
+                        if (selfResult > maxPlayerHealth) {
+                            selfResult = maxPlayerHealth;
+                            message = ` and healed ${maxPlayerHealth - activePlayerCard.health_points} health!`;
+                            // Trigger heal animation
+                            animateAttack(playerCardElement, playerCardElement, maxPlayerHealth - activePlayerCard.health_points, true);
+                            activePlayerCard.health_points = result;
+                            document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+                            battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage` + message + `</p>`;
+                        } else {
+                            // Trigger heal animation
+                            animateAttack(playerCardElement, playerCardElement, activePlayerCard.ability_self_power_2, true);
+                            activePlayerCard.health_points = selfResult;
+                            document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+                            battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage and healed ${activePlayerCard.ability_self_power_2} health!</p>`;
+                        }
                         
                         // Update player's health after a slight delay
                         setTimeout(() => {
                             activePlayerCard.health_points = selfResult;
                             document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
-                            
-                            // Add to battle log
-                            if (message === "") {
-                                battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage and healed ${activePlayerCard.ability_self_power_2} health!</p>`;
-                            } else {
-                                battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage` + message + `</p>`;
-                            }
-                            battleLog.scrollTop = battleLog.scrollHeight;
-                            flashBattleLog();
                         }, 300);
                     }, 800);
                 }
@@ -537,35 +544,29 @@ function handlePlayerTurn(moveChoice) {
     } 
     // Handle retreat animations
     else if (moveChoice === 3) {
-        // Animate retreat for slot 1
-        playerCardElement.classList.add('card-retreating');
-        
-        setTimeout(() => {
-            playerCardElement.classList.remove('card-retreating');
-            // Handles retreat action for slot 1
-            battleLog.innerHTML += `<p>` + username + ` retreated ` + activePlayerCard.name + ` for ` + playerCardSlot1.name + `!</p>`;
-            battleLog.scrollTop = battleLog.scrollHeight;
-            flashBattleLog();
-        }, 800);
+        // Handles retreat action for slot 1
+        battleLog.innerHTML += `<p>` + username + ` retreated ` + activePlayerCard.name + ` for ` + playerCardSlot1.name + `!</p>`;
+        battleLog.scrollTop = battleLog.scrollHeight;
+        flashBattleLog();
     } 
     else if (moveChoice === 4) {
-        // Animate retreat for slot 2
-        playerCardElement.classList.add('card-retreating');
-        
-        setTimeout(() => {
-            playerCardElement.classList.remove('card-retreating');
-            // Handles retreat action for slot 2
-            battleLog.innerHTML += `<p>` + username + ` retreated ` + activePlayerCard.name + ` for ` + playerCardSlot2.name + `!</p>`;
-            battleLog.scrollTop = battleLog.scrollHeight;
-            flashBattleLog();
-        }, 800);
+        // Handles retreat action for slot 2
+        battleLog.innerHTML += `<p>` + username + ` retreated ` + activePlayerCard.name + ` for ` + playerCardSlot2.name + `!</p>`;
+        battleLog.scrollTop = battleLog.scrollHeight;
+        flashBattleLog();
     }
 
     // Check game over & start opponent's turn after a longer delay to allow animations to complete
     if (!checkOpponentGameOver()) {
-        setTimeout(() => {
-            handleOpponentTurn();
-        }, 2500); // Increased delay to account for animations
+        if (moveChoice === 3 || moveChoice === 4) {
+            setTimeout(() => {
+                handleOpponentTurn();
+            }, 1000); // Decreased delay as there is a shorter retreat animation
+        } else {
+            setTimeout(() => {
+                handleOpponentTurn();
+            }, 2500); // Increased delay to account for animations
+        }
     } else {
         isPlayerTurn = true;
     }
@@ -573,6 +574,7 @@ function handlePlayerTurn(moveChoice) {
 
 // Handle opponent's turn
 function handleOpponentTurn() {
+    disablePlayerButtons();
     // Initialize battle log and choose a random move for the opponent
     let battleLog = document.querySelector('.battle-log');
     const moveChoice = Math.random() < 0.5 ? 1 : 2;
@@ -581,28 +583,42 @@ function handleOpponentTurn() {
 
     // If the opponent randomly chooses the first move
     if (moveChoice === 1) {
-        let result = activePlayerCard.health_points - activeOpponentCard.ability_power_1;
-        // If the player's health points are less than or equal to 0 after the opponent's move, set the health points to 0 and update the HTML
-        if (result <= 0) {
-            result = 0;
-            activePlayerCard.health_points = result;
-            document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+        // Trigger attack animation before updating HP
+        animateAttack(opponentCardElement, playerCardElement, activeOpponentCard.ability_power_1);
+        
+        // Continue with your existing logic after a slight delay to let animation start
+        setTimeout(() => {
+            let result = activePlayerCard.health_points - activeOpponentCard.ability_power_1;
+            // If the player's health points are less than or equal to 0 after the opponent's move, set the health points to 0 and update the HTML
+            if (result <= 0) {
+                result = 0;
+                activePlayerCard.health_points = result;
+                document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
 
-            // Add to battle log
-            battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_1 + ` for ${activeOpponentCard.ability_power_1} damage!</p>`;
-            battleLog.scrollTop = battleLog.scrollHeight;
-            battleLog.innerHTML += `<p>` + username + `'s ` + activePlayerCard.name + ` fainted!</p>`;
-            // Check if the player has any more cards, if not, the opponent wins
-            checkPlayerDeadCard();
-        } else {
-            activePlayerCard.health_points = result;
-            document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+                // Add to battle log
+                battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_1 + ` for ${activeOpponentCard.ability_power_1} damage!</p>`;
+                battleLog.scrollTop = battleLog.scrollHeight;
+                flashBattleLog();
 
-            // Add to battle log
-            battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_1 + ` for ${activeOpponentCard.ability_power_1} damage!</p>`;
-            battleLog.scrollTop = battleLog.scrollHeight;
-        }
-        // If the opponent randomly chooses the second move
+                setTimeout(() => {
+                    battleLog.innerHTML += `<p>` + username + `'s ` + activePlayerCard.name + ` fainted!</p>`;
+                    battleLog.scrollTop = battleLog.scrollHeight;
+                    flashBattleLog();
+                    // Check if the player has any more cards, if not, the opponent wins
+                    checkPlayerDeadCard();
+                }, 1000);
+            } else {
+                activePlayerCard.health_points = result;
+                document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+
+                // Add to battle log
+                battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_1 + ` for ${activeOpponentCard.ability_power_1} damage!</p>`;
+                battleLog.scrollTop = battleLog.scrollHeight;
+                flashBattleLog();
+            }
+        }, 300); // Small delay to let animation start before updating HP
+    
+    // If the opponent randomly chooses the second move
     } else if (moveChoice === 2) {
         // If the second sustainAbility is a heal move only and the opponent's health points are already maxed out, make the AI opponent choose a different move
         if ((activeOpponentCard.health_points === maxOpponentHealth) && (activeOpponentCard.ability_self_power_2 > 0 && activeOpponentCard.ability_power_2 === 0)) {
@@ -610,100 +626,163 @@ function handleOpponentTurn() {
             handleOpponentTurn();
             return;
         }
-        // If the second sustainAbility is a damage move
+
+        // If the second sustainAbility is a damage move only
         if (activeOpponentCard.ability_power_2 > 0 && activeOpponentCard.ability_self_power_2 == 0) {
-            let result = activePlayerCard.health_points - activeOpponentCard.ability_power_2;
-            // If the player's health points are less than or equal to 0 after the opponent's move, set the health points to 0 and update the HTML
-            if (result <= 0) {
-                result = 0;
-                activePlayerCard.health_points = result;
-                document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+            // Trigger attack animation
+            animateAttack(opponentCardElement, playerCardElement, activeOpponentCard.ability_power_2);
+            
+            setTimeout(() => {
+                let result = activePlayerCard.health_points - activeOpponentCard.ability_power_2;
+                // If the player's health points are less than or equal to 0
+                if (result <= 0) {
+                    result = 0;
+                    activePlayerCard.health_points = result;
+                    document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
 
-                // Add to battle log
-                battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage!</p>`;
-                battleLog.scrollTop = battleLog.scrollHeight;
-                battleLog.innerHTML += `<p>` + username + `'s ` + activePlayerCard.name + ` fainted!</p>`;
-                // Check if the player has any more cards, if not, the opponent wins
-                checkPlayerDeadCard();
-            } else {
-                activePlayerCard.health_points = result;
-                document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
-
-                // Add to battle log
-                battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage!</p>`;
-                battleLog.scrollTop = battleLog.scrollHeight;
-            }
-            // If the second sustainAbility is a heal and damage move
-        } else if (activeOpponentCard.ability_power_2 > 0 && activeOpponentCard.ability_self_power_2 > 0) {
-            let result = activePlayerCard.health_points - activeOpponentCard.ability_power_2;
-            let selfResult = activeOpponentCard.health_points + activeOpponentCard.ability_self_power_2;
-            let message = "";
-            if (selfResult > maxOpponentHealth) {
-                selfResult = maxOpponentHealth;
-                message = ` and healed ${maxOpponentHealth - activeOpponentCard.health_points} health!`;
-            }
-            // If the player's health points are less than or equal to 0 after the opponent's move, set the health points to 0 and update the HTML
-            if (result <= 0) {
-                result = 0;
-                activePlayerCard.health_points = result;
-                document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
-                activeOpponentCard.health_points = selfResult;
-                document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
-
-                // Add to battle log
-                if (message === "") {
-                    battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage and healed ${activeOpponentCard.ability_self_power_2} health!</p>`;
+                    // Add to battle log
+                    battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage!</p>`;
+                    battleLog.scrollTop = battleLog.scrollHeight;
+                    flashBattleLog();
+                    
+                    setTimeout(() => {
+                        battleLog.innerHTML += `<p>` + username + `'s ` + activePlayerCard.name + ` fainted!</p>`;
+                        battleLog.scrollTop = battleLog.scrollHeight;
+                        flashBattleLog();
+                        // Check if the player has any more cards
+                        checkPlayerDeadCard();
+                    }, 1000);
                 } else {
-                    battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage` + message + `</p>`;
-                }
-                battleLog.scrollTop = battleLog.scrollHeight;
-                battleLog.innerHTML += `<p>` + username + `'s ` + activePlayerCard.name + ` fainted!</p>`;
-                // Check if the player has any more cards, if not, the opponent wins
-                checkPlayerDeadCard();
-            } else {
-                activePlayerCard.health_points = result;
-                document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
-                activeOpponentCard.health_points = selfResult;
-                document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+                    activePlayerCard.health_points = result;
+                    document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
 
-                // Add to battle log
-                if (message === "") {
-                    battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage and healed ${activeOpponentCard.ability_self_power_2} health!</p>`;
-                } else {
-                    battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage` + message + `</p>`;
+                    // Add to battle log
+                    battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage!</p>`;
+                    battleLog.scrollTop = battleLog.scrollHeight;
+                    flashBattleLog();
                 }
-                battleLog.scrollTop = battleLog.scrollHeight;
-            }
-            // If the second sustainAbility is a heal move only
+            }, 300);
+        } 
+        // If the second sustainAbility is a heal and damage move
+        else if (activeOpponentCard.ability_power_2 > 0 && activeOpponentCard.ability_self_power_2 > 0) {
+            // First do the damage animation
+            animateAttack(opponentCardElement, playerCardElement, activeOpponentCard.ability_power_2);
+            
+            setTimeout(() => {
+                let result = activePlayerCard.health_points - activeOpponentCard.ability_power_2;
+                // Process damage part first
+                if (result <= 0) {
+                    result = 0;
+                    // Update player's health
+                    activePlayerCard.health_points = result;
+                    document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+
+                    // Now do the heal animation after damage is done
+                    setTimeout(() => {
+                        let selfResult = activeOpponentCard.health_points + activeOpponentCard.ability_self_power_2;
+                        let message = "";
+                        if (selfResult > maxOpponentHealth) {
+                            selfResult = maxOpponentHealth;
+                            message = ` and healed ${maxOpponentHealth - activeOpponentCard.health_points} health!`;
+                            // Trigger heal animation
+                            animateAttack(opponentCardElement, opponentCardElement, maxOpponentHealth - activeOpponentCard.health_points, true);
+                            activeOpponentCard.health_points = result;
+                            document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+                            battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage` + message + `</p>`;
+                        } else {
+                            // Trigger heal animation
+                            animateAttack(opponentCardElement, opponentCardElement, activeOpponentCard.ability_self_power_2, true);
+                            activeOpponentCard.health_points = selfResult;
+                            document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+                            battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage and healed ${activeOpponentCard.ability_self_power_2} health!</p>`;
+                        }
+                        
+                        // Update opponent's health after a slight delay
+                        setTimeout(() => {
+                            activeOpponentCard.health_points = selfResult;
+                            document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+                
+                            setTimeout(() => {
+                                battleLog.innerHTML += `<p>` + username + `'s ` + activePlayerCard.name + ` fainted!</p>`;
+                                battleLog.scrollTop = battleLog.scrollHeight;
+                                flashBattleLog();
+                                // Check if the opponent has any more cards
+                                checkPlayerDeadCard();
+                            }, 800);
+                        }, 300);
+                    }, 800);
+                } else {
+                    // Process regular damage
+                    activePlayerCard.health_points = result;
+                    document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
+                    
+                    // Now do the heal animation after damage is done
+                    setTimeout(() => {
+                        let selfResult = activeOpponentCard.health_points + activeOpponentCard.ability_self_power_2;
+                        let message = "";
+                        if (selfResult > maxOpponentHealth) {
+                            selfResult = maxOpponentHealth;
+                            message = ` and healed ${maxOpponentHealth - activeOpponentCard.health_points} health!`;
+                            // Trigger heal animation
+                            animateAttack(opponentCardElement, opponentCardElement, maxOpponentHealth - activeOpponentCard.health_points, true);
+                            activeOpponentCard.health_points = result;
+                            document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+                            battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage` + message + `</p>`;
+                        } else {
+                            // Trigger heal animation
+                            animateAttack(opponentCardElement, opponentCardElement, activeOpponentCard.ability_self_power_2, true);
+                            activeOpponentCard.health_points = selfResult;
+                            document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+                            battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage and healed ${activeOpponentCard.ability_self_power_2} health!</p>`;
+                        }
+                        
+                        // Update opponent's health after a slight delay
+                        setTimeout(() => {
+                            activeOpponentCard.health_points = selfResult;
+                            document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+                        }, 300);
+                    }, 800);
+                }
+            }, 300);
+        
+        // If the second sustainAbility is a heal move only
         } else {
-            let result = activeOpponentCard.health_points + activeOpponentCard.ability_self_power_2;
-            let message = "";
-            if (result > maxOpponentHealth) {
-                result = maxOpponentHealth;
-                message = ` and healed ${maxOpponentHealth - activeOpponentCard.health_points} health!`;
-            }
-            activeOpponentCard.health_points = result;
-            document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
-
-            // Add to battle log
-            if (message === "") {
-                battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` to heal ${activeOpponentCard.ability_self_power_2} health!</p>`;
-            } else {
-                battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + message + `</p>`;
-            }
-            battleLog.scrollTop = battleLog.scrollHeight;
-
+            setTimeout(() => {
+                // Update the health points for the opponent
+                let result = activeOpponentCard.health_points + activeOpponentCard.ability_self_power_2;
+                let message = "";
+                if (result > maxOpponentHealth) {
+                    result = maxOpponentHealth;
+                    message = ` and healed ${maxOpponentHealth - activeOpponentCard.health_points} health!`;
+                    // Trigger heal animation
+                    animateAttack(opponentCardElement, opponentCardElement, maxOpponentHealth - activeOpponentCard.health_points, true);
+                    activeOpponentCard.health_points = result;
+                    document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+                    battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + message + `</p>`;
+                } else {
+                    // Trigger heal animation
+                    animateAttack(opponentCardElement, opponentCardElement, maxOpponentHealth - activeOpponentCard.health_points, true);
+                    activeOpponentCard.health_points = result;
+                    document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
+                    battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` to heal ${activeOpponentCard.ability_self_power_2} health!</p>`;
+                }
+                battleLog.scrollTop = battleLog.scrollHeight;
+                flashBattleLog();
+            }, 300);
         }
     }
 
     // Check for game over and set back to player's turn
     if (!checkPlayerGameOver()) {
+        // Enable player buttons after opponent's turn
+        setTimeout(() => {
+        enableButtons(); }, 2000);
         isPlayerTurn = true;
     } else {
         isPlayerTurn = false;
         setTimeout(() => {
             handleOpponentTurn();
-        }, 1000);
+        }, 2500); // Increased delay to account for animations
     }
 }
 
@@ -811,4 +890,20 @@ function disableButtons() {
 function completeGymBattle(didWin, gymId) {
     const url = `/gym-battle-completed?did_win=${didWin}&gym_id=${gymId}`;
     window.location.href = url;
+}
+
+// Function to disable all buttons during the opponent's turn
+function disablePlayerButtons() {
+    document.getElementById('player-move-1').disabled = true;
+    document.getElementById('player-move-2').disabled = true;
+    document.getElementById('player-retreat-1').disabled = true;
+    document.getElementById('player-retreat-2').disabled = true;
+}
+
+// Function to enable all buttons during the player's turn
+function enableButtons() {
+    document.getElementById('player-move-1').disabled = false;
+    document.getElementById('player-move-2').disabled = false;
+    document.getElementById('player-retreat-1').disabled = false;
+    document.getElementById('player-retreat-2').disabled = false;
 }

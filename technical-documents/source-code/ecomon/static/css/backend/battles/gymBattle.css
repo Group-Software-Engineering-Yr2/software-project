@@ -392,6 +392,26 @@ html {
     100% { transform: rotate(25deg) translateX(0); opacity: 1; }
 }
 
+@keyframes reverse-retreat-animation {
+    0% { transform: rotate(25deg) translateX(150px); opacity: 0.5; }
+    50% { transform: rotate(25deg) translateX(-150px); opacity: 0.5; }
+    100% { transform: rotate(25deg) translateX(0); opacity: 1; }
+}
+
+@keyframes opponent-reverse-retreat-animation {
+    0% { transform: rotate(-25deg) translateX(-150px); opacity: 0.5; }
+    50% { transform: rotate(-25deg) translateX(150px); opacity: 0.5; }
+    100% { transform: rotate(-25deg) translateX(0); opacity: 1; }
+}
+
+.card-reverse-retreating {
+    animation: reverse-retreat-animation 1.5s ease-in-out;
+}
+
+.gym-battle-opponent-active .card-reverse-retreating {
+    animation: opponent-reverse-retreat-animation 1.5s ease-in-out;
+}
+
 @keyframes opponent-retreat-animation {
     0% { transform: rotate(-25deg) translateX(0); opacity: 1; }
     50% { transform: rotate(-25deg) translateX(150px); opacity: 0.5; }
@@ -447,6 +467,10 @@ html {
 
 .card-retreating {
     animation: retreat-animation 1.5s ease-in-out;
+}
+
+.card-reverse-retreating {
+    animation: reverse-retreat-animation 1.5s ease-in-out;
 }
 
 .gym-battle-opponent-active .card-retreating {
