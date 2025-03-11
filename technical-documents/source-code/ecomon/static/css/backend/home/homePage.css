@@ -45,7 +45,7 @@ html, body, #map {
 #locateButton-container {
     position: fixed;
     top: 20px;  
-    right: 95%;
+    left: 17%;
     transition: transform 0.3s ease-in-out;
     z-index: 500;
 }
@@ -76,7 +76,7 @@ html, body, #map {
     cursor: pointer;
 }
 
-@media (max-width: 500px) {  
+@media (max-width: 768px) {  
     .button {
         width: 60px;
         height: 60px;

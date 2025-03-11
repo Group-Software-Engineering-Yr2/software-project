@@ -7,18 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
-
-    // aligning locate button correctly
-    // getting edge button
-    const rightmostButton = document.querySelector('.buttons-container .button:last-child');
-    const locateButtonContainer = document.getElementById('locateButton-container');
-
-    // finding offset
-    let buttonRect = rightmostButton.getBoundingClientRect();
-    let leftOffset = window.innerWidth - (buttonRect.left *1.5);
-
-    // setting offset
-    locateButtonContainer.style.right = `${leftOffset}px`;
     
     // getting locate button and adding function to center on user 
     let locateButton = document.getElementById("locateButton");
