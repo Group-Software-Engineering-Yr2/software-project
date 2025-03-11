@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
     setOpponentCardSlot2(opponentCardSlot2);
 });
 
-let maxPlayerHealth;
+// Initialize the max health variables
+let playerCardsMaxHealth;
 let maxOpponentHealth;
 
 // Function to create the coin flip overlay
@@ -153,6 +154,17 @@ function startGame() {
     setOpponentCardSlot1(opponentCardSlot1);
     setOpponentCardSlot2(opponentCardSlot2);
 
+    // Initialize the max health points for the player's cards
+    let maxActivePlayerCardHealth = activePlayerCard.health_points;
+    let maxPlayerCardSlot1Health = playerCardSlot1.health_points;
+    let maxPlayerCardSlot2Health = playerCardSlot2.health_points;
+
+    playerCardsMaxHealth = {
+        activePlayerCard: maxActivePlayerCardHealth,
+        playerCardSlot1: maxPlayerCardSlot1Health,
+        playerCardSlot2: maxPlayerCardSlot2Health
+    }    
+
     // Initialize battle log
     let battleLog = document.querySelector('.battle-log');
     battleLog.innerHTML += `<p>Coin flip result: ${isPlayerTurn ? username : opponent} goes first!</p>`;
@@ -193,6 +205,9 @@ function startGame() {
                 handlePlayerTurn(3);
                 setPlayerActiveCard(playerCardSlot1);
                 setPlayerCardSlot1(activePlayerCard);
+                let tempMax = playerCardsMaxHealth.activePlayerCard;
+                playerCardsMaxHealth.activePlayerCard = playerCardsMaxHealth.playerCardSlot1;
+                playerCardsMaxHealth.playerCardSlot1 = tempMax;
                 let temp = activePlayerCard;
                 activePlayerCard = playerCardSlot1;
                 playerCardSlot1 = temp;
@@ -211,6 +226,9 @@ function startGame() {
                 handlePlayerTurn(4);
                 setPlayerActiveCard(playerCardSlot2);
                 setPlayerCardSlot2(activePlayerCard);
+                let tempMax = playerCardsMaxHealth.activePlayerCard;
+                playerCardsMaxHealth.activePlayerCard = playerCardsMaxHealth.playerCardSlot2;
+                playerCardsMaxHealth.playerCardSlot2 = tempMax;
                 let temp = activePlayerCard;
                 activePlayerCard = playerCardSlot2;
                 playerCardSlot2 = temp;
@@ -223,8 +241,6 @@ function startGame() {
 
 // The rest of your existing functions remain unchanged
 function setPlayerActiveCard(card) {
-    // Set the player's active card on the HTML page and initialize the maxPlayerHealth
-    maxPlayerHealth = card.health_points;
     document.getElementById('player-active-card-icon').src = card.image;
     document.getElementById('player-hp').textContent = `HP: ${card.health_points}`;
     document.getElementById('player-active-card-name').textContent = card.name;
@@ -232,10 +248,10 @@ function setPlayerActiveCard(card) {
     // Check if the second sustainAbility is a damage move only
     if (card.ability_power_2 > 0 && card.ability_self_power_2 == 0) {
         document.getElementById('player-move-2').textContent = card.ability_name_2 + ": " + card.ability_power_2 + " Damage";
-        // Check if the second sustainAbility is a heal and damage move
+    // Check if the second sustainAbility is a heal and damage move
     } else if (card.ability_power_2 > 0 && card.ability_self_power_2 > 0) {
         document.getElementById('player-move-2').textContent = card.ability_name_2 + ": " + card.ability_power_2 + " Damage and +" + card.ability_self_power_2 + " Health";
-        // Otherwise its a heal move only
+    // Otherwise its a heal move only
     } else {
         document.getElementById('player-move-2').textContent = card.ability_name_2 + ": +" + card.ability_self_power_2 + " Health";
     }
@@ -277,53 +293,53 @@ function animateAttack(attackingCardElement, receivingCardElement, damage, isHea
     // Get the card elements by their containers
     const attackingCard = attackingCardElement || document.querySelector('.gym-battle-player-active .active-card');
     const receivingCard = receivingCardElement || document.querySelector('.gym-battle-opponent-active .active-card');
-    
+
     // Add a class to trigger the animation
     attackingCard.classList.add('card-attacking');
-    
+
     // If it's a damage move, also animate the receiving card
     if (!isHeal && damage > 0) {
         receivingCard.classList.add('card-receiving-damage');
-        
+
         // Create and append damage number element
         const damageElement = document.createElement('div');
         damageElement.className = 'damage-number';
         damageElement.textContent = `-${damage}`;
         // document.querySelector('.gym-battle-area').appendChild(damageElement);
         document.querySelector('.battle-content').appendChild(damageElement);
-        
+
         // Position the damage number near the receiving card
         const cardRect = receivingCard.getBoundingClientRect();
-        damageElement.style.left = `${cardRect.left + cardRect.width/2}px`;
-        damageElement.style.top = `${cardRect.top + cardRect.height/2}px`;
-        
+        damageElement.style.left = `${cardRect.left + cardRect.width / 2}px`;
+        damageElement.style.top = `${cardRect.top + cardRect.height / 2}px`;
+
         // Remove damage number after animation completes
         setTimeout(() => {
             damageElement.remove();
         }, 1500);
     }
-    
+
     // If it's a heal move
     if (isHeal) {
         attackingCard.classList.add('card-healing');
-        
+
         // Create and append heal number element
         const healElement = document.createElement('div');
         healElement.className = 'heal-number';
         healElement.textContent = `+${damage}`;
         document.querySelector('.battle-content').appendChild(healElement);
-        
+
         // Position the heal number near the healing card
         const cardRect = attackingCard.getBoundingClientRect();
-        healElement.style.left = `${cardRect.left + cardRect.width/2}px`;
-        healElement.style.top = `${cardRect.top + cardRect.height/2}px`;
-        
+        healElement.style.left = `${cardRect.left + cardRect.width / 2}px`;
+        healElement.style.top = `${cardRect.top + cardRect.height / 2}px`;
+
         // Remove heal number after animation completes
         setTimeout(() => {
             healElement.remove();
         }, 1500);
     }
-    
+
     // Remove animation classes after they complete
     setTimeout(() => {
         attackingCard.classList.remove('card-attacking');
@@ -338,7 +354,7 @@ function animateAttack(attackingCardElement, receivingCardElement, damage, isHea
 function flashBattleLog() {
     const battleLog = document.querySelector('.battle-log');
     battleLog.classList.add('battle-log-flash');
-    
+
     setTimeout(() => {
         battleLog.classList.remove('battle-log-flash');
     }, 1000);
@@ -351,12 +367,12 @@ function handlePlayerTurn(moveChoice) {
     let battleLog = document.querySelector('.battle-log');
     const playerCardElement = document.querySelector('.gym-battle-player-active .active-card');
     const opponentCardElement = document.querySelector('.gym-battle-opponent-active .active-card');
-    
+
     // Handles First Move Button Click (First sustainAbility)
     if (moveChoice === 1) {
         // Trigger attack animation before updating HP
         animateAttack(playerCardElement, opponentCardElement, activePlayerCard.ability_power_1);
-        
+
         // Continue with your existing logic after a slight delay to let animation start
         setTimeout(() => {
             let result = activeOpponentCard.health_points - activePlayerCard.ability_power_1;
@@ -370,7 +386,7 @@ function handlePlayerTurn(moveChoice) {
                 battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_1 + ` for ${activePlayerCard.ability_power_1} damage!</p>`;
                 battleLog.scrollTop = battleLog.scrollHeight;
                 flashBattleLog();
-                
+
                 setTimeout(() => {
                     battleLog.innerHTML += `<p>` + opponent + `'s ` + activeOpponentCard.name + ` fainted!</p>`;
                     battleLog.scrollTop = battleLog.scrollHeight;
@@ -388,21 +404,21 @@ function handlePlayerTurn(moveChoice) {
                 flashBattleLog();
             }
         }, 300); // Small delay to let animation start before updating HP
-    } 
+    }
     // Handles Second Move Button Click (Second sustainAbility)
     else if (moveChoice === 2) {
         // If the second sustainAbility is a heal move only and player's health points are already maxed out
-        if ((activePlayerCard.health_points === maxPlayerHealth) && (activePlayerCard.ability_self_power_2 > 0 && activePlayerCard.ability_power_2 === 0)) {
+        if ((activePlayerCard.health_points === playerCardsMaxHealth.activePlayerCard) && (activePlayerCard.ability_self_power_2 > 0 && activePlayerCard.ability_power_2 === 0)) {
             alert("Your health points are already maxed out! Choose a different move!");
             isPlayerTurn = true;
             return;
         }
-        
+
         // If the second sustainAbility is a damage move only
         if (activePlayerCard.ability_power_2 > 0 && activePlayerCard.ability_self_power_2 == 0) {
             // Trigger attack animation
             animateAttack(playerCardElement, opponentCardElement, activePlayerCard.ability_power_2);
-            
+
             setTimeout(() => {
                 let result = activeOpponentCard.health_points - activePlayerCard.ability_power_2;
                 // If the opponent's health points are less than or equal to 0
@@ -415,7 +431,7 @@ function handlePlayerTurn(moveChoice) {
                     battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage!</p>`;
                     battleLog.scrollTop = battleLog.scrollHeight;
                     flashBattleLog();
-                    
+
                     setTimeout(() => {
                         battleLog.innerHTML += `<p>` + opponent + `'s ` + activeOpponentCard.name + ` fainted!</p>`;
                         battleLog.scrollTop = battleLog.scrollHeight;
@@ -433,12 +449,12 @@ function handlePlayerTurn(moveChoice) {
                     flashBattleLog();
                 }
             }, 300);
-        } 
+        }
         // If the second sustainAbility is a heal and damage move
         else if (activePlayerCard.ability_power_2 > 0 && activePlayerCard.ability_self_power_2 > 0) {
             // First do the damage animation
             animateAttack(playerCardElement, opponentCardElement, activePlayerCard.ability_power_2);
-            
+
             setTimeout(() => {
                 let result = activeOpponentCard.health_points - activePlayerCard.ability_power_2;
                 // Process damage part first
@@ -452,11 +468,11 @@ function handlePlayerTurn(moveChoice) {
                     setTimeout(() => {
                         let selfResult = activePlayerCard.health_points + activePlayerCard.ability_self_power_2;
                         let message = "";
-                        if (selfResult > maxPlayerHealth) {
-                            selfResult = maxPlayerHealth;
-                            message = ` and healed ${maxPlayerHealth - activePlayerCard.health_points} health!`;
+                        if (selfResult > playerCardsMaxHealth.activePlayerCard) {
+                            selfResult = playerCardsMaxHealth.activePlayerCard;
+                            message = ` and healed ${playerCardsMaxHealth.activePlayerCard - activePlayerCard.health_points} health!`;
                             // Trigger heal animation
-                            animateAttack(playerCardElement, playerCardElement, maxPlayerHealth - activePlayerCard.health_points, true);
+                            animateAttack(playerCardElement, playerCardElement, playerCardsMaxHealth.activePlayerCard - activePlayerCard.health_points, true);
                             activePlayerCard.health_points = result;
                             document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
                             battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage` + message + `</p>`;
@@ -467,12 +483,12 @@ function handlePlayerTurn(moveChoice) {
                             document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
                             battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage and healed ${activePlayerCard.ability_self_power_2} health!</p>`;
                         }
-                        
+
                         // Update player's health after a slight delay
                         setTimeout(() => {
                             activePlayerCard.health_points = selfResult;
                             document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
-                
+
                             setTimeout(() => {
                                 battleLog.innerHTML += `<p>` + opponent + `'s ` + activeOpponentCard.name + ` fainted!</p>`;
                                 battleLog.scrollTop = battleLog.scrollHeight;
@@ -486,16 +502,16 @@ function handlePlayerTurn(moveChoice) {
                     // Process regular damage
                     activeOpponentCard.health_points = result;
                     document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
-                    
+
                     // Now do the heal animation after damage is done
                     setTimeout(() => {
                         let selfResult = activePlayerCard.health_points + activePlayerCard.ability_self_power_2;
                         let message = "";
-                        if (selfResult > maxPlayerHealth) {
-                            selfResult = maxPlayerHealth;
-                            message = ` and healed ${maxPlayerHealth - activePlayerCard.health_points} health!`;
+                        if (selfResult > playerCardsMaxHealth.activePlayerCard) {
+                            selfResult = playerCardsMaxHealth.activePlayerCard;
+                            message = ` and healed ${playerCardsMaxHealth.activePlayerCard - activePlayerCard.health_points} health!`;
                             // Trigger heal animation
-                            animateAttack(playerCardElement, playerCardElement, maxPlayerHealth - activePlayerCard.health_points, true);
+                            animateAttack(playerCardElement, playerCardElement, playerCardsMaxHealth.activePlayerCard - activePlayerCard.health_points, true);
                             activePlayerCard.health_points = result;
                             document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
                             battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage` + message + `</p>`;
@@ -506,7 +522,7 @@ function handlePlayerTurn(moveChoice) {
                             document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
                             battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_2 + ` for ${activePlayerCard.ability_power_2} damage and healed ${activePlayerCard.ability_self_power_2} health!</p>`;
                         }
-                        
+
                         // Update player's health after a slight delay
                         setTimeout(() => {
                             activePlayerCard.health_points = selfResult;
@@ -515,18 +531,18 @@ function handlePlayerTurn(moveChoice) {
                     }, 800);
                 }
             }, 300);
-        } 
+        }
         // If the second sustainAbility is a heal move only
         else {
             setTimeout(() => {
                 // Update the health points for the player
                 let result = activePlayerCard.health_points + activePlayerCard.ability_self_power_2;
                 let message = "";
-                if (result > maxPlayerHealth) {
-                    result = maxPlayerHealth;
-                    message = ` and healed ${maxPlayerHealth - activePlayerCard.health_points} health!`;
+                if (result > playerCardsMaxHealth.activePlayerCard) {
+                    result = playerCardsMaxHealth.activePlayerCard;
+                    message = ` and healed ${playerCardsMaxHealth.activePlayerCard - activePlayerCard.health_points} health!`;
                     // Trigger heal animation
-                    animateAttack(playerCardElement, playerCardElement, maxPlayerHealth - activePlayerCard.health_points, true);
+                    animateAttack(playerCardElement, playerCardElement, playerCardsMaxHealth.activePlayerCard - activePlayerCard.health_points, true);
                     activePlayerCard.health_points = result;
                     document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
                     battleLog.innerHTML += `<p>` + username + ` used ` + activePlayerCard.ability_name_2 + message + `</p>`;
@@ -541,14 +557,14 @@ function handlePlayerTurn(moveChoice) {
                 flashBattleLog();
             }, 300);
         }
-    } 
+    }
     // Handle retreat animations
     else if (moveChoice === 3) {
         // Handles retreat action for slot 1
         battleLog.innerHTML += `<p>` + username + ` retreated ` + activePlayerCard.name + ` for ` + playerCardSlot1.name + `!</p>`;
         battleLog.scrollTop = battleLog.scrollHeight;
         flashBattleLog();
-    } 
+    }
     else if (moveChoice === 4) {
         // Handles retreat action for slot 2
         battleLog.innerHTML += `<p>` + username + ` retreated ` + activePlayerCard.name + ` for ` + playerCardSlot2.name + `!</p>`;
@@ -574,6 +590,7 @@ function handlePlayerTurn(moveChoice) {
 
 // Handle opponent's turn
 function handleOpponentTurn() {
+    // Disable player buttons during opponent's turn
     disablePlayerButtons();
     // Initialize battle log and choose a random move for the opponent
     let battleLog = document.querySelector('.battle-log');
@@ -585,7 +602,7 @@ function handleOpponentTurn() {
     if (moveChoice === 1) {
         // Trigger attack animation before updating HP
         animateAttack(opponentCardElement, playerCardElement, activeOpponentCard.ability_power_1);
-        
+
         // Continue with your existing logic after a slight delay to let animation start
         setTimeout(() => {
             let result = activePlayerCard.health_points - activeOpponentCard.ability_power_1;
@@ -617,8 +634,8 @@ function handleOpponentTurn() {
                 flashBattleLog();
             }
         }, 300); // Small delay to let animation start before updating HP
-    
-    // If the opponent randomly chooses the second move
+
+        // If the opponent randomly chooses the second move
     } else if (moveChoice === 2) {
         // If the second sustainAbility is a heal move only and the opponent's health points are already maxed out, make the AI opponent choose a different move
         if ((activeOpponentCard.health_points === maxOpponentHealth) && (activeOpponentCard.ability_self_power_2 > 0 && activeOpponentCard.ability_power_2 === 0)) {
@@ -631,7 +648,7 @@ function handleOpponentTurn() {
         if (activeOpponentCard.ability_power_2 > 0 && activeOpponentCard.ability_self_power_2 == 0) {
             // Trigger attack animation
             animateAttack(opponentCardElement, playerCardElement, activeOpponentCard.ability_power_2);
-            
+
             setTimeout(() => {
                 let result = activePlayerCard.health_points - activeOpponentCard.ability_power_2;
                 // If the player's health points are less than or equal to 0
@@ -644,7 +661,7 @@ function handleOpponentTurn() {
                     battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage!</p>`;
                     battleLog.scrollTop = battleLog.scrollHeight;
                     flashBattleLog();
-                    
+
                     setTimeout(() => {
                         battleLog.innerHTML += `<p>` + username + `'s ` + activePlayerCard.name + ` fainted!</p>`;
                         battleLog.scrollTop = battleLog.scrollHeight;
@@ -662,12 +679,12 @@ function handleOpponentTurn() {
                     flashBattleLog();
                 }
             }, 300);
-        } 
+        }
         // If the second sustainAbility is a heal and damage move
         else if (activeOpponentCard.ability_power_2 > 0 && activeOpponentCard.ability_self_power_2 > 0) {
             // First do the damage animation
             animateAttack(opponentCardElement, playerCardElement, activeOpponentCard.ability_power_2);
-            
+
             setTimeout(() => {
                 let result = activePlayerCard.health_points - activeOpponentCard.ability_power_2;
                 // Process damage part first
@@ -696,12 +713,12 @@ function handleOpponentTurn() {
                             document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
                             battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage and healed ${activeOpponentCard.ability_self_power_2} health!</p>`;
                         }
-                        
+
                         // Update opponent's health after a slight delay
                         setTimeout(() => {
                             activeOpponentCard.health_points = selfResult;
                             document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
-                
+
                             setTimeout(() => {
                                 battleLog.innerHTML += `<p>` + username + `'s ` + activePlayerCard.name + ` fainted!</p>`;
                                 battleLog.scrollTop = battleLog.scrollHeight;
@@ -715,7 +732,7 @@ function handleOpponentTurn() {
                     // Process regular damage
                     activePlayerCard.health_points = result;
                     document.getElementById('player-hp').textContent = `HP: ${activePlayerCard.health_points}`;
-                    
+
                     // Now do the heal animation after damage is done
                     setTimeout(() => {
                         let selfResult = activeOpponentCard.health_points + activeOpponentCard.ability_self_power_2;
@@ -735,7 +752,7 @@ function handleOpponentTurn() {
                             document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
                             battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` for ${activeOpponentCard.ability_power_2} damage and healed ${activeOpponentCard.ability_self_power_2} health!</p>`;
                         }
-                        
+
                         // Update opponent's health after a slight delay
                         setTimeout(() => {
                             activeOpponentCard.health_points = selfResult;
@@ -744,13 +761,13 @@ function handleOpponentTurn() {
                     }, 800);
                 }
             }, 300);
-        
-        // If the second sustainAbility is a heal move only
+
+            // If the second sustainAbility is a heal move only
         } else {
             setTimeout(() => {
                 // Update the health points for the opponent
                 let result = activeOpponentCard.health_points + activeOpponentCard.ability_self_power_2;
-                let message = "";
+                let message = ""; 
                 if (result > maxOpponentHealth) {
                     result = maxOpponentHealth;
                     message = ` and healed ${maxOpponentHealth - activeOpponentCard.health_points} health!`;
@@ -761,7 +778,7 @@ function handleOpponentTurn() {
                     battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + message + `</p>`;
                 } else {
                     // Trigger heal animation
-                    animateAttack(opponentCardElement, opponentCardElement, maxOpponentHealth - activeOpponentCard.health_points, true);
+                    animateAttack(opponentCardElement, opponentCardElement, activeOpponentCard.ability_self_power_2, true);
                     activeOpponentCard.health_points = result;
                     document.getElementById('opponent-hp').textContent = `HP: ${activeOpponentCard.health_points}`;
                     battleLog.innerHTML += `<p>` + opponent + ` used ` + activeOpponentCard.ability_name_2 + ` to heal ${activeOpponentCard.ability_self_power_2} health!</p>`;
@@ -776,7 +793,8 @@ function handleOpponentTurn() {
     if (!checkPlayerGameOver()) {
         // Enable player buttons after opponent's turn
         setTimeout(() => {
-        enableButtons(); }, 2000);
+            enableButtons();
+        }, 2000);
         isPlayerTurn = true;
     } else {
         isPlayerTurn = false;
@@ -819,7 +837,7 @@ function checkOpponentDeadCard() {
         alert("Opponent has no more cards! You win!");
         battleLog.innerHTML += `<p>` + opponent + ` has no more cards! You win!</p>`;
         completeGymBattle(true, gymID);
-        disableButtons();
+        disablePlayerButtons();
     }
 }
 
@@ -832,6 +850,9 @@ function checkPlayerDeadCard() {
     if (playerCardSlot1.health_points > 0) {
         setPlayerActiveCard(playerCardSlot1);
         setPlayerCardSlot1(activePlayerCard);
+        let tempMax = playerCardsMaxHealth.activePlayerCard;
+        playerCardsMaxHealth.activePlayerCard = playerCardsMaxHealth.playerCardSlot1;
+        playerCardsMaxHealth.playerCardSlot1 = tempMax;
         let temp = activePlayerCard
         activePlayerCard = playerCardSlot1;
         playerCardSlot1 = temp;
@@ -839,10 +860,13 @@ function checkPlayerDeadCard() {
         battleLog.innerHTML += `<p>` + username + ` swapped ` + playerCardSlot1.name + ` for ${activePlayerCard.name}</p>`;
         battleLog.scrollTop = battleLog.scrollHeight;
 
-        // Checks if the player's card in slot 2 is alive, if true, process the swap    
+    // Checks if the player's card in slot 2 is alive, if true, process the swap    
     } else if (playerCardSlot2.health_points > 0) {
         setPlayerActiveCard(playerCardSlot2);
         setPlayerCardSlot2(activePlayerCard);
+        let tempMax = playerCardsMaxHealth.activePlayerCard;
+        playerCardsMaxHealth.activePlayerCard = playerCardsMaxHealth.playerCardSlot2;
+        playerCardsMaxHealth.playerCardSlot2 = tempMax;
         let temp = activePlayerCard;
         activePlayerCard = playerCardSlot2;
         playerCardSlot2 = temp;
@@ -850,13 +874,13 @@ function checkPlayerDeadCard() {
         battleLog.innerHTML += `<p>` + username + ` swapped ` + playerCardSlot2.name + ` for ${activePlayerCard.name}</p>`;
         battleLog.scrollTop = battleLog.scrollHeight;
 
-        // If both cards are dead, the player loses    
+    // If both cards are dead, the player loses    
     } else {
         document.getElementById('player-active-card-icon').classList.add('card-dead');
         alert("Player has no more cards! You lost!");
         battleLog.innerHTML += `<p>` + username + ` has no more cards! You lost!</p>`;
         completeGymBattle(false, gymID);
-        disableButtons();
+        disablePlayerButtons();
     }
 }
 
@@ -876,14 +900,6 @@ function checkPlayerGameOver() {
     } else {
         return false;
     }
-}
-
-// Function to disable all buttons after the game is over
-function disableButtons() {
-    document.getElementById('player-move-1').disabled = true;
-    document.getElementById('player-move-2').disabled = true;
-    document.getElementById('player-retreat-1').disabled = true;
-    document.getElementById('player-retreat-2').disabled = true;
 }
 
 // Function to complete the gym battle and redirect to the gym battle completed page

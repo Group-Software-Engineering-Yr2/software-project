@@ -485,7 +485,7 @@ html {
     color: #ff5555;
     font-size: 2rem;
     font-weight: bold;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    text-shadow: -1px -1px 0 #144E3F, 1px -1px 0 #144E3F, -1px 1px 0 #144E3F, 1px 1px 0 #144E3F;
     animation: damage-number 1.5s ease-out;
     font-family: Arial, sans-serif;
     pointer-events: none;
@@ -494,10 +494,10 @@ html {
 
 .heal-number {
     position: absolute;
-    color: #55ff55;
+    color: #84C44C;
     font-size: 2rem;
     font-weight: bold;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    text-shadow: -1px -1px 0 #144E3F, 1px -1px 0 #144E3F, -1px 1px 0 #144E3F, 1px 1px 0 #144E3F;
     animation: heal-number 1.5s ease-out;
     font-family: Arial, sans-serif;
     pointer-events: none;
