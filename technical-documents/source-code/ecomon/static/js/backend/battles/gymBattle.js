@@ -1,5 +1,5 @@
 // Wait for the DOM to be fully loaded before executing the code
-// TODO: Commenting new features
+// TODO: Commenting all new features
 document.addEventListener('DOMContentLoaded', function () {
     // Create and show the coin flip overlay
     createCoinFlipOverlay();
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     setOpponentCardSlot2(opponentCardSlot2);
 });
 
-// Initialize the max health variables
+// Initialize the max health variables for player and opponent cards
 let playerCardsMaxHealth;
 let maxOpponentHealth;
 
@@ -54,6 +54,7 @@ function createCoinFlipOverlay() {
     coinContainer.style.height = '150px';
     coinContainer.style.position = 'relative';
     coinContainer.style.perspective = '1000px';
+    coinContainer.style.marginBottom = '30px'; // Add margin below coin
 
     // Create the coin
     const coin = document.createElement('div');
@@ -99,12 +100,89 @@ function createCoinFlipOverlay() {
     tails.style.color = 'white';
     tails.textContent = opponent;
 
+    // Create team info container
+    const teamInfoContainer = document.createElement('div');
+    teamInfoContainer.id = 'team-info-container';
+    teamInfoContainer.style.display = 'flex';
+    teamInfoContainer.style.justifyContent = 'space-between';
+    teamInfoContainer.style.width = '80%';
+    teamInfoContainer.style.maxWidth = '800px';
+    teamInfoContainer.style.color = 'white';
+    teamInfoContainer.style.fontFamily = 'Arial, sans-serif';
+
+    // Create user team info
+    const userTeamInfo = document.createElement('div');
+    userTeamInfo.className = 'team-info';
+    userTeamInfo.style.padding = '15px';
+    userTeamInfo.style.backgroundColor = 'rgba(132, 196, 76, 0.3)';
+    userTeamInfo.style.borderRadius = '8px';
+    userTeamInfo.style.width = '45%';
+    userTeamInfo.style.textAlign = 'center';
+
+    const userTeamTitle = document.createElement('h3');
+    userTeamTitle.textContent = username + "'s Team";
+    userTeamTitle.style.color = '#84C44C';
+    userTeamTitle.style.marginTop = '0';
+    userTeamTitle.style.marginBottom = '10px';
+
+    const userTeamBenefits = document.createElement('p');
+    if (userTeam === "Recycle") {
+        userTeamBenefits.textContent = 'Recycle Team Benefits: Recycle cards deal +10 damage on all moves';
+        userTeamBenefits.style.margin = '0';
+    } else if (userTeam === "Reduce") {
+        userTeamBenefits.textContent = 'Reduce Team Benefits: Player takes -5 damage from all moves';
+        userTeamBenefits.style.margin = '0';
+    } else if (userTeam === "Reuse") {
+        userTeamBenefits.textContent = 'Reuse Team Benefits: Players cards have increased use count';
+        userTeamBenefits.style.margin = '0';
+    }
+    userTeamInfo.appendChild(userTeamTitle);
+    userTeamInfo.appendChild(userTeamBenefits);
+
+    // Create opponent team info
+    const opponentTeamInfo = document.createElement('div');
+    opponentTeamInfo.className = 'team-info';
+    opponentTeamInfo.style.padding = '15px';
+    opponentTeamInfo.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
+    opponentTeamInfo.style.borderRadius = '8px';
+    opponentTeamInfo.style.width = '45%';
+    opponentTeamInfo.style.textAlign = 'center';
+
+    const opponentTeamTitle = document.createElement('h3');
+    opponentTeamTitle.textContent = opponent + "'s Team";
+    opponentTeamTitle.style.color = '#FF0000';
+    opponentTeamTitle.style.marginTop = '0';
+    opponentTeamTitle.style.marginBottom = '10px';
+
+    const opponentTeamBenefits = document.createElement('p');
+    if (opponentTeam === "Recycle") {
+        opponentTeamBenefits.textContent = 'Recycle Team Benefits: Recycle cards deal +10 damage on all moves';
+    } else if (opponentTeam === "Reduce") {
+        opponentTeamBenefits.textContent = 'Reduce Team Benefits: Opponent takes -5 damage from all moves';
+    } else if (opponentTeam === "Reuse") {
+        opponentTeamBenefits.textContent = 'Reuse Team Benefits: Opponents cards have increased use count';  
+    } else {
+        opponentTeamBenefits.textContent = 'Fossil Fuel Team Benefits: No team benefits';
+    }
+    opponentTeamBenefits.style.margin = '0';
+    opponentTeamInfo.appendChild(opponentTeamTitle);
+    opponentTeamInfo.appendChild(opponentTeamBenefits);
+
+    // Add team info to container
+    teamInfoContainer.appendChild(userTeamInfo);
+    teamInfoContainer.appendChild(opponentTeamInfo);
+
+    // Initially hide team info
+    teamInfoContainer.style.opacity = '0';
+    teamInfoContainer.style.transition = 'opacity 0.5s ease';
+
     // Assemble the elements
     coin.appendChild(heads);
     coin.appendChild(tails);
     coinContainer.appendChild(coin);
     overlay.appendChild(text);
     overlay.appendChild(coinContainer);
+    overlay.appendChild(teamInfoContainer);
     document.body.appendChild(overlay);
 }
 
@@ -112,6 +190,7 @@ function performCoinFlip() {
     const coin = document.getElementById('coin');
     const text = document.getElementById('coin-flip-text');
     const overlay = document.getElementById('coin-flip-overlay');
+    const teamInfo = document.getElementById('team-info-container');
 
     // Ensure coin starts at 0 rotation
     coin.style.transform = "rotateY(0deg)";
@@ -131,15 +210,20 @@ function performCoinFlip() {
             text.textContent = isHeads ? `${username} goes first!` : `${opponent} goes first!`;
             isPlayerTurn = isHeads;
 
+            // Show team information
+            teamInfo.style.opacity = '1';
+
+            // Increased delay before game starts (4 seconds instead of 1.5)
             setTimeout(() => {
                 overlay.style.opacity = '0';
-                overlay.style.transition = 'opacity 0.5s ease';
+                overlay.style.transition = 'opacity 0.8s ease';
 
+                // Increased delay for fade out (1 second instead of 0.5)
                 setTimeout(() => {
                     document.body.removeChild(overlay);
                     startGame();
-                }, 500);
-            }, 1500);
+                }, 1000);
+            }, 4000);
         }, 1000);
     }, 50); // Tiny delay to trigger reflow
 }
