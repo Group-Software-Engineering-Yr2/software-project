@@ -1,7 +1,6 @@
 from django.test import TestCase
-from accounts.forms import CustomUserCreationForm
 
-class TestForms(TestCase):
+class TestPrivacy(TestCase):
     '''
     Test cases for the privacy page
     '''
