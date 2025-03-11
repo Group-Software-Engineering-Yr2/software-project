@@ -385,6 +385,7 @@ html {
     100% { transform: scale(1) rotate(-25deg); filter: brightness(100%); }
 }
 
+/* Fix to make retreat animation work properly */
 @keyframes retreat-animation {
     0% { transform: rotate(25deg) translateX(0); opacity: 1; }
     50% { transform: rotate(25deg) translateX(-150px); opacity: 0.5; }
@@ -392,22 +393,26 @@ html {
     100% { transform: rotate(25deg) translateX(0); opacity: 1; }
 }
 
+/* Fix to make retreat animation work properly */
 @keyframes reverse-retreat-animation {
     0% { transform: rotate(25deg) translateX(150px); opacity: 0.5; }
     50% { transform: rotate(25deg) translateX(-150px); opacity: 0.5; }
     100% { transform: rotate(25deg) translateX(0); opacity: 1; }
 }
 
+/* Fix to make retreat animation work properly */
 @keyframes opponent-reverse-retreat-animation {
     0% { transform: rotate(-25deg) translateX(-150px); opacity: 0.5; }
     50% { transform: rotate(-25deg) translateX(150px); opacity: 0.5; }
     100% { transform: rotate(-25deg) translateX(0); opacity: 1; }
 }
 
+/* Fix to make retreat animation work properly */
 .card-reverse-retreating {
     animation: reverse-retreat-animation 1.5s ease-in-out;
 }
 
+/* Fix to make retreat animation work properly */
 .gym-battle-opponent-active .card-reverse-retreating {
     animation: opponent-reverse-retreat-animation 1.5s ease-in-out;
 }
@@ -465,14 +470,12 @@ html {
     animation: opponent-heal-animation 1s ease-in-out;
 }
 
+/* Fix to make retreat animation work properly */
 .card-retreating {
     animation: retreat-animation 1.5s ease-in-out;
 }
 
-.card-reverse-retreating {
-    animation: reverse-retreat-animation 1.5s ease-in-out;
-}
-
+/* Fix to make retreat animation work properly */
 .gym-battle-opponent-active .card-retreating {
     animation: opponent-retreat-animation 1.5s ease-in-out;
 }
