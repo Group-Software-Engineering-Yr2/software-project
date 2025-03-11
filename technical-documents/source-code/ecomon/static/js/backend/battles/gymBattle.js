@@ -794,7 +794,7 @@ function handleOpponentTurn() {
         // Enable player buttons after opponent's turn
         setTimeout(() => {
             enableButtons();
-        }, 2000);
+        }, 1500);
         isPlayerTurn = true;
     } else {
         isPlayerTurn = false;
