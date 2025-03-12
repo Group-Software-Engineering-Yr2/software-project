@@ -16,7 +16,7 @@ body {
     align-items: center;
     flex-direction: column;
     background-color: white;
-    border-radius: 5px;
+    border-radius: 10px;
     max-width: 90vw;
     width: 800px;
     padding: 20px;
@@ -167,5 +167,29 @@ body {
     bottom: 20px;
     left: 20px;
     z-index: 1000;
-    /* Ensure it's above other elements */
+}
+
+/* Responsive mobile design */
+@media screen and (max-width: 510px) {
+    .gym-content {
+        /* padding: 10px; */
+        height: 90%;
+    }
+
+    .gym-images {
+        gap: 10px;
+    }
+
+    .gym-info span {
+        font-size: 16px;
+    }
+
+    .player-deck a {
+        font-size: 18px;
+    }
+
+    .deck-card {
+        width: 160px;
+    }
+
 }

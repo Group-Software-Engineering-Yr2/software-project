@@ -75,10 +75,22 @@
                 {% endif %}
             </div>
         </div>
+
+        <div class="buttons-section">
+            {% if player_deck_card1 and player_deck_card2 and player_deck_card3 %}
+            <button id="start-battle" class="button">Start Battle</button>
+            <button id="edit-deck" class="button" onclick="window.location.href='/change_deck'">Edit Deck</button>
+            {% else %}
+            <button class="button"
+                onclick="alert('You need a full deck to begin a battle! \nClick on the Edit Deck button to choose your deck!')">Start
+                Battle</button>
+            <button id="edit-deck" class="button" onclick="window.location.href='/change_deck'">Edit Deck</button>
+            {% endif %}
+        </div>
     </div>
 
     <!-- Div to show the buttons that the user can interact with -->
-    <div class="buttons-section">
+    <!-- <div class="buttons-section">
         {% if player_deck_card1 and player_deck_card2 and player_deck_card3 %}
         <button id="start-battle" class="button">Start Battle</button>
         <button id="edit-deck" class="button" onclick="window.location.href='/change_deck'">Edit Deck</button>
@@ -88,7 +100,7 @@
             Battle</button>
         <button id="edit-deck" class="button" onclick="window.location.href='/change_deck'">Edit Deck</button>
         {% endif %}
-    </div>
+    </div> -->
     <a href="/home" class="button back-button">
         <i class="fas fa-arrow-left"></i>
     </a>
