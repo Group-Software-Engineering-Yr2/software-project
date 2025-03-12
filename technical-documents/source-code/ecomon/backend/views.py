@@ -91,7 +91,18 @@ def change_deck(request):
 def update_deck(request):
     if request.method == 'POST':
         user_profile = request.user.profile
+        
+        # Get the cards in the order they were selected
         selected_cards = request.POST.getlist('selected_cards')
+        card_order = request.POST.getlist('card_order')
+        
+        # If card_order is not provided or doesn't contain all cards, use selected_cards
+        
+        ordered_cards = []
+        for card_name in card_order:
+            if card_name in selected_cards and len(ordered_cards) < 3:
+                ordered_cards.append(card_name)
+            
         
         # Clear existing deck
         user_profile.deck_card_1 = None
@@ -99,14 +110,18 @@ def update_deck(request):
         user_profile.deck_card_3 = None
         
         # Add selected cards in order
-        for i, card_name in enumerate(selected_cards[:3]):
-            card = Card.objects.get(name=card_name)
-            if i == 0:
-                user_profile.deck_card_1 = card
-            elif i == 1:
-                user_profile.deck_card_2 = card
-            elif i == 2:
-                user_profile.deck_card_3 = card
+        for i, card_name in enumerate(ordered_cards[:3]):
+            try:
+                card = Card.objects.get(name=card_name)
+                if i == 0:
+                    user_profile.deck_card_1 = card
+                elif i == 1:
+                    user_profile.deck_card_2 = card
+                elif i == 2:
+                    user_profile.deck_card_3 = card
+            except Card.DoesNotExist:
+                # Skip if card doesn't exist
+                continue
                 
         user_profile.save()
 
