@@ -150,4 +150,37 @@ class DeckViewsTests(TestCase):
         self.assertEqual(self.profile.deck_card_2.name, self.card2.name)
         self.assertEqual(self.profile.deck_card_3.name, self.card3.name)
 
+    def test_clear_deck(self):
+        """Test clearing deck by submitting no cards"""
+        post_data = {
+            'selected_cards': []  # No cards selected
+        }
+        
+        session = self.client.session
+        session['original_referrer'] = reverse('change_deck')
+        session.save()
+        
+        response = self.client.post(reverse('update_deck'), data=post_data)
+        self.profile.refresh_from_db()
+        
+        # Check all cards are cleared
+        self.assertIsNone(self.profile.deck_card_1)
+        self.assertIsNone(self.profile.deck_card_2)
+        self.assertIsNone(self.profile.deck_card_3)
+
+    def test_change_deck_view_context(self):
+        """Test that view returns correct context"""
+        response = self.client.get(reverse('change_deck'))
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'backend/profile/changeDeck.html')
+        
+        # Check all required context variables
+        self.assertIn('cards', response.context)
+        self.assertIn('player_cards', response.context)
+        self.assertIn('user', response.context)
+        self.assertIn('deck_card_1', response.context)
+        self.assertIn('deck_card_2', response.context)
+        self.assertIn('deck_card_3', response.context)
+        self.assertIn('previous_page', response.context)
         
