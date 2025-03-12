@@ -1,3 +1,4 @@
+/* Sets the base font and text colour across the page */
 body {
     font-family: Arial, sans-serif;
     background-color: #f7f5fa;
@@ -5,6 +6,7 @@ body {
     padding: 20px;
 }
 
+/* Styles for h2 header */
 h2 {
     margin: 20px 0;
     font-size: 22px;
@@ -12,6 +14,7 @@ h2 {
     text-align: center;
 }
 
+/* Position back button fixed to top left corner */
 .backButton {
     position: fixed;
     top: 20px;
@@ -19,6 +22,7 @@ h2 {
     z-index: 1000;
 }
 
+/* Styles the back button */
 .backButton a {
     background-color: #84C44C;
     color: white;
@@ -30,15 +34,17 @@ h2 {
     transition: background-color 0.3s ease;
 }
 
+/* Back button dark green when hovered over */
 .backButton a:hover {
     background-color: #144E3F;
     cursor: pointer;
 }
 
-
+/*Adds bottom margim */
 .Deck {
     margin-bottom: 40px;
 }
+
 
 .deckTitle {
     font-size: 32px;
@@ -48,6 +54,7 @@ h2 {
     color: #144E3F;
 }
 
+/* Centers tables within the my deck section */
 .My.Deck table {
     margin: 0 auto;
     border-collapse: collapse;
@@ -73,6 +80,7 @@ h2 {
     margin: 0 auto;
 }
 
+/* Creates a responsive grid layout for cards with auto-fill that adjusts based on screen size */
 .cardTable tr {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -86,12 +94,14 @@ h2 {
     padding: 10px;
 }
 
+/* Styles card to display different when selected */
 .card-select {
     display: inline-block;
     position: relative;
     cursor: pointer;
     perspective: 1000px;
 }
+
 
 .card-select img {
     width: 180px;
@@ -100,12 +110,13 @@ h2 {
     border-radius: 10px;
 }
 
+/* Hides checkbox on cards */
 .card-select input[type="checkbox"] {
     position: absolute;
     opacity: 0;
 }
 
-
+/* Selected cards rise up and glow */
 .card-select input[type="checkbox"]:checked + img {
     transform: scale(1.15);
     box-shadow: 
@@ -115,16 +126,19 @@ h2 {
     z-index: 1;
 }
 
+/*  scales up cards and adds a subtle shadow on hover */
 .card-select:hover img {
     transform: scale(1.05);
     box-shadow: 0 0 15px rgba(20, 78, 63, 0.3);
 }
 
+/* Keeps selected cards hovering when clicked */
 .card-select input[type="checkbox"]:checked + img:hover {
     transform: scale(1.15);
 }
 
 
+/* Submit button styling */
 button[type="submit"] {
     display: block;
     width: 200px;
@@ -140,9 +154,11 @@ button[type="submit"] {
     transition: background-color 0.3s;
 }
 
+/* Dark green when hover over submit fitting with Ecomon style */
 button[type="submit"]:hover {
     background-color: #144E3F;
 }
+
 
 .back-button {
     color: white;
@@ -156,3 +172,90 @@ button[type="submit"]:hover {
     font-size: 16px;
     color: #144E3F;
 }
+
+/* Mobile Development!! */
+@media screen and (max-width: 768px) {
+    
+
+    body {
+      padding: 15px 10px;
+    }
+    
+    h2 {
+      font-size: 18px;
+      margin: 15px 0;
+    }
+    
+    /* Changes back button from fixed to absolute positioning for mobile */
+    .backButton {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+    
+    .backButton a {
+      padding: 10px 15px;
+      font-size: 14px;
+    }
+    
+    .deckTitle {
+      font-size: 24px;
+      margin-bottom: 15px;
+      margin-top: 50px; /* Space for fixed back button */
+    }
+    
+    .Deck {
+      margin-bottom: 25px;
+    }
+    
+    /* Makes deck images smaller on mobile */
+    .My.Deck img {
+      width: 140px; 
+    }
+    
+    /* Card selection takes up full mobile screen */
+    .cards-selection {
+      max-width: 100%;
+      padding: 0 5px;
+    }
+    
+    /* Adjusts grid for smaller cards and reduced spacing on mobile */
+    .cardTable tr {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+    }
+    
+    .cardTable td {
+      padding: 5px;
+    }
+    
+    .card-select img {
+      width: 140px; /* Smaller card images */
+    }
+    
+    .card-select input[type="checkbox"]:checked + img {
+      transform: scale(1.1);
+    }
+    
+    /* Reduces hover on mobile */
+    .card-select:hover img {
+      transform: scale(1.03);
+    }
+    
+    .card-select input[type="checkbox"]:checked + img:hover {
+      transform: scale(1.1);
+    }
+    
+    button[type="submit"] {
+      width: 180px;
+      padding: 10px 25px;
+      font-size: 16px;
+      margin: 15px auto;
+    }
+    
+    .use-count {
+      font-size: 14px;
+      margin-top: 3px;
+    }
+  }
+  
