@@ -343,11 +343,6 @@ def completed_gym_battle(request):
     #get players deck
     player_deck_cards = get_player_deck(request.user)
 
-    # Increment use count for each card used in battle
-    for card in player_deck_cards:
-        player_card = PlayerCards.objects.get(player=request.user, card=card)
-        player_card.increment_use()
-
     # Ensure the required parameters are present
     if not did_win or not gym_id:
         return redirect('missing-battle-condition')
