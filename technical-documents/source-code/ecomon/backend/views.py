@@ -92,12 +92,11 @@ def update_deck(request):
     if request.method == 'POST':
         user_profile = request.user.profile
         
-        # Get the cards in the order they were selected
+        # Get the cards in the order they were selected using list in change Deck JS
         selected_cards = request.POST.getlist('selected_cards')
         card_order = request.POST.getlist('card_order')
         
         # If card_order is not provided or doesn't contain all cards, use selected_cards
-        
         ordered_cards = []
         for card_name in card_order:
             if card_name in selected_cards and len(ordered_cards) < 3:
@@ -125,7 +124,7 @@ def update_deck(request):
                 
         user_profile.save()
 
-        # Get stored referrer and remove from session to avoid looping
+        # Get stored referrer and remove from session to avoid possible looping
         original_referrer = request.session.pop("original_referrer", "/view-gym")
         return redirect(original_referrer)
             
