@@ -8,6 +8,10 @@ def check_and_award_achievements(user, stat_type):
     Check and award achievements for a specific stat type
     stat_type should be 'PACKS', 'BATTLES', or 'BINS'
     """
+
+    if stat_type not in ['PACKS', 'BATTLES', 'BINS']:
+        raise ValueError("Invalid stat type")
+    
     profile = user.profile
     stat_value = {
         'PACKS': profile.packs_opened,

@@ -110,3 +110,8 @@ class AchievementServiceTests(TestCase):
         self.assertFalse(awarded)
         self.user.profile.refresh_from_db()
         self.assertEqual(self.user.profile.pack_count, initial_packs + 1)
+
+    def test_invalid_stat_type(self):
+        """Test handling of invalid stat type"""
+        with self.assertRaises(ValueError):
+            check_and_award_achievements(self.user, "Invalid stat type")
