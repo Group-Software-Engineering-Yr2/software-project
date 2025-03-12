@@ -160,7 +160,7 @@ function createCoinFlipOverlay() {
     } else if (opponentTeam === "Reduce") {
         opponentTeamBenefits.textContent = 'Reduce Team Benefits: Opponent takes -5 damage from all moves';
     } else if (opponentTeam === "Reuse") {
-        opponentTeamBenefits.textContent = 'Reuse Team Benefits: Opponents cards have increased use count';  
+        opponentTeamBenefits.textContent = 'Reuse Team Benefits: Opponents cards have increased use count';
     } else {
         opponentTeamBenefits.textContent = 'Fossil Fuel Team Benefits: No team benefits';
     }
@@ -247,7 +247,7 @@ function startGame() {
         activePlayerCard: maxActivePlayerCardHealth,
         playerCardSlot1: maxPlayerCardSlot1Health,
         playerCardSlot2: maxPlayerCardSlot2Health
-    }    
+    }
 
     // Initialize battle log
     let battleLog = document.querySelector('.battle-log');
@@ -332,10 +332,10 @@ function setPlayerActiveCard(card) {
     // Check if the second sustainAbility is a damage move only
     if (card.ability_power_2 > 0 && card.ability_self_power_2 == 0) {
         document.getElementById('player-move-2').textContent = card.ability_name_2 + ": " + card.ability_power_2 + " Damage";
-    // Check if the second sustainAbility is a heal and damage move
+        // Check if the second sustainAbility is a heal and damage move
     } else if (card.ability_power_2 > 0 && card.ability_self_power_2 > 0) {
         document.getElementById('player-move-2').textContent = card.ability_name_2 + ": " + card.ability_power_2 + " Damage and +" + card.ability_self_power_2 + " Health";
-    // Otherwise its a heal move only
+        // Otherwise its a heal move only
     } else {
         document.getElementById('player-move-2').textContent = card.ability_name_2 + ": +" + card.ability_self_power_2 + " Health";
     }
@@ -851,7 +851,7 @@ function handleOpponentTurn() {
             setTimeout(() => {
                 // Update the health points for the opponent
                 let result = activeOpponentCard.health_points + activeOpponentCard.ability_self_power_2;
-                let message = ""; 
+                let message = "";
                 if (result > maxOpponentHealth) {
                     result = maxOpponentHealth;
                     message = ` and healed ${maxOpponentHealth - activeOpponentCard.health_points} health!`;
@@ -944,7 +944,7 @@ function checkPlayerDeadCard() {
         battleLog.innerHTML += `<p>` + username + ` swapped ` + playerCardSlot1.name + ` for ${activePlayerCard.name}</p>`;
         battleLog.scrollTop = battleLog.scrollHeight;
 
-    // Checks if the player's card in slot 2 is alive, if true, process the swap    
+        // Checks if the player's card in slot 2 is alive, if true, process the swap    
     } else if (playerCardSlot2.health_points > 0) {
         setPlayerActiveCard(playerCardSlot2);
         setPlayerCardSlot2(activePlayerCard);
@@ -958,7 +958,7 @@ function checkPlayerDeadCard() {
         battleLog.innerHTML += `<p>` + username + ` swapped ` + playerCardSlot2.name + ` for ${activePlayerCard.name}</p>`;
         battleLog.scrollTop = battleLog.scrollHeight;
 
-    // If both cards are dead, the player loses    
+        // If both cards are dead, the player loses    
     } else {
         document.getElementById('player-active-card-icon').classList.add('card-dead');
         alert("Player has no more cards! You lost!");
@@ -998,6 +998,7 @@ function disablePlayerButtons() {
     document.getElementById('player-move-2').disabled = true;
     document.getElementById('player-retreat-1').disabled = true;
     document.getElementById('player-retreat-2').disabled = true;
+    document.getElementById('see-bench-cards').disabled = true;
 }
 
 // Function to enable all buttons during the player's turn
@@ -1006,4 +1007,5 @@ function enableButtons() {
     document.getElementById('player-move-2').disabled = false;
     document.getElementById('player-retreat-1').disabled = false;
     document.getElementById('player-retreat-2').disabled = false;
+    document.getElementById('see-bench-cards').disabled = false;
 }
