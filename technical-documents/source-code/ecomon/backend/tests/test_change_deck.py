@@ -109,8 +109,13 @@ class DeckViewsTests(TestCase):
         """Test the update deck view"""
         # Test POST request with valid data matching the form structure
         post_data = {
-            'selected_cards': [  # Match the form's name attribute
-                self.card1.name,  # Use card names as they're used in the form
+            'selected_cards': [  
+                self.card1.name,
+                self.card2.name, 
+                self.card3.name
+            ],
+            'card_order': [  # Add this to match what the view expects
+                self.card1.name,
                 self.card2.name,
                 self.card3.name
             ]
@@ -118,7 +123,7 @@ class DeckViewsTests(TestCase):
         
         # Set original referrer in session
         session = self.client.session
-        session['original_referrer'] = reverse('change_deck')  # Redirect to profile after update
+        session['original_referrer'] = reverse('change_deck')
         session.save()
         
         # Make the POST request
@@ -140,9 +145,9 @@ class DeckViewsTests(TestCase):
         # Refresh profile from db
         self.profile.refresh_from_db()
         
-        # Check if deck was updated using card names (as that's what the form sends)
+        # Check if deck was updated
         self.assertEqual(self.profile.deck_card_1.name, self.card1.name)
         self.assertEqual(self.profile.deck_card_2.name, self.card2.name)
         self.assertEqual(self.profile.deck_card_3.name, self.card3.name)
 
-    
+        
