@@ -24,7 +24,7 @@ def home(request):
 
     # getting 3 days ago
     threeDaysAgo = timezone.now().date() - timedelta(days=3)
-    last_pack_allocation = timezone.now().date() - timedelta(days=3)
+    last_pack_allocation = timezone.now().date()
     
     # checking if more than three days or more ago
     if threeDaysAgo >= last_pack_allocation:
