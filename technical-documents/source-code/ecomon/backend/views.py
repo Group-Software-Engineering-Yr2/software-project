@@ -8,7 +8,7 @@ from django.db import transaction
 from accounts.player_service import get_player_deck, has_deck, add_players_pack
 from accounts.models import Profile
 from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards, increase_packs_opened
-from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown, increase_win_count, increase_bins_emptied
+from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown, increase_win_count, increase_bins_emptied, reset_gym_player_cards
 from .bin_service import is_bin_full, increment_wrapper_count
 from .models import Gym, Card, PlayerCards,Team
 from .achievement_service import check_and_award_achievements
@@ -387,6 +387,8 @@ def completed_gym_battle(request):
                 increase_win_count(request.user)
                 check_and_award_achievements(request.user, 'BATTLES')
                 player_collection_cards = get_player_deck(request.user)
+                # Reset the gym player's cards from in use to not in use before updating the gym's cards
+                reset_gym_player_cards(gym)
                 # Set the gym's cards & update the player's cards in use
                 update_gym_cards(request.user,player_collection_cards, gym)
                 # Clear the cards used by the player in the battle from their deck
