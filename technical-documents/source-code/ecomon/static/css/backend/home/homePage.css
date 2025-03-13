@@ -45,7 +45,7 @@ html, body, #map {
 #locateButton-container {
     position: fixed;
     top: 20px;  
-    left: 17%;
+    left: 6%;
     transition: transform 0.3s ease-in-out;
     z-index: 500;
 }
