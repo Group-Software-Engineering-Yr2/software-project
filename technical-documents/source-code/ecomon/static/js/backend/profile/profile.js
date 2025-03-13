@@ -1,54 +1,61 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Get all card container elements
-    const cardCells = document.querySelectorAll('.cardTable td');
     
-    // Process each cell to add the flip functionality
+    // Select all cells in cardTable (All obtained cards)
+    const cardCells = document.querySelectorAll('.cardTable td');
+
+    // Loop through each card
     cardCells.forEach(cell => {
+        
+        // gets image inside the card cell
         const originalImg = cell.querySelector('img');
-        if (!originalImg) return;
         
-        // Skip processing if the card is not obtained (has "Blank" in the alt text)
-        if (originalImg.alt.includes('Blank')) return;
-        
-        // Create the card container structure
+        // Create a div element to act as the card container
         const cardContainer = document.createElement('div');
         cardContainer.className = 'card-container';
-        
+
+        // Create a div to hold both the front and back of the card
         const cardInner = document.createElement('div');
         cardInner.className = 'card-inner';
-        
-        // Create front of card
+
+        // Create the front of the card
         const cardFront = document.createElement('div');
         cardFront.className = 'card-front';
-        
-        // Create back of card
+
+        // Create the back of  card
         const cardBack = document.createElement('div');
         cardBack.className = 'card-back';
-        
-        // Get the card type from the data attribute (if available)
+
+        // Try to get the card type from the data attribute of the image
         let cardType = originalImg.dataset.cardType;
-        
-        // If data attribute isn't available, try to determine from other clues
+
+        // If no data, make card type based on image source
         if (!cardType) {
-            const imgSrc = originalImg.src.toLowerCase();
+            const imgSrc = originalImg.src.toLowerCase(); // Convert to lowercase for consistency
             
+            // If the image filename contains "recycle" assign cardtype 2 which is recycle
             if (imgSrc.includes('recycle')) {
                 cardType = '2';
-            } else if (imgSrc.includes('plant')) {
+            } 
+            // If the image filename contains "plant", assign cardtype 3 which is plant
+            else if (imgSrc.includes('plant')) {
                 cardType = '3';
-            } else {
-                cardType = '1'; // Default to plastic
+            } 
+            // otherwise do plastic
+            else {
+                cardType = '1';
             }
         }
-        
-        // Move the original image into the front
+
+        // Remove the original image from the cell
         originalImg.remove();
+        
+        // Append the original image to the front of the card
         cardFront.appendChild(originalImg);
-        
-        // Create the back image based on card type
+
+        // Create a new image element for the back of the card
         const backImg = document.createElement('img');
-        
-        // Set the appropriate back image based on card type
+
+        // Set the back image source and alt text based on the determined card type
         if (cardType === '2') {
             backImg.src = "/static/images/backend/profile/backrecyclecard.png";
             backImg.alt = "Recycle Card Back";
@@ -59,23 +66,32 @@ document.addEventListener('DOMContentLoaded', function() {
             backImg.src = "/static/images/backend/profile/backplasticcard.png";
             backImg.alt = "Plastic Card Back";
         }
-        
+
+        // Append the back image to the back side of the card
         cardBack.appendChild(backImg);
-        
-        // Add front and back to the inner container
+
+        // Append the front and back sides  to the inner container
         cardInner.appendChild(cardFront);
         cardInner.appendChild(cardBack);
-        
-        // Add inner container to the main container
+
+        //Append the inner container to the main card container
         cardContainer.appendChild(cardInner);
-        
-        // Replace the cell's content with our new card container
+
+        // Clear the existing content of the cell and replace it with new card container
         cell.innerHTML = '';
         cell.appendChild(cardContainer);
-        
-        // Add click event to flip the card
+
+        // Add a click event for the 'flipping of a card'
         cardContainer.addEventListener('click', function() {
-            this.classList.toggle('flipped');
+            // If the card is already flipped, remove the 'flipped' class
+            if (this.classList.contains('flipped')) {
+                this.classList.remove('flipped');
+            } 
+            // If the card is not flipped, add the 'flipped' class
+            else {
+                this.classList.add('flipped');
+            }
+            // Changed from toggle in hope older version of JS still work and run it
         });
     });
 });
