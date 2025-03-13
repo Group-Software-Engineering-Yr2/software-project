@@ -45,7 +45,6 @@ class AchievementServiceTests(TestCase):
 
 
 
-
     def test_pack_achievement(self):
         """Test pack opening achievement"""
         # Set initial packs opened
@@ -115,3 +114,18 @@ class AchievementServiceTests(TestCase):
         """Test handling of invalid stat type"""
         with self.assertRaises(ValueError):
             check_and_award_achievements(self.user, "Invalid stat type")
+
+    def test_below_threshold_no_award(self):
+        """Test that achievements aren't awarded below threshold"""
+        self.user.profile.packs_opened = 9  # Just below threshold
+        self.user.profile.save()
+        
+        awarded = check_and_award_achievements(self.user, 'PACKS')
+        
+        self.assertFalse(awarded)
+        self.assertFalse(
+            PlayerAchievements.objects.filter(
+                player=self.user,
+                achievement__name='Bronze Pack Opener'
+            ).exists()
+        )
