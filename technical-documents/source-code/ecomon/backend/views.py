@@ -414,10 +414,23 @@ def completed_gym_battle(request):
 
 
         # Check if the user has reached an achievement milestone
-        # Increment use count for each card used in the battle
+        # Increment use count for each card used in the battle and check if any cards have reached max uses
         for card in player_deck_cards:
             player_card = PlayerCards.objects.get(player=request.user, card=card)
             player_card.increment_use()
+
+        battle_cards = []
+        for card in player_deck_cards:
+            player_card = PlayerCards.objects.get(player=request.user, card=card)
+            max_uses = player_card.get_use_count()
+            exceeded = player_card.use_count >= max_uses
+            battle_cards.append({
+            'image_url': card.image.url,
+            'exceeded': exceeded,
+            })
+
+        context['battle_cards'] = battle_cards
+        context['any_expired'] = any(card['exceeded'] for card in context['battle_cards'])
 
         # Get the players cards and filter out the cards that have reached max uses
         players_cards = PlayerCards.objects.filter(player=request.user)
