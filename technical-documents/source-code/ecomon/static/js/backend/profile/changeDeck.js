@@ -28,6 +28,7 @@ function limitSelections(checkbox) {
         }
     }
     
+    // Update hidden fields with the current order
     updateOrderFields();
 }
 
