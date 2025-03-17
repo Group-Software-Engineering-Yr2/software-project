@@ -8,8 +8,9 @@ from django.db import transaction
 from accounts.player_service import get_player_deck, has_deck, add_players_pack
 from accounts.models import Profile
 from .pack_service import get_pack_count, reduce_user_pack_count,generate_pack, add_player_cards, increase_packs_opened
-from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown, increase_win_count, increase_bins_emptied
+from .gym_service import reset_profile_wrappers, update_gym_cards, update_owning_player, update_cooldown, increase_win_count, increase_bins_emptied, reset_gym_player_cards
 from .bin_service import is_bin_full, increment_wrapper_count
+from .models import Gym, Card, PlayerCards,Team
 from .achievement_service import check_and_award_achievements
 from .models import Gym, Card, PlayerCards
 from datetime import timedelta
@@ -23,7 +24,7 @@ def home(request):
 
     # getting 3 days ago
     threeDaysAgo = timezone.now().date() - timedelta(days=3)
-    last_pack_allocation = timezone.now().date() - timedelta(days=3)
+    last_pack_allocation = timezone.now().date()
     
     # checking if more than three days or more ago
     if threeDaysAgo >= last_pack_allocation:
@@ -92,6 +93,7 @@ def update_deck(request):
         user_profile = request.user.profile
         
         # Get the cards in the order they were selected
+        # Get the cards in the order they were selected using list in change Deck JS
         selected_cards = request.POST.getlist('selected_cards')
         card_order = request.POST.getlist('card_order')
         
@@ -124,7 +126,7 @@ def update_deck(request):
                 
         user_profile.save()
 
-        # Get stored referrer and remove from session to avoid looping
+        # Get stored referrer and remove from session to avoid possible looping
         original_referrer = request.session.pop("original_referrer", "/view-gym")
         return redirect(original_referrer)
             
@@ -247,7 +249,63 @@ def render_gym_battle(request, gym_id):
         player_deck_card1 = profile.deck_card_1 if profile and profile.deck_card_1 else None
         player_deck_card2 = profile.deck_card_2 if profile and profile.deck_card_2 else None
         player_deck_card3 = profile.deck_card_3 if profile and profile.deck_card_3 else None
+
+        # Retrieve Player's and Gym Owning teams
+        user_team = profile.team_name.name if profile else "No team"
+        gym_team = gym.owning_player.profile.team_name.name if gym.owning_player else "No team"
         
+        # Apply battle benefits based on the user's team
+        if user_team == "Recycle":
+            if player_deck_card1 and player_deck_card1.card_type == 2:
+                player_deck_card1.ability_power_1 += 10
+                if player_deck_card1.ability_power_2 != 0:
+                    player_deck_card1.ability_power_2 += 10
+            if player_deck_card2 and player_deck_card2.card_type == 2:
+                player_deck_card2.ability_power_1 += 10
+                if player_deck_card2.ability_power_2 != 0:
+                    player_deck_card2.ability_power_2 += 10
+            if player_deck_card3 and player_deck_card3.card_type == 2:
+                player_deck_card3.ability_power_1 += 10
+                if player_deck_card3.ability_power_2 != 0:
+                    player_deck_card3.ability_power_2 += 10
+        elif user_team == "Reduce":
+            gym.card1.ability_power_1 -= 5
+            gym.card2.ability_power_1 -= 5
+            gym.card3.ability_power_1 -= 5
+            if gym.card1.ability_power_2 != 0:
+                gym.card1.ability_power_2 -= 5
+            if gym.card2.ability_power_2 != 0:
+                gym.card2.ability_power_2 -= 5
+            if gym.card3.ability_power_2 != 0:
+                gym.card3.ability_power_2 -= 5
+        
+        # Apply battle benefits based on the gym's team
+        if gym_team == "Recycle":
+            if gym.card1.card_type == 2:
+                gym.card1.ability_power_1 += 10
+                if gym.card1.ability_power_2 != 0:
+                    gym.card1.ability_power_2 += 10
+            if gym.card2.card_type == 2:
+                gym.card2.ability_power_1 += 10
+                if gym.card2.ability_power_2 != 0:
+                    gym.card2.ability_power_2 += 10
+            if gym.card3.card_type == 2:
+                gym.card3.ability_power_1 += 10
+                if gym.card3.ability_power_2 != 0:
+                    gym.card3.ability_power_2 += 10
+        elif gym_team == "Reduce":
+            if player_deck_card1 and player_deck_card2 and player_deck_card3:
+                player_deck_card1.ability_power_1 -= 5
+                player_deck_card2.ability_power_1 -= 5
+                player_deck_card3.ability_power_1 -= 5
+                if player_deck_card1.ability_power_2 != 0:
+                    player_deck_card1.ability_power_2 -= 5
+                if player_deck_card2.ability_power_2 != 0:
+                    player_deck_card2.ability_power_2 -= 5
+                if player_deck_card3.ability_power_2 != 0:
+                    player_deck_card3.ability_power_2 -= 5
+            
+
         # Context variables to pass to the template
         context = {
             "gym_id": gym_id,
@@ -258,7 +316,9 @@ def render_gym_battle(request, gym_id):
             "gym_owning_player": gym.owning_player,
             "player_deck_card1": json.dumps(player_deck_card1.to_json()),
             "player_deck_card2": json.dumps(player_deck_card2.to_json()),
-            "player_deck_card3": json.dumps(player_deck_card3.to_json())
+            "player_deck_card3": json.dumps(player_deck_card3.to_json()),
+            "user_team": user_team,
+            "gym_team": gym_team,
         }
 
     except Gym.DoesNotExist:
@@ -284,11 +344,6 @@ def completed_gym_battle(request):
 
     #get players deck
     player_deck_cards = get_player_deck(request.user)
-
-    # Increment use count for each card used in battle
-    for card in player_deck_cards:
-        player_card = PlayerCards.objects.get(player=request.user, card=card)
-        player_card.increment_use()
 
     # Ensure the required parameters are present
     if not did_win or not gym_id:
@@ -343,6 +398,8 @@ def completed_gym_battle(request):
                 increase_win_count(request.user)
                 check_and_award_achievements(request.user, 'BATTLES')
                 player_collection_cards = get_player_deck(request.user)
+                # Reset the gym player's cards from in use to not in use before updating the gym's cards
+                reset_gym_player_cards(gym)
                 # Set the gym's cards & update the player's cards in use
                 update_gym_cards(request.user,player_collection_cards, gym)
                 # Clear the cards used by the player in the battle from their deck
@@ -359,10 +416,23 @@ def completed_gym_battle(request):
 
 
         # Check if the user has reached an achievement milestone
-        # Increment use count for each card used in the battle
+        # Increment use count for each card used in the battle and check if any cards have reached max uses
         for card in player_deck_cards:
             player_card = PlayerCards.objects.get(player=request.user, card=card)
             player_card.increment_use()
+
+        battle_cards = []
+        for card in player_deck_cards:
+            player_card = PlayerCards.objects.get(player=request.user, card=card)
+            max_uses = player_card.get_use_count()
+            exceeded = player_card.use_count >= max_uses
+            battle_cards.append({
+            'image_url': card.image.url,
+            'exceeded': exceeded,
+            })
+
+        context['battle_cards'] = battle_cards
+        context['any_expired'] = any(card['exceeded'] for card in context['battle_cards'])
 
         # Get the players cards and filter out the cards that have reached max uses
         players_cards = PlayerCards.objects.filter(player=request.user)
@@ -403,3 +473,105 @@ def get_gym_locations(request):
 def logout_view(request):
     logout(request)
     return redirect('/accounts/login')
+
+@login_required
+def team_leaderboard(request):
+    """Renders template for the team leaderboard"""
+
+    # Get teams that users can select
+    teams = Team.objects.filter(user_selectable=True)
+
+    teams_data = []
+    for team in teams:
+        # Filter gyms owned by players whose profile has this team
+        gyms = Gym.objects.filter(owning_player__profile__team_name=team)
+        gyms_owned = gyms.count()
+
+        recycle_cards_in_use = 0
+        plant_cards_in_use = 0
+        plastic_cards_in_use = 0
+
+        # Iterate through each gym to check the cards used in that gym
+        for gym in gyms:
+            for card in (gym.card1, gym.card2, gym.card3):
+                if card.card_type == 2:
+                    recycle_cards_in_use += 1
+                elif card.card_type == 3:
+                    plant_cards_in_use += 1
+                elif card.card_type == 1:
+                    plastic_cards_in_use += 1
+
+        teams_data.append({
+            'icon_url': team.icon.url,
+            'name': team.name,
+            'currently_owned_gyms': gyms_owned,
+            'recycle_cards_in_use': recycle_cards_in_use,
+            'plant_cards_in_use': plant_cards_in_use,
+            'plastic_cards_in_use': plastic_cards_in_use,
+        })
+
+    context = {
+        'teams': teams_data,
+    }
+    return render(request, 'backend/leaderboard/team_leaderboard.html', context)
+
+@login_required
+def player_leaderboard(request):
+    """
+    Renders the Player Leaderboard, excluding any players whose team is 'Fossil Fuels'.
+    Shows the top 10 players ordered by the number of gyms they own (descending).
+    """
+
+    # Exclude any profiles whose team_name is "Fossil Fuels"
+    profiles = Profile.objects.select_related('user', 'team_name') \
+                              .exclude(team_name__name="Fossil Fuels")
+
+    players_data = []
+
+    for profile in profiles:
+        user = profile.user
+        username = user.username
+        team = profile.team_name.name  # e.g. "Recycle", "Reuse", etc.
+
+        # Count how many gyms this user owns
+        owning_gyms = Gym.objects.filter(owning_player=user).count()
+
+        # Gather all PlayerCards for this user
+        player_cards = PlayerCards.objects.filter(player=user)
+
+        # Count cards by type (adjust card_type values if your logic differs)
+        plastic_cards_owned = player_cards.filter(card__card_type=3).count()
+        recycle_cards_owned = player_cards.filter(card__card_type=1).count()
+        plant_cards_owned = player_cards.filter(card__card_type=2).count()
+
+        # Collection total could be the sum of these counts
+        collection_total = plastic_cards_owned + recycle_cards_owned + plant_cards_owned
+
+        battles_won = profile.battles_won
+        bins_emptied = profile.bins_emptied
+        packs_opened = profile.packs_opened
+
+        players_data.append({
+            'username': username,
+            'team_name': team,
+            'owning_gyms': owning_gyms,
+            'plastic_cards_owned': plastic_cards_owned,
+            'recycle_cards_owned': recycle_cards_owned,
+            'plant_cards_owned': plant_cards_owned,
+            'collection_total': collection_total,
+            'battles_won': battles_won,
+            'bins_emptied': bins_emptied,
+            'packs_opened': packs_opened,
+        })
+
+    # Sort the list in descending order by owning_gyms
+    players_data.sort(key=lambda p: p['owning_gyms'], reverse=True)
+
+    # Take the top 10 players
+    players_data = players_data[:10]
+
+    context = {
+        'players': players_data,
+    }
+
+    return render(request, 'backend/leaderboard/player_leaderboard.html', context)

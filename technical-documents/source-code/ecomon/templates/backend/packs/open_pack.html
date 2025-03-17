@@ -9,6 +9,13 @@
     <title>Packs Available</title>
 </head>
 <body>
+    <!--Info icon-->
+    <div class="info-icon">
+        <button>
+            <p class="info-icon-i">i</p>
+            <div class="tooltip">If it has been more than 3 days since you've recieved a pack you will recieve a pack</div>
+        </button>
+    </div>
     <!-- Back Button -->
     <div class="back-button">
         <a href="/home">
@@ -20,9 +27,11 @@
         <h1>You Have <span id="pack-count">{{pack_count}}</span> Packs!</h1>
         <p>I'm feeling lucky!</p>
         <img class="pack-image" src="{% static 'images/pack_template.png' %}" alt="Open Pack"> 
-        <button class="open-button">
-            <a href="/opening_pack">Open Packs</a>
-        </button>
+        <a href="/opening_pack">
+            <button class="open-button">
+                Open Packs
+            </button>
+        </a>
     </section>
 </body>
 </html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>Ecomon Team Leaderboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/backend/leaderboard/team_leaderboard.css' %}">
+</head>
+<body>
+    <!-- Floating Back Button -->
+    <a href="/home" class="button back-button">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <!-- Floating leaderboard Button -->
+    <a href="/player_leaderboard" class="button leaderboard-button" >
+        <img src="{% static 'images/backend/leaderboard/teamIcon.png' %}" alt="Player Leaderboard" class="button-image">
+    </a>
+
+    <div class="leaderboard-wrapper">
+        <div class="leaderboard-container">
+            <img class="title-logo" alt="ecomon logo" src="{% static 'images/backend/scanner/Ecomon1-removebg.png' %}">
+            <h1>Team Leaderboard</h1>
+
+            <div class="table-wrapper">
+                <table class="leaderboard-table styled-table">
+                    <thead>
+                        <tr>
+                            <!-- Empty header for the first column -->
+                            <th></th>
+                            {% for team in teams %}
+                            <th>
+                                <!-- Team icon -->
+                                <img src="{{ team.icon_url }}" alt="{{ team.name }}">
+                                <!-- Team name -->
+                                <div>{{ team.name }}</div>
+                            </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="metric-label">Currently Owned Gyms</td>
+                            {% for team in teams %}
+                            <td>{{ team.currently_owned_gyms }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <td class="metric-label">Recycle Cards in use</td>
+                            {% for team in teams %}
+                            <td>{{ team.recycle_cards_in_use }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <td class="metric-label">Plant Cards in use</td>
+                            {% for team in teams %}
+                            <td>{{ team.plant_cards_in_use }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <td class="metric-label">Plastic Cards in use</td>
+                            {% for team in teams %}
+                            <td>{{ team.plastic_cards_in_use }}</td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

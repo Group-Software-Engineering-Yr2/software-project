@@ -92,5 +92,12 @@ def increase_win_count(user:User):
     profile = Profile.objects.get(user=user)
     profile.battles_won += 1
     profile.save()
-
-
+    
+def reset_gym_player_cards(gym:Gym):
+    '''Resets the player's cards back to the user if the gym they were in is taken over by another player'''
+    user = gym.owning_player
+    cards_in_gym = [gym.card1,gym.card2,gym.card3]
+    for card in cards_in_gym:
+        player_card = PlayerCards.objects.get(player=user,card=card)
+        player_card.in_gym = False
+        player_card.save()

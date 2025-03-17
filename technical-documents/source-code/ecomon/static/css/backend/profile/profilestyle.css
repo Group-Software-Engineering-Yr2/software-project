@@ -1,10 +1,10 @@
-/* Global Colour and font */
+/* Global Ecomon Colour to cover the text content */
 * {
     color: #144E3F;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-
+/* Flex boxing the header for ecomon logo */
 header {
     display: flex;
     justify-content: center;
@@ -13,6 +13,7 @@ header {
     padding: 25px;
 }
 
+/* Flexboxing the cards obtained section */
 .content-container {
     display: flex;
     flex-direction: column;
@@ -31,6 +32,8 @@ header {
     padding: 0 20px;
 }
 
+
+/* Fixing the logout and back buttons to the corners of the screen */
 .backButton, .logoutButton {
     position: fixed;
     top: 20px;
@@ -40,6 +43,7 @@ header {
 .backButton { left: 20px; }
 .logoutButton { right: 20px; }
 
+/* Setting buttons to same size */
 .backButton button, .logoutButton button {
     border: none;
     background: none;
@@ -55,6 +59,7 @@ header {
     object-fit: contain;
 }
 
+/* Setting text in back button to match back buttons across all of Ecomon */
 .backButton a {
     background-color: #84C44C;
     color: white;
@@ -74,7 +79,7 @@ header {
 
 #backButton { color: white; }
 
-/* Profile Section */
+/* Profile Section with text and images and user details */
 .profile-container {
     display: flex;
     justify-content: space-around;
@@ -98,12 +103,11 @@ header {
     transition: transform 0.5s ease;
 }
 
-/* Profile Spin */
+/* Adding spin affect to team image */
 .profilepic img:hover {
     transform: rotate(360deg);
     cursor: pointer;
 }
-
 
 .details {
     text-align: center;
@@ -135,7 +139,7 @@ header {
     margin: 0 auto;
 }
 
-/* Table Styling */
+/* Styling all the tables */
 .cardTable table, .AchievmentsTable table, .My.Deck table {
     width: 100%;
     max-width: 800px;
@@ -155,7 +159,7 @@ header {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Achievements Section */
+/* Achievements Section Styling */
 .AchievmentsTable {
     width: 100%;
     border-spacing: 0 15px;
@@ -171,6 +175,7 @@ header {
     border-radius: 5px;
 }
 
+/* Centreing the achievements section */
 .AchievmentsTable .medal-row {
     text-align: center;
 }
@@ -245,6 +250,8 @@ header {
     display: inline-block;
 }
 
+
+
 .bin-open, .bin-closed {
     position: absolute;
     top: 0;
@@ -259,6 +266,7 @@ header {
     pointer-events: none;
 }
 
+/* Setting transition so bin becomes closed when hovered over */
 .bin-container:hover .bin-closed {
     opacity: 1;
 }
@@ -267,7 +275,7 @@ header {
     opacity: 0;
 }
 
-/* Card Flip */
+/* Card Section and Flip */
 .card-container {
     perspective: 1000px;
     width: 180px;
@@ -285,6 +293,7 @@ header {
     cursor: pointer;
 }
 
+/* Flip Card */
 .card-container.flipped .card-inner {
     transform: rotateY(180deg);
 }
@@ -311,15 +320,200 @@ header {
     object-fit: contain;
 }
 
-/* Hover Effects */
-.cardTable img:hover {
-    transform: none;
-    box-shadow: none;
-    cursor: pointer;
-}
 
-.AchievmentsTable img:hover {
-    transform: none;
-    box-shadow: none;
-    cursor: default;
+/* Mobilising the Profile Page */
+@media screen and (max-width: 768px) {
+    /* Making sure all containers fit within the 768 pixels */
+    .content-container,
+    header,
+    .profile-container,
+    .cards-section,
+    .Deck,
+    .achievements-section,
+    .AchievmentsTable,
+    .cardTable table,
+    .AchievmentsTable table,
+    .My.Deck table {
+        width: 100%;
+        max-width: 100vw;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+    
+
+    header {
+        height: auto;
+        padding: 15px 5px;
+        flex-direction: column;
+    }
+    
+    /* Logo sizing for mobile across the top of page */
+    .logo img {
+        height: 100px;
+        width: auto;
+        padding: 5px;
+        display: block;
+        margin: 0 auto;
+    }
+    
+    /* Back and Logout button fixed on either sides of the screen and slightly smaller */
+    .Buttons {
+        width: 95%;
+        padding: 0;
+        margin: 10px auto;
+    }
+    
+    .backButton, .logoutButton {
+        position: static;
+    }
+    
+    .backButton button, .logoutButton button {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .backButton button img, .logoutButton button img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .backButton a {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    /* Profile container adjustments */
+    .profile-container {
+        flex-direction: column;
+        transform: none;
+        margin-bottom: 0;
+        padding: 0;
+    }
+    
+    
+    .team-bin-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 5px;
+    }
+    
+    .logo {
+        width: 45%;
+    }
+    
+    .bin {
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end; 
+    }
+    
+    .profilepic img {
+        height: 120px;
+    }
+    
+    .bin-container {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .bin-open, .bin-closed {
+        height: 120px;
+    }
+    
+   
+    .binimage {
+        margin-right: 0;
+        justify-content: flex-end; /* Aligned bin image to the right a little bit as slighlty off centre */
+        width: 100%;
+        padding-right: 10px; /* Added right padding */
+    }
+    
+    /* User details underneath */
+    .details {
+        font-size: 20px;
+        margin: 10px 0;
+        width: 100%;
+    }
+    
+    .binText {
+        font-size: 14px;
+        text-align: center;
+        width: 100%;
+    }
+    
+    /* Section titles */
+    .deckTitle, .cardTitle, .AchievementTitle {
+        font-size: 22px;
+        margin: 12px 0 5px;
+    }
+    
+    
+    .content-container {
+        margin: 10px auto;
+        padding: 0 5px;
+    }
+    
+    /* Card sizing and arrangement */
+    .cardTable img, .AchievmentsTable img, .My.Deck img {
+        width: 100px;
+        margin: 3px;
+    }
+    
+    /* Force tables to fit screen */
+    .cardTable, .AchievmentsTable, .My.Deck {
+        width: 100%;
+        overflow-x: hidden;
+    }
+    
+    .cardTable table td, .AchievmentsTable table td, .My.Deck table td {
+        padding: 2px;
+    }
+    
+    /* Card container for flip effect */
+    .card-container {
+        width: 100px;
+        height: 140px;
+        margin: 3px;
+    }
+    
+    /* Deck section adjustment */
+    .Deck {
+        margin-top: 0;
+    }
+    
+    .DeckButton button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    /* Achievement medals */
+    .AchievmentsTable img {
+        max-width: 60px;
+    }
+    
+    .AchievmentsTable .achievement-total {
+        font-size: 18px;
+    }
+    
+    .AchievmentsTable .medal-labels {
+        font-size: 11px;
+    }
+    
+    /* Table layout control */
+    .cardTable table, .AchievmentsTable table, .My.Deck table {
+        table-layout: fixed;
+    }
+    
+    /* Ensure table cells don't overflow */
+    .cardTable td, .AchievmentsTable td, .My.Deck td {
+        word-wrap: break-word;
+        overflow: hidden;
+    }
 }

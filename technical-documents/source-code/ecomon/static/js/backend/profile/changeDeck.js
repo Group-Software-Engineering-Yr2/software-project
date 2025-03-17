@@ -1,4 +1,4 @@
-// Track the order of selected cards
+// Allow for order cards selected to be known so they add in order
 let selectionOrder = [];
 
 // Limit the amount of cards a player can select to 3 and track selection order

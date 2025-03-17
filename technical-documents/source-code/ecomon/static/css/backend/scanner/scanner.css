@@ -141,12 +141,6 @@ body {
     cursor: pointer;
 }
 
-/* #reader {
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
-} */
-
 /* Responsive Design */
 @media screen and (max-width: 1024px) {
     .container {
