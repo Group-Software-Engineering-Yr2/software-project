@@ -17,7 +17,7 @@ from datetime import timedelta
 
 @login_required
 def home(request):
-    gyms = list(Gym.objects.values('name', 'latitude', 'longitude'))
+    gyms = list(Gym.objects.values('name', 'latitude', 'longitude', 'owning_player__profile__team_name__name'))
 
     # getting last allocation from DB
     last_pack_allocation = Profile.objects.get(user=request.user).last_pack_allocation

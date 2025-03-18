@@ -29,9 +29,30 @@ document.addEventListener('DOMContentLoaded', function() {
     // moving map to user location on startup
     map.on('locationfound', onLocationFound);
 
+    // creating custom marker objects
+    var reduceMarker = L.icon({iconUrl: 'static/images/teams/reduce.png', iconSize: [30, 30]});
+    var reuseMarker = L.icon({iconUrl: 'static/images/teams/Reuse.png', iconSize: [30, 30]});
+    var recycleMarker = L.icon({iconUrl: 'static/images/teams/Recycle.png', iconSize: [30, 30]});
+    var fossilMarker = L.icon({iconUrl: 'static/images/teams/Factory.png', iconSize: [30, 30]});
+
     // Getting all gym locations and adding markers (no AJAX)
     gyms.forEach(gym => {
-        var marker = L.marker([gym.latitude, gym.longitude]).addTo(map);
-        marker.bindPopup(`<b>${gym.name}</b>`);
-    })   
+        // getting the current gym owner
+        var ownerTeam = gym.owning_player__profile__team_name__name;
+        // checking which team, adding corresponding marker
+        console.log(ownerTeam);
+        if (ownerTeam == "Reduce") {
+            var marker = L.marker([gym.latitude, gym.longitude], {icon: reduceMarker}).addTo(map);
+            marker.bindPopup(`<b>${gym.name}</b>`);
+        } else if (ownerTeam == "Recycle") {
+            var marker = L.marker([gym.latitude, gym.longitude], {icon: recycleMarker}).addTo(map);
+            marker.bindPopup(`<b>${gym.name}</b>`);
+        } else if (ownerTeam == "Reuse") {
+            var marker = L.marker([gym.latitude, gym.longitude], {icon: reuseMarker}).addTo(map);
+            marker.bindPopup(`<b>${gym.name}</b>`);            
+        } else {
+            var marker = L.marker([gym.latitude, gym.longitude], {icon: fossilMarker}).addTo(map);
+            marker.bindPopup(`<b>${gym.name}</b>`);     
+        }
+    })
 });
