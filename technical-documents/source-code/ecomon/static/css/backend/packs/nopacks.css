@@ -59,3 +59,8 @@ p {
     font-size: 14px;
     font-weight: bold;
 }
+
+.return-button:hover {
+    background-color: #144E3F;
+    transition: 0.3s ease;
+}
