@@ -74,7 +74,7 @@ class PlayerLeaderboardViewTests(TestCase):
         The view is decorated with @login_required, so unauthenticated requests
         should be redirected to the login page.
         """
-        # Ensure that your urls.py includes a URL pattern with name 'player_leaderboard'
+        # Ensure that the urls.py includes a URL pattern with name 'player_leaderboard'
         response = self.client.get('/player_leaderboard')
         self.assertNotEqual(response.status_code, 200)
         self.assertRedirects(response, '/accounts/login/?next=' + '/player_leaderboard')
