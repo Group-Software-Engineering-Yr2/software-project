@@ -20,14 +20,34 @@ document.addEventListener('DOMContentLoaded', function() {
         iconSize: [40, 40],
     });
     
+    // Store the current circle object globally
+    var currentCircle = null;
+
     // function to add marker on user location
     function onLocationFound(e) {
         var radius = e.accuracy; 
-        L.marker(e.latlng, {icon: userLocationIcon}).addTo(map).bindPopup("This is you! (within " + Math.round(radius) + "m)");
+        var playerMarker = L.marker(e.latlng, {icon: userLocationIcon}).addTo(map).bindPopup("This is you! (within " + Math.round(radius) + "m)");
+        
+        // making radius on player
+        playerMarker.on('click', function (e) {
+            // If there's already a circle, remove it
+            if (currentCircle) {
+                map.removeLayer(currentCircle);
+            }
+
+            // Create a new circle
+            currentCircle = L.circle(e.latlng, {
+                radius: Math.round(radius),
+                color: 'blue',
+                fillColor: 'blue',
+                fillOpacity: 0.1,
+            }).addTo(map);
+        });
     }
 
     // moving map to user location on startup
     map.on('locationfound', onLocationFound);
+
 
     // creating custom marker objects
     var reduceMarker = L.icon({iconUrl: 'static/images/teams/reduce.png', iconSize: [30, 30]});
@@ -39,20 +59,48 @@ document.addEventListener('DOMContentLoaded', function() {
     gyms.forEach(gym => {
         // getting the current gym owner
         var ownerTeam = gym.owning_player__profile__team_name__name;
+        var marker;
+
         // checking which team, adding corresponding marker
         console.log(ownerTeam);
         if (ownerTeam == "Reduce") {
-            var marker = L.marker([gym.latitude, gym.longitude], {icon: reduceMarker}).addTo(map);
-            marker.bindPopup(`<b>${gym.name}</b>`);
+            marker = L.marker([gym.latitude, gym.longitude], {icon: reduceMarker}).addTo(map);
         } else if (ownerTeam == "Recycle") {
-            var marker = L.marker([gym.latitude, gym.longitude], {icon: recycleMarker}).addTo(map);
-            marker.bindPopup(`<b>${gym.name}</b>`);
+            marker = L.marker([gym.latitude, gym.longitude], {icon: recycleMarker}).addTo(map);
         } else if (ownerTeam == "Reuse") {
-            var marker = L.marker([gym.latitude, gym.longitude], {icon: reuseMarker}).addTo(map);
-            marker.bindPopup(`<b>${gym.name}</b>`);            
+            marker = L.marker([gym.latitude, gym.longitude], {icon: reuseMarker}).addTo(map);
         } else {
-            var marker = L.marker([gym.latitude, gym.longitude], {icon: fossilMarker}).addTo(map);
-            marker.bindPopup(`<b>${gym.name}</b>`);     
+            marker = L.marker([gym.latitude, gym.longitude], {icon: fossilMarker}).addTo(map);
         }
-    })
-});
+
+        marker.bindPopup(`<b>${gym.name}</b>`);
+
+        // Adding click event to show radius circle
+        marker.on('click', function () {
+            // If there's already a circle, remove it
+            if (currentCircle) {
+                map.removeLayer(currentCircle);
+            }
+
+            // Create a new circle
+            currentCircle = L.circle([gym.latitude, gym.longitude], {
+                radius: 200,
+                color: 'blue',
+                fillColor: 'blue',
+                fillOpacity: 0.1,
+            }).addTo(map);
+        });
+    });
+
+    // Function to remove gym radius when clicking anywhere else
+    function removeGymRadius() {
+        // If a circle exists, remove it
+        if (currentCircle) {
+            map.removeLayer(currentCircle);
+            currentCircle = null;
+        }
+    }
+
+    // Remove gym radius when clicking anywhere else on the map
+    map.on('click', removeGymRadius);
+})
