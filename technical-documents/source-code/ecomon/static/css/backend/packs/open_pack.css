@@ -123,3 +123,13 @@ p {
 .info-icon:hover .tooltip {
     display: block;
 }
+
+@media screen and (max-width: 480px) {
+    .tooltip {
+        font-size: 10px;
+    }
+
+    .info-icon {
+        right: 5px;
+    }
+}

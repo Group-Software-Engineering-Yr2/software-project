@@ -9,13 +9,33 @@ const allowedPattern = /^http:\/\/127\.0\.0\.1:8000\/view-gym\/\d+$/;
 function onScanSuccess(decodedText, decodedResult) {
     console.log(`Scanned URL: ${decodedText}`, decodedResult);
 
-    // Validate the scanned URL
-    if (allowedPattern.test(decodedText)) {
-        window.location.href = decodedText;
-    } else {
-        alert("Invalid QR Code. Please scan a valid recycling gym QR code.");
-        console.warn("Scanned QR code does not match the expected format.");
-    }
+    // Use requestAnimationFrame to avoid blocking
+    requestAnimationFrame(() => {
+        if (allowedPattern.test(decodedText)) {
+            window.location.href = decodedText;
+        } else {
+            // Show non-blocking error notification
+            showNonBlockingError("Invalid QR Code. Please scan a valid recycling gym QR code.");
+        }
+    });
+}
+
+// Create a non-blocking error display
+function showNonBlockingError(message) {
+    const errorDiv = document.getElementById('scanner-error');
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+    errorDiv.style.marginTop = '10px';
+    errorDiv.style.color = 'red';
+    errorDiv.style.fontWeight = 'bold';
+    
+    // Clear previous timeout if exists
+    if (window.errorTimeout) clearTimeout(window.errorTimeout);
+    
+    // Hide after 2 seconds
+    window.errorTimeout = setTimeout(() => {
+        errorDiv.style.display = 'none';
+    }, 2000);
 }
 
 // Function to handle the scan failure
@@ -26,29 +46,24 @@ function onScanFailure(error) {
 // Function to start the scanner
 function startScanner() {
     if (isScanning) return;
-
-    Html5Qrcode.getCameras().then(devices => {
-        if (devices && devices.length) {
-            const cameraId = devices[0].id;
-            html5QrCode.start(
-                cameraId,
-                { fps: 10, qrbox: { width: 250, height: 250 } },
-                onScanSuccess,
-                onScanFailure
-            ).then(() => {
-                isScanning = true;
-                document.getElementById("logo-and-text").style.display = "none";
-                document.getElementById("start-scanner").style.display = "none";
-                document.getElementById("content").style.marginTop = "20px";
-                document.getElementById("teams").style.display = "none";
-                document.getElementById("stop-scanner").style.display = "block";
-                document.querySelector(".title").style.marginTop = "155px";
-            }).catch(err => {
-                console.error("Failed to start scanner:", err);
-            });
-        }
+    
+    // Use facingMode: "environment" for back camera
+    html5QrCode.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: { width: 250, height: 250 } },
+        onScanSuccess,
+        onScanFailure
+    ).then(() => {
+        isScanning = true;
+        document.getElementById("logo-and-text").style.display = "none";
+        document.getElementById("start-scanner").style.display = "none";
+        document.getElementById("content").style.marginTop = "20px";
+        document.getElementById("teams").style.display = "none";
+        document.getElementById("stop-scanner").style.display = "block";
+        document.querySelector(".title").style.marginTop = "155px";
     }).catch(err => {
-        console.error("Failed to get cameras:", err);
+        console.error("Failed to start scanner:", err);
+        alert("Unable to access camera. Please ensure permissions are granted.");
     });
 }
 
