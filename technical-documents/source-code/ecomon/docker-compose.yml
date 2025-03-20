@@ -1,0 +1,6 @@
+version: '3.9'
+services:
+  econmon_django:
+    image: ecomon
+    ports:
+      - 9765:9765
