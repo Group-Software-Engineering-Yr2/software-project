@@ -98,6 +98,10 @@ def reset_gym_player_cards(gym:Gym):
     user = gym.owning_player
     cards_in_gym = [gym.card1,gym.card2,gym.card3]
     for card in cards_in_gym:
-        player_card = PlayerCards.objects.get(player=user,card=card)
-        player_card.in_gym = False
-        player_card.save()
+        # If the player's card has decomposed don't change the card that doesn't exists.
+        try:
+            player_card = PlayerCards.objects.get(player=user,card=card)
+            player_card.in_gym = False
+            player_card.save()
+        except:
+            pass
