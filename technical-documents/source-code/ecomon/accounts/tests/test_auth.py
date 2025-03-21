@@ -19,7 +19,7 @@ class APIAuthenticationTests(APITestCase):
         self.token = Token.objects.create(user=self.user) 
         self.client.credentials(HTTP_AUTHORIZATION=f'Token {self.token.key}')
         self.profile = Profile.objects.create(
-            user=self.user, team_name=self.team, wrapper_count=0, pack_count=1
+            user=self.user, team_name=self.team, wrapper_count=0, pack_count=2
         )
 
     def tearDown(self):
@@ -62,7 +62,7 @@ class APIAuthenticationTests(APITestCase):
         # Get the created user and verify pack count
         new_user = User.objects.get(username="packuser")
         profile = Profile.objects.get(user=new_user)
-        self.assertEqual(profile.pack_count, 1)
+        self.assertEqual(profile.pack_count, 2)
 
 
     def test_login_user(self):
