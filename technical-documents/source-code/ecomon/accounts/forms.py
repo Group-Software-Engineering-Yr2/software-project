@@ -24,7 +24,7 @@ class CustomUserCreationForm(UserCreationForm):
                 user=user,
                 team_name=team,
                 wrapper_count=0,
-                pack_count=1,
+                pack_count=2,
                 last_pack_allocation=now()
             )
         return user
