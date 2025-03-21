@@ -29,7 +29,7 @@
     <!-- Popup container -->
      <div class="popup-container hidden" id="popup-container">
         <!-- Popup for editing username -->
-        <div class="popup-edituser" id="popup-edituser">
+        <div class="popup-edituser hidden" id="popup-edituser">
             <div class="popup-content-container">
                 <div class="popup-header">
                     <h2>Edit Username</h2>
@@ -45,11 +45,54 @@
                     </form>
                     
                 </div>
-
             </div>
         </div>
-        <!-- Next popup -->
-     </div>
+
+        <!-- Email Popup -->
+        <div class="popup-edituser hidden" id="popup-editemail">
+            <div class="popup-content-container">
+                <div class="popup-header">
+                    <h2>Edit Email</h2>
+                    <span class="close" onclick="closePopup(this)">&times;</span>
+                </div>
+                <div class="popup-body">
+                    <form id="edit-email-form" class="flex-center-form">
+                        {% csrf_token %}
+                        <label for="new-email">New Email:</label>
+                        <input type="email" id="new-email" name="new_email" required>
+                        <div id="email-feedback" class="form-feedback"></div>
+                        <button class="submit-button" type="submit">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Password Popup -->
+        <div class="popup-edituser hidden" id="popup-editpassword">
+            <div class="popup-content-container">
+                <div class="popup-header">
+                    <h2>Edit Password</h2>
+                    <span class="close" onclick="closePopup(this)">&times;</span>
+                </div>
+                <div class="popup-body">
+                    <form id="edit-password-form" class="flex-center-form">
+                        {% csrf_token %}
+                        <label for="old-password">Old Password:</label>
+                        <input type="password" id="old-password" name="old_password" required>
+                        
+                        <label for="new-password">New Password:</label>
+                        <input type="password" id="new-password" name="new_password" required>
+                        
+                        <label for="confirm-new-password">Confirm New Password:</label>
+                        <input type="password" id="confirm-new-password" name="confirm_new_password" required>
+                        
+                        <div id="password-feedback" class="form-feedback"></div>
+                        <button class="submit-button" type="submit">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -89,7 +132,7 @@
 
             <p>Username: {{ user.username }} <i class="fas fa-pencil edit-button" onclick="popupEditUsername()"></i></p>
             
-            <p>Email: {{ user.email }}</p>
+            <p>Email: {{ user.email }} <i class="fas fa-pencil edit-button" onclick="popupEditEmail()"></i></p>
             <p>Team: {{ user.profile.team_name.name}}</p>
             <p>
                 <div class = 'powers'>
@@ -102,8 +145,6 @@
                     {% endif %}
                 </div>
             </p>
-        
-
         </div>
 
         <!-- Bin Div -->

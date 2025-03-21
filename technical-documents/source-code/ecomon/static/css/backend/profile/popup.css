@@ -19,6 +19,7 @@
 .popup-edituser{
     width: 25%;
     height: 30%;
+    min-height: fit-content;
     min-width: 300px;
     background-color: white;
     position: fixed;
