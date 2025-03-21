@@ -32,6 +32,11 @@ header {
     padding: 0 20px;
 }
 
+/* Edit button */
+.edit-button{
+    font-size: 25px;
+    cursor: pointer;
+}
 
 /* Fixing the logout and back buttons to the corners of the screen */
 .backButton, .logoutButton {

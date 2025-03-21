@@ -9,9 +9,12 @@
         
         <!-- Links to CSS and Javascript Files -->
         <link rel="stylesheet" href="{% static 'css/backend/profile/profilestyle.css' %}">
+        <link rel="stylesheet" href="{% static 'css/backend/profile/popup.css' %}">
         <link rel="stylesheet" href="{% static 'css/backend/profile/profile-mobilestyle.css' %}" media="screen and (max-width: 768px)">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <script src="{% static 'js/backend/profile/profile.js' %}"></script>
+        <script src="{% static 'js/backend/profile/edit_profile.js' %}"></script>
+
     </head>
 
 
@@ -23,6 +26,35 @@
 </header>
 
 <body>
+    <!-- Popup container -->
+     <div class="popup-container hidden" id="popup-container">
+        <!-- Popup for editing username -->
+        <div class="popup-edituser" id="popup-edituser">
+            <div class="popup-content-container">
+                <div class="popup-header">
+                    <h2>Edit Username</h2>
+                    <span class="close" onclick="closePopup()">&times;</span>
+                </div>
+                <div class="popup-body">
+                    <form id="edit-username-form" class="flex-center-form">
+                        {% csrf_token %}
+                        <label for="new-username">New Username:</label>
+                        <input type="text" id="new-username" name="new_username" required>
+                        <div id="username-feedback" class="form-feedback"></div>
+                        <button class="submit-button" type="submit" value="Submit">Save</button>
+                    </form>
+                    
+                </div>
+
+            </div>
+        </div>
+        <!-- Next popup -->
+     </div>
+
+
+
+
+    
     <!-- Navigation buttons -->
     <div class = "Buttons">
         <!-- Back button -->
@@ -54,12 +86,12 @@
 
         <!-- Profile Details -->
         <div class="details">
+
+            <p>Username: {{ user.username }} <i class="fas fa-pencil edit-button" onclick="popupEditUsername()"></i></p>
+            
+            <p>Email: {{ user.email }}</p>
+            <p>Team: {{ user.profile.team_name.name}}</p>
             <p>
-                Username: {{ user.username }}
-                <br><br>
-                Email: {{ user.email }}
-                <br><br>
-                Team: {{ user.profile.team_name.name}}
                 <div class = 'powers'>
                     {% if "Reduce" in user.profile.team_name|stringformat:"s"%}
                         <p>Team Power: Take 5 less damage a turn</p>
@@ -70,7 +102,7 @@
                     {% endif %}
                 </div>
             </p>
-            
+        
 
         </div>
 
