@@ -3,7 +3,7 @@
 let html5QrCode = new Html5Qrcode("reader");
 let isScanning = false;
 // Define the allowed URL pattern using a regular expression
-const allowedPattern = /^http:\/\/127\.0\.0\.1:8000\/view-gym\/\d+$/;
+const allowedPattern = /^https?:\/\/www\.ecomon\.org\.uk\/view-gym\/\d+$/;
 
 // Function to handle the scanned URL (successful scan)
 function onScanSuccess(decodedText, decodedResult) {

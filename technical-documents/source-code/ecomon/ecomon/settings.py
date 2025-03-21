@@ -26,8 +26,21 @@ SECRET_KEY = 'django-insecure-4$jo9cqsajt8gyo$)$-1iq8%ubrq)wi)&l61ze)8l7ws^w2bbd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Allowed hosts - Add your domain
+ALLOWED_HOSTS = ['*']
 
+# CSRF trusted origins - Add your domain
+CSRF_TRUSTED_ORIGINS = ['https://www.ecomon.org.uk', 'https://ecomon.org.uk','http://192.168.1.10']
+
+# Security settings for production
+# SECURE_BROWSER_XSS_FILTER = True
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_HSTS_SECONDS = 31536000
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+# SECURE_SSL_REDIRECT = True
 
 # Application definition
 
