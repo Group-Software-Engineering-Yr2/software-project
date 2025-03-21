@@ -113,6 +113,19 @@ class RegisterView(APIView):
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class DeleteAccountView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        # You could add extra checks here (e.g., require a confirmation flag)
+        if request.data.get("confirm"):
+            user = request.user
+            user.delete()
+            return Response({"message": "Account deleted successfully."}, status=status.HTTP_200_OK)
+        return Response({"error": "Deletion not confirmed."}, status=status.HTTP_400_BAD_REQUEST)
+
+
 class LoginView(APIView):
     '''Login a user and return a token'''
     def post(self, request):

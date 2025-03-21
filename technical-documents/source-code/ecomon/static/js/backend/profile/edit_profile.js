@@ -14,6 +14,11 @@ function popupEditPassword() {
     document.getElementById('popup-editpassword').classList.remove("hidden");
 }
 
+function popupDeleteAccount() {
+    _showGeneralPopup();
+    document.getElementById('popup-deleteaccount').classList.remove("hidden");
+}
+
 function _showGeneralPopup(){
     document.getElementById('popup-container').classList.remove("hidden");
 }
@@ -24,6 +29,7 @@ function closePopup(element) {
     document.getElementById('popup-edituser').classList.add("hidden");
     document.getElementById('popup-editemail').classList.add("hidden");
     document.getElementById('popup-editpassword').classList.add("hidden");
+    document.getElementById('popup-deleteaccount').classList.add("hidden");
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -127,6 +133,40 @@ document.addEventListener("DOMContentLoaded", function () {
                 feedbackDiv.textContent = body.message;
                 feedbackDiv.style.color = "green";
                 setTimeout(() => window.location.reload(), 1000);
+            } else {
+                feedbackDiv.textContent = Object.values(body).flat().join(", ");
+                feedbackDiv.style.color = "red";
+            }
+        })
+        .catch(error => {
+            feedbackDiv.textContent = "Something went wrong.";
+            feedbackDiv.style.color = "red";
+            console.error("Error:", error);
+        });
+    });
+
+    // Delete Account - handle confirmation button click
+    const deleteButton = document.getElementById("confirm-delete-button");
+    deleteButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        const feedbackDiv = document.getElementById("delete-feedback");
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        fetch("/accounts/api/profile/delete/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken
+            },
+            body: JSON.stringify({ confirm: true })
+        })
+        .then(response => response.json().then(data => ({ status: response.status, body: data })))
+        .then(({ status, body }) => {
+            if (status === 200) {
+                feedbackDiv.textContent = body.message;
+                feedbackDiv.style.color = "green";
+                // Optionally redirect to the login or home page after deletion.
+                setTimeout(() => window.location.href = "/", 1500);
             } else {
                 feedbackDiv.textContent = Object.values(body).flat().join(", ");
                 feedbackDiv.style.color = "red";

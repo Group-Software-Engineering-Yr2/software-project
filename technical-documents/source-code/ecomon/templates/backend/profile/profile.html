@@ -92,6 +92,23 @@
                 </div>
             </div>
         </div>
+        <!-- Delete Account popup -->
+        <div class="popup-edituser" id="popup-deleteaccount">
+            <div class="popup-content-container">
+                <div class="popup-header">
+                    <h2>Delete Account</h2>
+                    <span class="close" onclick="closePopup(this)">&times;</span>
+                </div>
+                <div class="popup-body" style="flex-direction: column; align-items: center;">
+                    <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                    <div id="delete-feedback" class="form-feedback"></div>
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button class="submit-button" onclick="closePopup(this)">Cancel</button>
+                        <button class="submit-button" id="confirm-delete-button">Delete Account</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -349,7 +366,7 @@
                 </div>
         <div class="Buttons" style="margin-top: 5vh;">
             <button class="alteration-button" onclick="popupEditPassword()">Reset Password</button>
-            <button class="alteration-button" style="background-color: red;">Delete Account</button>
+            <button class="alteration-button" style="background-color: red;" onclick="popupDeleteAccount()">Delete Account</button>
         </div>
         
     </div>
