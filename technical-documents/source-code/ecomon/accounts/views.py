@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from .models import Profile, Team
-from .serializers import ProfileSerializer, RegisterSerializer, LoginSerializer
+from .serializers import ProfileSerializer, RegisterSerializer, LoginSerializer, PasswordUpdateSerializer, UsernameUpdateSerializer, EmailUpdateSerializer
 from .forms import CustomUserCreationForm
 
 class UserProfileView(APIView):
@@ -24,6 +24,48 @@ class UserProfileView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Profile.DoesNotExist:
             return Response({"error": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class UpdateUsernameView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        serializer = UsernameUpdateSerializer(data=request.data)
+        if serializer.is_valid():
+            user = request.user
+            user.username = serializer.validated_data['new_username']
+            user.save()
+            return Response({"message": "Username updated successfully."}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateEmailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        serializer = EmailUpdateSerializer(data=request.data)
+        if serializer.is_valid():
+            user = request.user
+            user.email = serializer.validated_data['new_email']
+            user.save()
+            return Response({"message": "Email updated successfully."}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdatePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        serializer = PasswordUpdateSerializer(data=request.data)
+        if serializer.is_valid():
+            user = request.user
+            # Check if the provided old password is correct.
+            if not user.check_password(serializer.validated_data['old_password']):
+                return Response({"old_password": ["Old password is not correct."]}, status=status.HTTP_400_BAD_REQUEST)
+            user.set_password(serializer.validated_data['new_password'])
+            user.save()
+            return Response({"message": "Password updated successfully."}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UpdateProfileView(APIView):
     '''Update profile REST API'''
@@ -70,6 +112,19 @@ class RegisterView(APIView):
                 }
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class DeleteAccountView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        # You could add extra checks here (e.g., require a confirmation flag)
+        if request.data.get("confirm"):
+            user = request.user
+            user.delete()
+            return Response({"message": "Account deleted successfully."}, status=status.HTTP_200_OK)
+        return Response({"error": "Deletion not confirmed."}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LoginView(APIView):
     '''Login a user and return a token'''

@@ -32,6 +32,30 @@ header {
     padding: 0 20px;
 }
 
+/* Edit button */
+.edit-button{
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.alteration-button{
+    display: inline-block;
+    padding: 10px 15px;
+    font: 16px Arial, sans-serif;
+    background-color: #84C44C;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+    border: none;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+.alteration-button:hover {
+    background-color: #144E3F;
+}
 
 /* Fixing the logout and back buttons to the corners of the screen */
 .backButton, .logoutButton {
