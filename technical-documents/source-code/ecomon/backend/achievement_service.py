@@ -1,9 +1,11 @@
+from django.contrib.auth.models import User
 from django.db import transaction
 from .models import Achievement, PlayerAchievements
 from accounts.player_service import add_players_pack
+from accounts.models import Profile
 
 @transaction.atomic
-def check_and_award_achievements(user, stat_type):
+def check_and_award_achievements(user:User, stat_type):
     """
     Check and award achievements for a specific stat type
     stat_type should be 'PACKS', 'BATTLES', or 'BINS'
@@ -11,8 +13,7 @@ def check_and_award_achievements(user, stat_type):
 
     if stat_type not in ['PACKS', 'BATTLES', 'BINS']:
         raise ValueError("Invalid stat type")
-    
-    profile = user.profile
+    profile = Profile.objects.get(user=user)
     stat_value = {
         'PACKS': profile.packs_opened,
         'BATTLES': profile.battles_won,
@@ -39,7 +40,8 @@ def check_and_award_achievements(user, stat_type):
         print(f"Awarded {achievement.name} to {user.username}")
 
     if awarded_pack:
-        add_players_pack(user)
+        add_players_pack(profile)
+        profile.save()
         print(f"Awarded pack to {user.username} for new achievement")
 
     return awarded_pack

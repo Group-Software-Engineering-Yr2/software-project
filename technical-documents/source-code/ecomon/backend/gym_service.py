@@ -87,9 +87,8 @@ def update_cooldown(gym:Gym):
     gym.cooldown = timezone.now() + timedelta(minutes=30)
     gym.save()
 
-def increase_win_count(user:User):
+def increase_win_count(profile:Profile):
     '''Increases the win count of the user'''
-    profile = Profile.objects.get(user=user)
     profile.battles_won += 1
     profile.save()
     

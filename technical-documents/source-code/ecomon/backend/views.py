@@ -374,7 +374,7 @@ def completed_gym_battle(request):
 
         # Ensure the user has a selected deck
         if not has_deck(request.user):
-            return redirect('battle-deck-empty/')
+            return redirect('/battle-deck-empty')
 
         # Get initial values for verification
         initial_bins_emptied = request.user.profile.bins_emptied
@@ -394,25 +394,25 @@ def completed_gym_battle(request):
         # Process the result of the gym battle
         if did_win == 'true':
             with transaction.atomic():
+                profile = Profile.objects.get(user=request.user)
                 #Increase the win count in the user's profile
-                increase_win_count(request.user)
+                increase_win_count(profile)
+                # Add a pack to the user's profile
+                add_players_pack(profile)
                 check_and_award_achievements(request.user, 'BATTLES')
-                player_collection_cards = get_player_deck(request.user)
                 # Reset the gym player's cards from in use to not in use before updating the gym's cards
                 reset_gym_player_cards(gym)
                 # Set the gym's cards & update the player's cards in use
-                update_gym_cards(request.user,player_collection_cards, gym)
+                update_gym_cards(request.user,player_deck_cards, gym)
                 # Clear the cards used by the player in the battle from their deck
-                request.user.profile.deck_card_1 = None
-                request.user.profile.deck_card_2 = None
-                request.user.profile.deck_card_3 = None
-                request.user.profile.save() 
+                profile.deck_card_1 = None
+                profile.deck_card_2 = None
+                profile.deck_card_3 = None
+                profile.save() 
                 # Update the owning player
                 update_owning_player(request.user,gym)
                 # Update the cooldown of the gym
                 update_cooldown(gym)
-                # Add a pack to the user's profile
-                add_players_pack(request.user)
 
 
         # Check if the user has reached an achievement milestone
