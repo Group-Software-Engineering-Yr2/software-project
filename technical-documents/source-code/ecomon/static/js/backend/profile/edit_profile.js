@@ -11,7 +11,7 @@ function popupEditEmail() {
 
 function popupEditPassword() {
     _showGeneralPopup();
-    document.getElementById('popup-container-password').classList.remove("hidden");
+    document.getElementById('popup-editpassword').classList.remove("hidden");
 }
 
 function _showGeneralPopup(){
@@ -23,7 +23,7 @@ function closePopup(element) {
     document.getElementById('popup-container').classList.add("hidden");
     document.getElementById('popup-edituser').classList.add("hidden");
     document.getElementById('popup-editemail').classList.add("hidden");
-    document.getElementById('popup-container-password').classList.add("hidden");
+    document.getElementById('popup-editpassword').classList.add("hidden");
 }
 
 document.addEventListener("DOMContentLoaded", function () {
