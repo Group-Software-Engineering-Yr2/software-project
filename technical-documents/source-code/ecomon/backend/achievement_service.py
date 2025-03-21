@@ -40,7 +40,8 @@ def check_and_award_achievements(user:User, stat_type):
         print(f"Awarded {achievement.name} to {user.username}")
 
     if awarded_pack:
-        add_players_pack(user)
+        add_players_pack(profile)
+        profile.save()
         print(f"Awarded pack to {user.username} for new achievement")
 
     return awarded_pack
