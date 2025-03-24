@@ -86,7 +86,7 @@ class AchievementServiceTests(TestCase):
         self.assertEqual(self.user.profile.pack_count, initial_packs + 1)
 
     def test_pack_rewards_not_doubled(self):
-        """Test pack rewards are not given twice for the same achivement"""
+        """Test pack rewards are not given twice for the same achievement"""
         # Set initial packs opened
         self.user.profile.packs_opened = 10
         self.user.profile.save()

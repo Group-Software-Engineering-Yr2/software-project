@@ -17,6 +17,8 @@ from datetime import timedelta
 
 @login_required
 def home(request):
+    ''' Renders the home page '''
+    # Get all gyms from the database
     gyms = list(Gym.objects.values('name', 'latitude', 'longitude', 'owning_player__profile__team_name__name'))
 
     # getting last allocation from DB
@@ -39,6 +41,7 @@ def home(request):
 
 @login_required
 def profile(request):
+    """ Renders the profile page """
     cards = Card.objects.all().order_by('card_type')
     players_cards = PlayerCards.objects.filter(player=request.user)  # Get logged-in user's cards
     
@@ -64,6 +67,7 @@ def profile(request):
 
 @login_required
 def change_deck(request):
+    """ Renders the change deck page """
     referer = request.META.get("HTTP_REFERER")
 
     # Store referrer only if it's not `change_deck` itself
@@ -89,6 +93,7 @@ def change_deck(request):
 
 @login_required
 def update_deck(request):
+    """ Updates the user's deck based on the cards selected by the user """
     if request.method == 'POST':
         user_profile = request.user.profile
         
@@ -465,12 +470,16 @@ def user_has_no_deck(request):
 
 @login_required
 def get_gym_locations(request):
+    """
+    Returns a JSON response containing the locations of all gyms
+    """
     gyms = Gym.objects.all()
     gym_data = [{"name": gym.name, "latitude": gym.latitude, "longitude": gym.longitude} for gym in gyms]
     return JsonResponse(gym_data, safe=False)
 
 @login_required
 def logout_view(request):
+    """Logs out the user and redirects to the login page"""
     logout(request)
     return redirect('/accounts/login')
 
