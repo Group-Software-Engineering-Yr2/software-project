@@ -8,7 +8,7 @@
 -   Jake Mcallister
 -   Boris Cheung
 -   Angelo Thind
--   Finay Fordham
+-   Finlay Fordham
 
 # Useful Links
 
