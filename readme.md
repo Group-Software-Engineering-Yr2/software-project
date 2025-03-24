@@ -11,16 +11,16 @@
 -   Finay Fordham
 
 ## Project Overview
-Ecomon is a web-based application developed using the Django framework and agile development methodologies. The game transforms sustainability into an engaging collectible card experience while supporting the University of Exeter's environmental goals. 
 
-Players create an account and join a team (Reduce, Reuse, or Recycle), collect cards, and battle against other players and the evil "Team Fossil Fuels" at physical recycling bins on campus. The game embeds sustainability principles through innovative gameplay mechanics. 
+Ecomon is a web-based application developed using the Django framework and agile development methodologies. The game transforms sustainability into an engaging collectible card experience while supporting the University of Exeter's environmental goals.
+
+Players create an account and join a team (Reduce, Reuse, or Recycle), collect cards, and battle against other players and the evil "Team Fossil Fuels" at physical recycling bins on campus. The game embeds sustainability principles through innovative gameplay mechanics.
 
 After opening packs, players accumulate digital wrappers in their virtual bin. Once full, players must visit actual campus recycle bins to empty their wrappers in order to open more packs - encouraging awareness of recycling infrastructure.
 
-Educational elements are integrated through sustainability facts featured on cards and recycling gyms, while the card degradation system (where cards decompose/expire after varying numbers of uses based on card type) reinforces concepts of resource lifecycle and environmental impact. 
+Educational elements are integrated through sustainability facts featured on cards and recycling gyms, while the card degradation system (where cards decompose/expire after varying numbers of uses based on card type) reinforces concepts of resource lifecycle and environmental impact.
 
 Progress is tracked through achievements and leaderboards, encouraging competitive environmental action across campus.
-
 
 # Useful Links
 
@@ -100,6 +100,7 @@ To run cron jobs locally
 3. Deploy docker container on desired infrastructure
 
 ## Deployed App Link
+
 Open web browser and navigate to [www.ecomon.org.uk](https://www.ecomon.org.uk)
 
 ## Testing Suite
