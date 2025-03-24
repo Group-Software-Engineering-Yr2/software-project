@@ -12,7 +12,7 @@
 
 ## Project Overview
 
-Ecomon is a web-based application developed using the Django framework and agile development methodologies. The game transforms sustainability into an engaging collectible card experience while supporting the University of Exeter's environmental goals.
+Ecomon is a web-based application developed using the Django framework and agile development methodologies (kanban). The game transforms sustainability into an engaging collectible card experience while supporting the University of Exeter's environmental goals.
 
 Players create an account and join a team (Reduce, Reuse, or Recycle), collect cards, and battle against other players and the evil "Team Fossil Fuels" at physical recycling bins on campus. The game embeds sustainability principles through innovative gameplay mechanics.
 
