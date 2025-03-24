@@ -5,7 +5,7 @@
 -   Adam O'Neill
 -   Lorenzo Meixieira
 -   Callum Ward
--   Jake Mcallister
+-   Jacob Mcallister
 -   Boris Cheung
 -   Angelo Thind
 -   Finlay Fordham
